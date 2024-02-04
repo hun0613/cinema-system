@@ -31,3 +31,33 @@ body {
     text-wrap: balance;
   }
 }
+
+@font-face {
+  font-family: "NMSNeo1";
+  src: url("../../public/font/NanumSquareNeoTTF-aLt.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "NMSNeo2";
+  src: url("../../public/font/NanumSquareNeoTTF-bRg.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "NMSNeo3";
+  src: url("../../public/font/NanumSquareNeoTTF-cBd.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "NMSNeo4";
+  src: url("../../public/font/NanumSquareNeoTTF-dEb.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "NMSNeo5";
+  src: url("../../public/font/NanumSquareNeoTTF-eHv.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "NMSNeo6";
+  src: url("../../public/font/NanumSquareNeo-Variable.woff2") format("woff2");
+}
