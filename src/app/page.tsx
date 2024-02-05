@@ -1,21 +1,15 @@
+import ContentArea from "../components/ContentArea";
+
 export default function Home() {
   return (
-    <div className="bg-bgColor flex h-screen w-screen flex-col items-center justify-center">
-      <h1 className="w-fix font-NMSNeo1 flex h-fit flex-col items-center justify-center">
-        안녕하세요 폰트 적용 잘 되나요?
-      </h1>
-      <h1 className="w-fix font-NMSNeo2 flex h-fit flex-col items-center justify-center">
-        안녕하세요 폰트 적용 잘 되나요?
-      </h1>
-      <h1 className="w-fix font-NMSNeo3 flex h-fit flex-col items-center justify-center">
-        안녕하세요 폰트 적용 잘 되나요?
-      </h1>
-      <h1 className="w-fix font-NMSNeo4 flex h-fit flex-col items-center justify-center">
-        안녕하세요 폰트 적용 잘 되나요?
-      </h1>
-      <h1 className="w-fix font-NMSNeo5 flex h-fit flex-col items-center justify-center">
-        안녕하세요 폰트 적용 잘 되나요?
-      </h1>
+    <div className="flex h-full min-h-screen w-full flex-col items-center justify-start overflow-y-auto overflow-x-hidden bg-bgColor">
+      {/* body */}
+      <div className="bg-contentAreaColor desktop:w-[80%] flex h-full min-h-screen w-full max-w-[1100px] flex-col items-center justify-start">
+        {/* screen (컴포넌트화 예정) */}
+        <div className="flex aspect-video w-full flex-col items-center justify-center bg-black"></div>
+        {/* content Area */}
+        <ContentArea />
+      </div>
     </div>
   );
 }

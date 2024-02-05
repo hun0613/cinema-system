@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "영화예매 시스템",
@@ -23,8 +22,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <>
+      {/* suppressHydrationWarning : "app-index.js:35 Warning: Extra attributes from the server: data-redeviation-bs-uid" warning 해결 */}
+      <html lang="en" suppressHydrationWarning>
+        <body>
+          {/* 헤더 -> html 태그 바로 자식 영역에 다른 body 외의 다른 태그가 들어가면 hydration 에러가 발생 ! 반드시 body 내부에 작성 */}
+          <header className="fixed top-0 flex h-20 w-screen flex-col items-center justify-center bg-gradient-to-b from-black/20 text-white">
+            header
+          </header>
+          {/* 라우팅 될 다른 컴포넌트 들 */}
+          {children}
+        </body>
+      </html>
+    </>
   );
 }

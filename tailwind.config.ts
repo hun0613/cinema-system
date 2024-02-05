@@ -23,6 +23,14 @@ const config: Config = {
       },
       colors: {
         bgColor: "#1E1E1E",
+        contentAreaColor: "#242424",
+        borderColor: "#404040",
+        fontColor: "#DEDEDE",
+        pointColor: "#FF0000",
+      },
+      screens: {
+        desktop: "1100px",
+        tablet: "764px",
       },
     },
   },
