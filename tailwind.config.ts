@@ -22,15 +22,18 @@ const config: Config = {
         NMSNeo6: ["NMSNeo6"],
       },
       colors: {
-        bgColor: "#1E1E1E",
+        bgColor: "#131313",
         contentAreaColor: "#242424",
         borderColor: "#404040",
         fontColor: "#DEDEDE",
         pointColor: "#FF0000",
       },
       screens: {
-        desktop: "1100px",
+        desktop: "1000px",
         tablet: "764px",
+      },
+      transitionProperty: {
+        height: "height",
       },
     },
   },
