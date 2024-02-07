@@ -35,6 +35,9 @@ const config: Config = {
       transitionProperty: {
         height: "height",
       },
+      aspectRatio: {
+        "3/1": "3/1",
+      },
     },
   },
   plugins: [],

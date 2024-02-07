@@ -12,7 +12,7 @@ const ContentArea = () => {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-start">
-      {width > 764 ? (
+      {width === 0 || width > 764 ? (
         // Desktop 버전 Nav
         <Navigation
           navValue={navState}

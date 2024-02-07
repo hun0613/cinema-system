@@ -35,10 +35,10 @@ const MobileNavigation = ({
   searchValue,
   setSearchValue,
 }: NavProps) => {
-  console.log(navValue);
-
   const [navModalState, setNavModalState] = useState<boolean>(false);
-  const [navMenuTitle, setNavMenuTitle] = useState<string>("현재 상영작");
+  const [navMenuTitle, setNavMenuTitle] = useState<string>(
+    navList.filter((el) => el.id === navValue)[0]?.name,
+  );
 
   const searchInputRef = useRef<HTMLInputElement>(null);
 
