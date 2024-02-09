@@ -1,3 +1,4 @@
+import Header from "@/components/Home/Header";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -27,9 +28,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body>
           {/* 헤더 -> html 태그 바로 자식 영역에 다른 body 외의 다른 태그가 들어가면 hydration 에러가 발생 ! 반드시 body 내부에 작성 */}
-          <header className="fixed top-0 z-50 flex h-20 w-screen flex-col items-center justify-center bg-gradient-to-b from-black/20 text-white">
-            header
-          </header>
+          <Header />
           {/* 라우팅 될 다른 컴포넌트 들 */}
           {children}
         </body>
