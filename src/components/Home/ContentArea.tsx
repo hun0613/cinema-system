@@ -30,9 +30,9 @@ const ContentArea = () => {
         />
       )}
       {/* content */}
-      {/* <div className="flex h-fit min-h-[100px] w-full flex-col items-center justify-start bg-slate-600 p-3">
-        content
-      </div> */}
+      <div className="flex h-fit min-h-[300px] w-full flex-col items-center justify-center border-b border-borderColor/40 p-3 font-NMSNeo2 text-fontColor">
+        Content Area
+      </div>
     </div>
   );
 };

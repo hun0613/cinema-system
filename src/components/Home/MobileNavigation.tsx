@@ -37,7 +37,7 @@ const MobileNavigation = ({
 }: NavProps) => {
   const [navModalState, setNavModalState] = useState<boolean>(false);
   const [navMenuTitle, setNavMenuTitle] = useState<string>(
-    navList.filter((el) => el.id === navValue)[0]?.name,
+    navList.filter((el) => el.id === (navValue === 4 ? 1 : navValue))[0]?.name,
   );
 
   const searchInputRef = useRef<HTMLInputElement>(null);

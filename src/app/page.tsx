@@ -1,3 +1,4 @@
+import Footer from "@/components/Home/Footer";
 import Image from "next/image";
 import ContentArea from "../components/Home/ContentArea";
 
@@ -20,10 +21,12 @@ export default function Home() {
         </div>
       </div>
       {/* body */}
-      <div className="flex h-full min-h-screen w-full max-w-[1100px] flex-col items-center justify-start bg-bgColor ">
+      <div className="flex h-fit w-full max-w-[1100px] flex-col items-center justify-start bg-bgColor ">
         {/* content Area */}
         <ContentArea />
       </div>
+      {/* footer */}
+      <Footer />
     </div>
   );
 }
