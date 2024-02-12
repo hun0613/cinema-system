@@ -61,3 +61,7 @@ body {
   font-family: "NMSNeo6";
   src: url("../../public/font/NanumSquareNeo-Variable.woff2") format("woff2");
 }
+
+.content_animation {
+  transition-property: opacity, transform;
+}
