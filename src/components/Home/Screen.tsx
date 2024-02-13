@@ -9,8 +9,6 @@ const Screen = () => {
 
   let filteredMovie = movieData.filter((el) => el.classification === 1);
 
-  console.log(zoom);
-
   const changeContent = () => {
     if (contentIdx === filteredMovie.length - 1) {
       setZoom(false);
@@ -47,7 +45,7 @@ const Screen = () => {
           style={{ width: "100%", height: "auto" }}
           className={
             zoom
-              ? `scale-100 opacity-100 transition-transform duration-[8000ms] ease-in-out`
+              ? `scale-105 opacity-100 transition-transform duration-[8000ms] ease-in-out`
               : `scale-125`
           }
         />
