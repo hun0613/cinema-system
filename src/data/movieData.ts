@@ -1,10 +1,10 @@
-enum MovieClassification {
+export enum MovieClassification {
   Expected = 0,
   InProgress = 1,
   End = 2,
 }
 
-interface movieType {
+export interface movieType {
   id: number;
   title: string;
   summary: string;

@@ -1,7 +1,8 @@
 "use client";
-import { movieData } from "@/data/movieData";
+import { movieData, movieType } from "@/data/movieData";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import ScreenIdxBtn from "./ScreenIdxBtn";
 
 const Screen = () => {
   const [zoom, setZoom] = useState<boolean>(false);
@@ -21,6 +22,8 @@ const Screen = () => {
 
   useEffect(() => {
     setZoom(true);
+
+    clearTimeout(0);
 
     let timer = setTimeout(() => {
       changeContent();
@@ -106,6 +109,20 @@ const Screen = () => {
             }
           />
         </div>
+      </div>
+      {/* screen idx btns */}
+      <div className="absolute bottom-0 flex h-fit w-full flex-row items-center justify-center pb-5">
+        {filteredMovie.map((movieInfo: movieType, idx: number) => {
+          return (
+            <ScreenIdxBtn
+              key={`${movieInfo.title}_idx`}
+              data={movieInfo}
+              idx={contentIdx}
+              setIdx={setContentIdx}
+              setZoom={setZoom}
+            />
+          );
+        })}
       </div>
     </div>
   );
