@@ -123,7 +123,7 @@ const MobileNavigation = ({
                   <div
                     key={idx}
                     onClick={(e) => handleClickNavElement(e, el.id, el.name)}
-                    className="mt-2 flex h-fit w-full flex-col items-center justify-center rounded-lg border border-borderColor bg-black/20 p-3 drop-shadow-sm duration-150 ease-in-out hover:bg-pointColor/80"
+                    className="mt-2 flex h-fit w-full flex-col items-center justify-center rounded-lg border-2 border-borderColor bg-black/70 p-3 drop-shadow-sm duration-150 ease-in-out hover:bg-pointColor/80"
                   >
                     {el.name}
                   </div>

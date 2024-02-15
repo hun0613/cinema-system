@@ -29,7 +29,7 @@ const config: Config = {
         pointColor: "#FF0000",
       },
       screens: {
-        desktop: "1000px",
+        desktop: "1100px",
         tablet: "764px",
       },
       transitionProperty: {

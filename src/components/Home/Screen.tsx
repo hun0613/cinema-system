@@ -115,7 +115,7 @@ const Screen = () => {
         {filteredMovie.map((movieInfo: movieType, idx: number) => {
           return (
             <ScreenIdxBtn
-              key={`${movieInfo.title}_idx`}
+              key={`${movieInfo.title}_${idx}`}
               data={movieInfo}
               idx={contentIdx}
               setIdx={setContentIdx}
