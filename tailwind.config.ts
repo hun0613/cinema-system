@@ -27,6 +27,7 @@ const config: Config = {
         borderColor: "#404040",
         fontColor: "#DEDEDE",
         pointColor: "#FF0000",
+        screenColor: "#161616",
       },
       screens: {
         desktop: "1100px",
@@ -37,7 +38,7 @@ const config: Config = {
       },
       aspectRatio: {
         "3/1": "3 / 1",
-        "3/4": "3 / 4",
+        "3/4.3": "3 / 4.3",
       },
     },
   },

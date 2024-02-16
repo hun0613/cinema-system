@@ -1,14 +1,18 @@
 "use client";
-import { movieData, movieType } from "@/data/movieData";
+import { movieType } from "@/data/movieData";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ScreenIdxBtn from "./ScreenIdxBtn";
 
-const Screen = () => {
+interface Data {
+  data: movieType[];
+}
+
+const Screen = ({ data }: Data) => {
   const [zoom, setZoom] = useState<boolean>(false);
   const [contentIdx, setContentIdx] = useState<number>(0);
 
-  let filteredMovie = movieData.filter((el) => el.classification === 1);
+  let filteredMovie: movieType[] = data.filter((el) => el.classification === 1);
 
   const changeContent = () => {
     if (contentIdx === filteredMovie.length - 1) {
@@ -35,8 +39,8 @@ const Screen = () => {
   }, [contentIdx]);
 
   return (
-    <div className="relative flex h-fit w-full flex-col items-center justify-center bg-black/60">
-      <div className="relative flex aspect-video h-[calc(100vh)] flex-col items-center justify-center overflow-hidden bg-white/10 tablet:h-[calc(100vh-100px)]">
+    <div className="bg-screenColor relative flex h-fit w-full flex-col items-center justify-center">
+      <div className="relative flex aspect-video h-[calc(100vh)] flex-col items-center justify-start overflow-hidden bg-white/10 tablet:h-[calc(100vh-200px)]">
         {/* bg */}
         <Image
           alt="movie img"
@@ -44,6 +48,7 @@ const Screen = () => {
           width={0}
           height={0}
           priority
+          quality={100}
           sizes="100vw"
           style={{ width: "100%", height: "auto" }}
           className={
@@ -53,12 +58,12 @@ const Screen = () => {
           }
         />
         {/* bg effect */}
-        <div className="absolute h-full w-full bg-gradient-to-r from-black/70"></div>
-        <div className="absolute h-full w-full bg-gradient-to-l from-black/70"></div>
+        <div className="from-screenColor absolute h-full w-full bg-gradient-to-r"></div>
+        <div className="from-screenColor absolute h-full w-full bg-gradient-to-l"></div>
       </div>
 
       {/* info area */}
-      <div className="absolute top-0 flex h-full w-full max-w-[1100px] flex-col-reverse items-center justify-center p-5 target:p-10 tablet:flex-row tablet:justify-between">
+      <div className="absolute top-0 flex h-full w-full max-w-[1100px] flex-col-reverse items-center justify-center p-5 tablet:flex-row tablet:justify-between tablet:p-10">
         {/* summary */}
         <div className="mt-8 flex h-fit w-full flex-col items-center justify-center font-NMSNeo2 text-sm leading-snug text-fontColor tablet:mt-0 tablet:w-[55%] tablet:items-end">
           {/* title */}
@@ -94,14 +99,14 @@ const Screen = () => {
           </button>
         </div>
         {/* poster */}
-        <div className="ml-0 mt-16 flex aspect-[3/4] w-[50%] flex-col items-center justify-center drop-shadow-xl tablet:ml-5 tablet:mt-0 tablet:w-2/5">
+        <div className="ml-0 mt-16 flex aspect-[3/4.3] w-[50%] flex-col items-center justify-center drop-shadow-xl tablet:ml-5 tablet:mt-0 tablet:w-1/3">
           <Image
             alt="movie img"
             src={filteredMovie[contentIdx].poster_img}
             width={0}
             height={0}
             sizes="100vw"
-            style={{ width: "100%", height: "auto" }}
+            style={{ width: "100%", height: "100%" }}
             className={
               zoom
                 ? `translate-y-0 opacity-100 transition-all duration-[1500ms] ease-in-out`

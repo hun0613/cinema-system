@@ -7,6 +7,7 @@ interface NavProps {
   setNavValue: React.Dispatch<React.SetStateAction<number>>;
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 type NavProperty = {
@@ -34,6 +35,7 @@ const MobileNavigation = ({
   setNavValue,
   searchValue,
   setSearchValue,
+  setPage,
 }: NavProps) => {
   const [navModalState, setNavModalState] = useState<boolean>(false);
   const [navMenuTitle, setNavMenuTitle] = useState<string>(
@@ -46,6 +48,7 @@ const MobileNavigation = ({
   const handleClickNav = (e: React.MouseEvent, id: number) => {
     e.stopPropagation();
     setNavValue(id);
+    setPage(1);
 
     // 검색 영역을 클릭한 경우
     if (id === 4) {
@@ -67,6 +70,7 @@ const MobileNavigation = ({
     setNavValue(id);
     setNavMenuTitle(name);
     setNavModalState(false);
+    setPage(1);
   };
 
   // search 값 변경 시 함수
@@ -101,7 +105,7 @@ const MobileNavigation = ({
         <div
           onClick={(e) => {
             e.stopPropagation();
-            console.log("check");
+            // console.log("check");
           }}
           className={
             navModalState
