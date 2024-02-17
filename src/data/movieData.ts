@@ -93,8 +93,8 @@ export const movieData: movieType[] = [
     ‘스크러빗 부인’과 ‘블리처’의 계략에 빠져 눈더미처럼 불어난 숙박비로 인해 순식간에 빚더미에 오른다.
     게다가 밤마다 초콜릿을 훔쳐가는 작은 도둑 ‘움파 룸파’의 등장과 ‘달콤 백화점’을 독점한 초콜릿 카르텔의 강력한 견제까지.
     세계 최고의 초콜릿 메이커가 되는 길은 험난하기만 한데…`,
-    rating: 9.5,
-    reservation_rate: 10.1,
+    rating: 6.5,
+    reservation_rate: 8.1,
     release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_윙카.jpeg",

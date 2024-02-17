@@ -14,6 +14,7 @@ const ContentArea = ({ data }: Data) => {
   const [navState, setNavState] = useState<number>(1);
   const [searchValue, setSearchValue] = useState<string>("");
   const [page, setPage] = useState<number>(1);
+  const [hoverCardId, setHoverCardId] = useState<number>(0);
 
   let width: number = useWindowSize();
 
@@ -59,7 +60,14 @@ const ContentArea = ({ data }: Data) => {
         {filteredMovie
           .slice(0, page * 8)
           .map((movieInfo: movieType, idx: number) => {
-            return <Card key={`${movieInfo.title}_${idx}`} data={movieInfo} />;
+            return (
+              <Card
+                key={`${movieInfo.title}_${idx}`}
+                data={movieInfo}
+                hoverCardId={hoverCardId}
+                setHoverCardId={setHoverCardId}
+              />
+            );
           })}
       </div>
       {/* 더보기 btn area */}
