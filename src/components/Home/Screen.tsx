@@ -24,6 +24,10 @@ const Screen = ({ data }: Data) => {
     }
   };
 
+  const handleClickBook = () => {
+    console.log(filteredMovie[contentIdx]);
+  };
+
   useEffect(() => {
     setZoom(true);
 
@@ -89,6 +93,7 @@ const Screen = ({ data }: Data) => {
           {/* 예매하기 버튼 */}
           <button
             type="button"
+            onClick={handleClickBook}
             className={
               zoom
                 ? `content_animation mt-10 flex h-fit w-1/2 translate-y-0 flex-col items-center justify-center rounded-lg bg-pointColor px-5 py-3 font-NMSNeo3 text-sm text-white opacity-100 duration-[2500ms] ease-in-out hover:bg-pointColor/60 tablet:w-2/5 tablet:text-base`
@@ -123,6 +128,7 @@ const Screen = ({ data }: Data) => {
               key={`${movieInfo.title}_${idx}`}
               data={movieInfo}
               idx={contentIdx}
+              btnIdx={idx}
               setIdx={setContentIdx}
               setZoom={setZoom}
             />

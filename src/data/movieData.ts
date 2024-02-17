@@ -10,6 +10,7 @@ export interface movieType {
   summary: string;
   rating: number;
   reservation_rate: number;
+  release_date: string;
   classification: MovieClassification;
   background_img: string;
   poster_img: string;
@@ -29,6 +30,7 @@ export const movieData: movieType[] = [
     펼쳐진다!`,
     rating: 8.7,
     reservation_rate: 43,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_서울의봄.jpeg",
     poster_img: "/images/pt_서울의봄.webp",
@@ -47,6 +49,7 @@ export const movieData: movieType[] = [
     태풍이 몰아치던 어느 날, 아무도 몰랐던 진실이 드러난다.`,
     rating: 9.8,
     reservation_rate: 38,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_괴물.jpeg",
     poster_img: "/images/pt_괴물.jpeg",
@@ -72,6 +75,7 @@ export const movieData: movieType[] = [
     기분 좋은 갓생 스토리가 시작된다!`,
     rating: 9.2,
     reservation_rate: 27,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_도그데이즈.jpeg",
     poster_img: "/images/pt_도그데이즈.jpeg",
@@ -91,6 +95,7 @@ export const movieData: movieType[] = [
     세계 최고의 초콜릿 메이커가 되는 길은 험난하기만 한데…`,
     rating: 9.5,
     reservation_rate: 10.1,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_윙카.jpeg",
     poster_img: "/images/pt_윙카.jpeg",
@@ -113,6 +118,7 @@ export const movieData: movieType[] = [
     `,
     rating: 9.1,
     reservation_rate: 3.7,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_아기상어.jpeg",
     poster_img: "/images/pt_아기상어.jpeg",
@@ -134,6 +140,7 @@ export const movieData: movieType[] = [
     `,
     rating: 7.8,
     reservation_rate: 2.7,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_데드맨.jpeg",
     poster_img: "/images/pt_데드맨.jpeg",
@@ -160,6 +167,7 @@ export const movieData: movieType[] = [
     `,
     rating: 8.8,
     reservation_rate: 10.7,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_외계인.jpeg",
     poster_img: "/images/pt_외계인.jpeg",
@@ -179,13 +187,14 @@ export const movieData: movieType[] = [
     `,
     rating: 9.5,
     reservation_rate: 2.7,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_소풍.jpeg",
     poster_img: "/images/pt_소풍.jpeg",
   },
   {
     id: 9,
-    title: "서울의 봄",
+    title: "서울의 봄2",
     summary: `1979년 12월 12일, 수도 서울 군사반란 발생 그날, 대한민국의 운명이
     바뀌었다 대한민국을 뒤흔든 10월 26일 이후, 서울에 새로운 바람이
     불어온 것도 잠시 12월 12일, 보안사령관 전두광이 반란을 일으키고 군
@@ -196,13 +205,14 @@ export const movieData: movieType[] = [
     펼쳐진다!`,
     rating: 8.7,
     reservation_rate: 43,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_서울의봄.jpeg",
     poster_img: "/images/pt_서울의봄.webp",
   },
   {
     id: 10,
-    title: "괴물",
+    title: "괴물2",
     summary: `“우리 동네에는 괴물이 산다”
     싱글맘 사오리(안도 사쿠라)는 아들 미나토(쿠로카와 소야)의 행동에서 이상 기운을 감지한다.
     용기를 내 찾아간 학교에서 상담을 진행한 날 이후
@@ -214,13 +224,14 @@ export const movieData: movieType[] = [
     태풍이 몰아치던 어느 날, 아무도 몰랐던 진실이 드러난다.`,
     rating: 9.8,
     reservation_rate: 38,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_괴물.jpeg",
     poster_img: "/images/pt_괴물.jpeg",
   },
   {
     id: 11,
-    title: "도그데이즈",
+    title: "도그데이즈2",
     summary: `깔끔한 성격의 계획형 싱글남 ‘민상’(유해진).
     영끌까지 모아 산 건물을 개똥밭으로 만드는 세입자 수의사 ‘진영’(김서형) 때문에 매일 머리가 아프다.
     오늘도 ‘진영’과 티격태격하던 ‘민상’은 동물병원에서 한 성격하는 할머니를 만나는데,
@@ -239,13 +250,14 @@ export const movieData: movieType[] = [
     기분 좋은 갓생 스토리가 시작된다!`,
     rating: 10.5,
     reservation_rate: 27.4,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_도그데이즈.jpeg",
     poster_img: "/images/pt_도그데이즈.jpeg",
   },
   {
     id: 12,
-    title: "윙카",
+    title: "윙카2",
     summary: `세상에서 가장 달콤한 여정
     좋은 일은 모두 꿈에서부터 시작된다!
     
@@ -258,13 +270,14 @@ export const movieData: movieType[] = [
     세계 최고의 초콜릿 메이커가 되는 길은 험난하기만 한데…`,
     rating: 9.5,
     reservation_rate: 10.1,
+    release_date: "2024-01-20",
     classification: MovieClassification.End,
     background_img: "/images/bg_윙카.jpeg",
     poster_img: "/images/pt_윙카.jpeg",
   },
   {
     id: 13,
-    title: "아기상어 극장판-사이렌 스톤의 비밀",
+    title: "아기상어 극장판-사이렌 스톤의 비밀2",
     summary: `대도시 미끈매끈 시티로 이사한 아기상어 ‘올리’!
 
     최고의 단짝 ‘윌리엄’과 헤어져야 한다는 슬픔도 잠시,
@@ -280,13 +293,14 @@ export const movieData: movieType[] = [
     `,
     rating: 9.1,
     reservation_rate: 3.7,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_아기상어.jpeg",
     poster_img: "/images/pt_아기상어.jpeg",
   },
   {
     id: 14,
-    title: "데드맨",
+    title: "데드맨2",
     summary: `목숨값 단돈 500만원! 이름값 1000억?
     이름에 살고, 이름에 죽는다!
      
@@ -299,15 +313,16 @@ export const movieData: movieType[] = [
     ‘이만재’ 때문에 아버지가 죽었다고 주장하는 ‘공희주’가 등장하면서
     1천억짜리 설계판의 배후를 찾기 위해 의기투합한 세 사람의 추적이 시작되는데…
     `,
-    rating: 7.8,
+    rating: 0.0,
     reservation_rate: 2.7,
+    release_date: "2024-03-28",
     classification: MovieClassification.Expected,
     background_img: "/images/bg_데드맨.jpeg",
     poster_img: "/images/pt_데드맨.jpeg",
   },
   {
     id: 15,
-    title: "외계+인 2부",
+    title: "외계+인 2부3",
     summary: `반드시 돌아가야 한다. 모두를 지키기 위해
 
     인간의 몸속에 가둬진 외계인 죄수의 탈옥을 막으려다 과거에 갇혀버린 ‘이안’(김태리)은
@@ -327,13 +342,14 @@ export const movieData: movieType[] = [
     `,
     rating: 8.8,
     reservation_rate: 10.7,
+    release_date: "2024-01-23",
     classification: MovieClassification.End,
     background_img: "/images/bg_외계인.jpeg",
     poster_img: "/images/pt_외계인.jpeg",
   },
   {
     id: 16,
-    title: "괴물",
+    title: "괴물3",
     summary: `“우리 동네에는 괴물이 산다”
     싱글맘 사오리(안도 사쿠라)는 아들 미나토(쿠로카와 소야)의 행동에서 이상 기운을 감지한다.
     용기를 내 찾아간 학교에서 상담을 진행한 날 이후
@@ -345,13 +361,14 @@ export const movieData: movieType[] = [
     태풍이 몰아치던 어느 날, 아무도 몰랐던 진실이 드러난다.`,
     rating: 9.8,
     reservation_rate: 38,
+    release_date: "2024-02-15",
     classification: MovieClassification.InProgress,
     background_img: "/images/bg_괴물.jpeg",
     poster_img: "/images/pt_괴물.jpeg",
   },
   {
     id: 17,
-    title: "도그데이즈",
+    title: "도그데이즈3",
     summary: `깔끔한 성격의 계획형 싱글남 ‘민상’(유해진).
     영끌까지 모아 산 건물을 개똥밭으로 만드는 세입자 수의사 ‘진영’(김서형) 때문에 매일 머리가 아프다.
     오늘도 ‘진영’과 티격태격하던 ‘민상’은 동물병원에서 한 성격하는 할머니를 만나는데,
@@ -368,8 +385,9 @@ export const movieData: movieType[] = [
     
     특별한 단짝 덕분에 엮이게 된 이들의
     기분 좋은 갓생 스토리가 시작된다!`,
-    rating: 10.5,
+    rating: 0.0,
     reservation_rate: 27.4,
+    release_date: "2024-03-31",
     classification: MovieClassification.Expected,
     background_img: "/images/bg_도그데이즈.jpeg",
     poster_img: "/images/pt_도그데이즈.jpeg",

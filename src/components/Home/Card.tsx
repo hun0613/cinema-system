@@ -7,10 +7,25 @@ interface Data {
 }
 
 const Card = ({ data }: Data) => {
+  // 날짜 차이 계산 함수
+  const diffDate = (date: string) => {
+    let currDate = new Date();
+    let dataDate = new Date(date);
+
+    let diff = currDate.getTime() - dataDate.getTime();
+
+    return Math.ceil(Math.abs(diff / (1000 * 60 * 60 * 24)));
+  };
+
+  const handleHoverCard = (e: React.MouseEvent) => {
+    console.log(e.target);
+  };
+
   return (
     <div className="flex h-fit w-full flex-col items-center justify-center">
       {/* poster */}
       <Image
+        onMouseOver={handleHoverCard}
         alt="movie img"
         src={data.poster_img}
         width={0}
@@ -33,14 +48,28 @@ const Card = ({ data }: Data) => {
           </div>
         </div>
         {/* reservation rate */}
-        <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">
-          <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-xs tablet:text-sm">
-            예매율
+        {data.classification === 1 ? (
+          <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">
+            <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-xs tablet:text-sm">
+              예매율
+            </div>
+            <div className="table:text-sm ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-xs">
+              {data.reservation_rate}%
+            </div>
           </div>
-          <div className="table:text-sm ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-xs">
-            {data.reservation_rate}%
+        ) : data.classification === 2 ? (
+          <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">
+            <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-xs text-pointColor/80 tablet:text-sm">
+              상영종료
+            </div>
           </div>
-        </div>
+        ) : data.classification === 3 ? (
+          <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">
+            <div className="mt-[2px] h-fit w-fit font-NMSNeo4 text-xs text-pointColor/80 tablet:text-sm">
+              D-{diffDate(data.release_date)}
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

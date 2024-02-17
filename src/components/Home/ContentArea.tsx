@@ -17,9 +17,18 @@ const ContentArea = ({ data }: Data) => {
 
   let width: number = useWindowSize();
 
-  let filteredMovie: movieType[] = data.filter(
-    (el) => el.classification === navState,
-  );
+  let filteredMovie: movieType[] = data.filter((el) => {
+    if (navState === 4) {
+      if (el.title.includes(searchValue)) {
+        return el;
+      }
+    } else {
+      if (el.classification === navState) {
+        return el;
+      }
+    }
+  });
+
   const handleClickAddBtn = () => {
     setPage(page + 1);
   };

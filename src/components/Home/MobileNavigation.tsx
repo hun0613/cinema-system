@@ -152,17 +152,17 @@ const MobileNavigation = ({
             : `flex h-full w-1/2 cursor-pointer flex-row items-center justify-center border-b-2 border-borderColor font-NMSNeo3 text-sm text-fontColor duration-150 ease-in-out hover:bg-black/30`
         }
       >
+        <BsSearch
+          onClick={handleClickSearch}
+          className="mr-3 text-base text-fontColor"
+        />
         <input
           ref={searchInputRef}
           type="text"
           value={searchValue}
           placeholder="제목을 입력하세요"
           onChange={handleChangeSearch}
-          className=" mr-3 w-2/3 bg-transparent p-1 font-NMSNeo2 text-fontColor outline-none"
-        />
-        <BsSearch
-          onClick={handleClickSearch}
-          className=" cursor-pointer text-base text-fontColor"
+          className="w-2/3 bg-transparent p-1 font-NMSNeo2 text-fontColor outline-none"
         />
       </div>
     </div>
