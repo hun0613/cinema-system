@@ -32,6 +32,7 @@ const config: Config = {
       screens: {
         desktop: "1100px",
         tablet: "764px",
+        mobile: "430px",
       },
       transitionProperty: {
         height: "height",

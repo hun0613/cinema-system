@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <>
       {/* suppressHydrationWarning : "app-index.js:35 Warning: Extra attributes from the server: data-redeviation-bs-uid" warning 해결 */}

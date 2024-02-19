@@ -1,17 +1,22 @@
 "use client";
 import { movieType } from "@/data/movieData";
+import useWindowSize from "@/hooks/useWindowSize";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ScreenIdxBtn from "./ScreenIdxBtn";
 
 interface Data {
   data: movieType[];
+  test: any;
 }
 
-const Screen = ({ data }: Data) => {
+const Screen = ({ data, test }: Data) => {
   const [zoom, setZoom] = useState<boolean>(false);
   const [contentIdx, setContentIdx] = useState<number>(0);
 
+  console.log(test);
+
+  let width: number = useWindowSize();
   let filteredMovie: movieType[] = data.filter((el) => el.classification === 1);
 
   const changeContent = () => {
@@ -43,7 +48,7 @@ const Screen = ({ data }: Data) => {
   }, [contentIdx]);
 
   return (
-    <div className="bg-screenColor relative flex h-fit w-full flex-col items-center justify-center">
+    <div className="relative flex h-fit w-full flex-col items-center justify-center bg-screenColor">
       <div className="relative flex aspect-video h-[calc(100vh)] flex-col items-center justify-start overflow-hidden bg-white/10 tablet:h-[calc(100vh-200px)]">
         {/* bg */}
         <Image
@@ -62,8 +67,8 @@ const Screen = ({ data }: Data) => {
           }
         />
         {/* bg effect */}
-        <div className="from-screenColor absolute h-full w-full bg-gradient-to-r"></div>
-        <div className="from-screenColor absolute h-full w-full bg-gradient-to-l"></div>
+        <div className="absolute h-full w-full bg-gradient-to-r from-screenColor"></div>
+        <div className="absolute h-full w-full bg-gradient-to-l from-screenColor"></div>
       </div>
 
       {/* info area */}
@@ -74,8 +79,8 @@ const Screen = ({ data }: Data) => {
           <h1
             className={
               zoom
-                ? `content_animation justify-ceneter font-NMSNeo flex h-fit w-fit translate-y-0 flex-col items-center text-2xl opacity-100 duration-[2000ms] ease-in-out tablet:text-3xl`
-                : `justify-ceneter font-NMSNeo flex h-fit w-fit translate-y-10 flex-col items-center text-2xl opacity-0 tablet:text-3xl`
+                ? `content_animation font-NMSNeo  h-fit w-full translate-y-0  truncate text-center text-2xl opacity-100 duration-[2000ms] ease-in-out tablet:text-right tablet:text-3xl`
+                : ` font-NMSNeo h-fit w-full translate-y-10 truncate  text-center text-2xl opacity-0 tablet:text-right tablet:text-3xl`
             }
           >
             {filteredMovie[contentIdx].title}
@@ -88,7 +93,11 @@ const Screen = ({ data }: Data) => {
                 : `mt-5 flex h-fit w-fit translate-y-10 flex-col items-center justify-center text-center font-NMSNeo2 text-xs leading-loose opacity-0 transition-none target:mt-10 tablet:text-right tablet:text-sm tablet:leading-loose`
             }
           >
-            {filteredMovie[contentIdx].summary}
+            {width === 0 || width > 764
+              ? filteredMovie[contentIdx].summary
+              : filteredMovie[contentIdx].summary.length > 200
+                ? `${filteredMovie[contentIdx].summary.slice(0, 200)}...`
+                : filteredMovie[contentIdx].summary}
           </p>
           {/* 예매하기 버튼 */}
           <button
@@ -121,20 +130,22 @@ const Screen = ({ data }: Data) => {
         </div>
       </div>
       {/* screen idx btns */}
-      <div className="absolute bottom-0 flex h-fit w-full flex-row items-center justify-center pb-5">
-        {filteredMovie.map((movieInfo: movieType, idx: number) => {
-          return (
-            <ScreenIdxBtn
-              key={`${movieInfo.title}_${idx}`}
-              data={movieInfo}
-              idx={contentIdx}
-              btnIdx={idx}
-              setIdx={setContentIdx}
-              setZoom={setZoom}
-            />
-          );
-        })}
-      </div>
+      {width === 0 || width > 764 ? (
+        <div className="absolute bottom-0 flex h-fit w-full flex-row items-center justify-center pb-5">
+          {filteredMovie.map((movieInfo: movieType, idx: number) => {
+            return (
+              <ScreenIdxBtn
+                key={`${movieInfo.title}_${idx}`}
+                data={movieInfo}
+                idx={contentIdx}
+                btnIdx={idx}
+                setIdx={setContentIdx}
+                setZoom={setZoom}
+              />
+            );
+          })}
+        </div>
+      ) : null}
     </div>
   );
 };

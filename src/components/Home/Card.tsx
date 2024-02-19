@@ -7,9 +7,17 @@ interface Data {
   data: movieType;
   hoverCardId: number;
   setHoverCardId: React.Dispatch<React.SetStateAction<number>>;
+  setModalControlState: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalContentId: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Card = ({ data, hoverCardId, setHoverCardId }: Data) => {
+const Card = ({
+  data,
+  hoverCardId,
+  setHoverCardId,
+  setModalControlState,
+  setModalContentId,
+}: Data) => {
   // 날짜 차이 계산 함수
   const diffDate = (date: string) => {
     let currDate = new Date();
@@ -20,12 +28,18 @@ const Card = ({ data, hoverCardId, setHoverCardId }: Data) => {
     return Math.ceil(Math.abs(diff / (1000 * 60 * 60 * 24)));
   };
 
+  const handleClickDetailBtn = () => {
+    setModalContentId(data.id);
+    setModalControlState(true);
+  };
+
   return (
     <div className="relative flex h-fit w-full flex-col items-center justify-center">
       {/* poster */}
       <div className="aspect-[3/4.3] w-full overflow-hidden">
         <Image
           onMouseEnter={() => (!isMobile ? setHoverCardId(data.id) : null)}
+          onClick={isMobile ? handleClickDetailBtn : () => {}}
           alt="movie img"
           src={data.poster_img}
           width={0}
@@ -46,6 +60,7 @@ const Card = ({ data, hoverCardId, setHoverCardId }: Data) => {
           className="absolute top-0 flex aspect-[3/4.3] w-full flex-col items-center justify-center bg-black/50"
         >
           <button
+            onClick={handleClickDetailBtn}
             type="button"
             className="mb-3 flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-fontColor p-3 font-NMSNeo3 text-sm text-bgColor hover:bg-fontColor/80 tablet:text-base"
           >
@@ -81,7 +96,7 @@ const Card = ({ data, hoverCardId, setHoverCardId }: Data) => {
             <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-xs tablet:text-sm">
               예매율
             </div>
-            <div className="table:text-sm ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-xs">
+            <div className="ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-xs tablet:text-sm">
               {data.reservation_rate}%
             </div>
           </div>

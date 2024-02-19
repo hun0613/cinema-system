@@ -11,7 +11,7 @@ const Footer = () => {
         시스템관리자 : 박성훈
       </div>
       <div className="mb-1 flex h-fit w-fit flex-col items-center justify-center">
-        TEL : 010)4601-9075
+        Contact : pshun7614@gmail.com
       </div>
     </div>
   );
