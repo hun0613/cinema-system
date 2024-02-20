@@ -2,19 +2,19 @@
 import { movieType } from "@/data/movieData";
 import useWindowSize from "@/hooks/useWindowSize";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ScreenIdxBtn from "./ScreenIdxBtn";
 
 interface Data {
   data: movieType[];
-  test: any;
 }
 
-const Screen = ({ data, test }: Data) => {
+const Screen = ({ data }: Data) => {
   const [zoom, setZoom] = useState<boolean>(false);
   const [contentIdx, setContentIdx] = useState<number>(0);
 
-  console.log(test);
+  const router = useRouter();
 
   let width: number = useWindowSize();
   let filteredMovie: movieType[] = data.filter((el) => el.classification === 1);
@@ -30,7 +30,8 @@ const Screen = ({ data, test }: Data) => {
   };
 
   const handleClickBook = () => {
-    console.log(filteredMovie[contentIdx]);
+    // console.log(filteredMovie[contentIdx]);
+    router.push(`/book/${filteredMovie[contentIdx].id}`);
   };
 
   useEffect(() => {

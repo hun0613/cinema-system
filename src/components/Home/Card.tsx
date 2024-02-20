@@ -1,5 +1,6 @@
 import { movieType } from "@/data/movieData";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { isMobile } from "react-device-detect";
 import { FaHeart } from "react-icons/fa";
 
@@ -28,9 +29,15 @@ const Card = ({
     return Math.ceil(Math.abs(diff / (1000 * 60 * 60 * 24)));
   };
 
+  const router = useRouter();
+
   const handleClickDetailBtn = () => {
     setModalContentId(data.id);
     setModalControlState(true);
+  };
+
+  const handleClickBook = () => {
+    router.push(`/book/${data.id}`);
   };
 
   return (
@@ -68,6 +75,7 @@ const Card = ({
           </button>
           {data.classification !== 1 ? null : (
             <button
+              onClick={handleClickBook}
               type="button"
               className="flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-pointColor p-3 font-NMSNeo3 text-sm hover:bg-pointColor/80 tablet:text-base"
             >
