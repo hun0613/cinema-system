@@ -5,15 +5,15 @@ export enum MovieClassification {
 }
 
 export interface movieType {
-  id: number;
-  title: string;
-  summary: string;
-  rating: number;
-  reservation_rate: number;
-  release_date: string;
-  classification: MovieClassification;
-  background_img: string;
-  poster_img: string;
+  id: number; // id
+  title: string; // 제목
+  summary: string; // 줄거리
+  rating: number; // 평점
+  reservation_rate: number; // 예매율
+  release_date: string; // 개봉일시
+  classification: MovieClassification; // 상영여부
+  background_img: string; // 배경이미지
+  poster_img: string; // 포스터이미지
 }
 
 export const movieData: movieType[] = [

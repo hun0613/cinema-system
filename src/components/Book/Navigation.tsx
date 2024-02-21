@@ -1,0 +1,121 @@
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+interface Props {
+  navState: number;
+  setNavState: React.Dispatch<React.SetStateAction<number>>;
+  theater: number;
+  date: string;
+  time: string;
+  room: string;
+  headCnt: number;
+  seat: string;
+}
+
+const Navigation = ({
+  navState,
+  setNavState,
+  theater,
+  date,
+  time,
+  room,
+  headCnt,
+  seat,
+}: Props) => {
+  const handleClickNav = (nav: number) => {
+    if (nav === 2 && !theater) {
+      toast.error("먼저 극장을 선택해주세요", {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if (nav === 3 && (!theater || !date || !time || !room)) {
+      toast.error("먼저 날짜/상영관을 선택해주세요", {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else {
+      setNavState(nav);
+    }
+  };
+  return (
+    <div className="flex h-fit w-full flex-col items-center justify-center p-10">
+      {/* nav container */}
+      <div className="flex h-fit w-full flex-row items-center justify-between tablet:w-2/3">
+        {/* 극장 */}
+        <div
+          onClick={() => handleClickNav(1)}
+          className="flex h-fit w-1/3 cursor-pointer flex-col items-center justify-center"
+        >
+          {/* complete btn */}
+          <div
+            className={
+              theater
+                ? `aspect-square w-3 rounded-full bg-pointColor`
+                : `aspect-square w-3 rounded-full bg-borderColor`
+            }
+          ></div>
+          {/* title */}
+          <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-xs text-fontColor mobile:text-sm">
+            극장
+          </div>
+        </div>
+        {/* 날짜/상영관/시간 */}
+        <div
+          onClick={() => handleClickNav(2)}
+          className="flex h-fit w-1/3 cursor-pointer flex-col items-center justify-center"
+        >
+          {/* complete btn */}
+          <div
+            className={
+              date && time && room
+                ? `aspect-square w-3 rounded-full bg-pointColor`
+                : `aspect-square w-3 rounded-full bg-borderColor`
+            }
+          ></div>
+          {/* title */}
+          <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-xs text-fontColor mobile:text-sm">
+            날짜/상영관
+          </div>
+        </div>
+        {/* 인원수/좌석 */}
+        <div
+          onClick={() => handleClickNav(3)}
+          className="flex h-fit w-1/3 cursor-pointer flex-col items-center justify-center"
+        >
+          {/* complete btn */}
+          <div
+            className={
+              headCnt && seat
+                ? `aspect-square w-3 rounded-full bg-pointColor`
+                : `aspect-square w-3 rounded-full bg-borderColor`
+            }
+          ></div>
+          {/* title */}
+          <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-xs text-fontColor mobile:text-sm">
+            인원수/좌석
+          </div>
+        </div>
+      </div>
+      {/* progress bar */}
+      <div className="mt-5 flex h-fit w-full flex-row items-start justify-start tablet:w-2/3">
+        {/* bar position */}
+        <div
+          className={
+            navState === 1
+              ? `flex h-2 w-1/3 translate-x-[0%] flex-col items-center justify-center rounded-lg duration-300 ease-in-out`
+              : navState === 2
+                ? `flex h-2 w-1/3 translate-x-[100%] flex-col items-center justify-center rounded-lg duration-300 ease-in-out`
+                : navState === 3
+                  ? `flex h-2 w-1/3 translate-x-[200%] flex-col items-center justify-center rounded-lg duration-300 ease-in-out`
+                  : `flex h-2 w-1/3 translate-x-[0%] flex-col items-center justify-center rounded-lg duration-300 ease-in-out`
+          }
+        >
+          {/* item */}
+          <div className="h-full w-1/4 rounded-lg bg-pointColor"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Navigation;

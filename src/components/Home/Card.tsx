@@ -5,11 +5,11 @@ import { isMobile } from "react-device-detect";
 import { FaHeart } from "react-icons/fa";
 
 interface Data {
-  data: movieType;
-  hoverCardId: number;
-  setHoverCardId: React.Dispatch<React.SetStateAction<number>>;
-  setModalControlState: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalContentId: React.Dispatch<React.SetStateAction<number>>;
+  data: movieType; // 컨텐츠 데이터
+  hoverCardId: number; // hover가 활성화 되는 카드 컴포넌트
+  setHoverCardId: React.Dispatch<React.SetStateAction<number>>; // hover 활성화 컴포넌트 상태변경함수
+  setModalControlState: React.Dispatch<React.SetStateAction<boolean>>; // 상세보기 모달 활성화 상태변경함수
+  setModalContentId: React.Dispatch<React.SetStateAction<number>>; // 모달에 보여지는 컨텐츠 id 상태변경함수
 }
 
 const Card = ({
@@ -19,6 +19,8 @@ const Card = ({
   setModalControlState,
   setModalContentId,
 }: Data) => {
+  const router = useRouter();
+
   // 날짜 차이 계산 함수
   const diffDate = (date: string) => {
     let currDate = new Date();
@@ -28,8 +30,6 @@ const Card = ({
 
     return Math.ceil(Math.abs(diff / (1000 * 60 * 60 * 24)));
   };
-
-  const router = useRouter();
 
   const handleClickDetailBtn = () => {
     setModalContentId(data.id);

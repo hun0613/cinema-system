@@ -20,7 +20,9 @@ const Screen = ({ data }: Data) => {
   let filteredMovie: movieType[] = data.filter((el) => el.classification === 1);
 
   const changeContent = () => {
+    // 마지막 컨텐츠에서 전환될 때
     if (contentIdx === filteredMovie.length - 1) {
+      // 애니메이션 효과 초기화
       setZoom(false);
       setContentIdx(0);
     } else {
@@ -30,7 +32,6 @@ const Screen = ({ data }: Data) => {
   };
 
   const handleClickBook = () => {
-    // console.log(filteredMovie[contentIdx]);
     router.push(`/book/${filteredMovie[contentIdx].id}`);
   };
 
@@ -39,6 +40,7 @@ const Screen = ({ data }: Data) => {
 
     clearTimeout(0);
 
+    // 캐러셀 컨텐츠 전환 (15초 간격)
     let timer = setTimeout(() => {
       changeContent();
     }, 15000);

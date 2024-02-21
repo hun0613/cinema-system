@@ -1,5 +1,6 @@
 import Header from "@/components/Home/Header";
 import type { Metadata } from "next";
+
 import "./globals.css";
 
 // const inter = Inter({ subsets: ["latin"] });

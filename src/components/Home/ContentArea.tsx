@@ -13,23 +13,25 @@ interface Data {
 }
 
 const ContentArea = ({ data }: Data) => {
-  const [navState, setNavState] = useState<number>(1);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [page, setPage] = useState<number>(1);
-  const [hoverCardId, setHoverCardId] = useState<number>(0);
-  const [modalControlState, setModalControlState] = useState<boolean>(false);
-  const [modalContentId, setModalContentId] = useState<number>(0);
+  const [navState, setNavState] = useState<number>(1); // navigation 상태
+  const [searchValue, setSearchValue] = useState<string>(""); // 검색 키워드
+  const [page, setPage] = useState<number>(1); // 현재 page
+  const [hoverCardId, setHoverCardId] = useState<number>(0); // hover 시 활성화 되는 컨텐츠 id
+  const [modalControlState, setModalControlState] = useState<boolean>(false); // 상세보기 모달 컨트롤 상태
+  const [modalContentId, setModalContentId] = useState<number>(0); // 상세보기 모달에 보여지는 컨텐츠 id
 
-  // console.log(data.filter((movie) => movie.id === modalContentId));
-
+  // window width size
   let width: number = useWindowSize();
 
   let filteredMovie: movieType[] = data.filter((el) => {
+    // navigation이 검색에 가 있을 때
     if (navState === 4) {
+      // 검색 키워드가 포함된 컨텐츠 필터링
       if (el.title.includes(searchValue)) {
         return el;
       }
     } else {
+      // 분류가 선택한 navigation에 해당하는 컨텐츠 필터링
       if (el.classification === navState) {
         return el;
       }
@@ -109,5 +111,3 @@ const ContentArea = ({ data }: Data) => {
 };
 
 export default ContentArea;
-
-// document.body.style= `overflow: hidden`;
