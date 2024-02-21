@@ -20,7 +20,11 @@ const MovieInfoComp = ({ data }: Props) => {
         {/* bg */}
         <Image
           alt="movie img"
-          src={data?.background_img ? data?.background_img : ""}
+          src={
+            data?.background_img
+              ? data?.background_img
+              : "/images/bg_empty.jpeg"
+          }
           width={0}
           height={0}
           priority
@@ -44,7 +48,7 @@ const MovieInfoComp = ({ data }: Props) => {
         <div className="mt-14 flex aspect-[3/4.3] h-3/5 flex-col items-center justify-center drop-shadow-xl ">
           <Image
             alt="movie img"
-            src={data?.poster_img ? data?.poster_img : ""}
+            src={data?.poster_img ? data?.poster_img : "/images/bg_empty.jpeg"}
             width={0}
             height={0}
             sizes="100vw"

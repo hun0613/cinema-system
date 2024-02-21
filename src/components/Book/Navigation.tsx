@@ -23,12 +23,15 @@ const Navigation = ({
   seat,
 }: Props) => {
   const handleClickNav = (nav: number) => {
+    // 날짜/상영관으로 넘어가려할때 극장선택이 안되있는 경우
     if (nav === 2 && !theater) {
       toast.error("먼저 극장을 선택해주세요", {
         autoClose: 2000,
         position: toast.POSITION.TOP_CENTER,
       });
-    } else if (nav === 3 && (!theater || !date || !time || !room)) {
+    }
+    // 인원수/좌석으로 넘어가려할때 그전 정보가 입력되어있지 않은 경우
+    else if (nav === 3 && (!theater || !date || !time || !room)) {
       toast.error("먼저 날짜/상영관을 선택해주세요", {
         autoClose: 2000,
         position: toast.POSITION.TOP_CENTER,
@@ -36,6 +39,7 @@ const Navigation = ({
     } else {
       setNavState(nav);
     }
+    // setNavState(nav);
   };
   return (
     <div className="flex h-fit w-full flex-col items-center justify-center p-10">
@@ -55,10 +59,11 @@ const Navigation = ({
             }
           ></div>
           {/* title */}
-          <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-xs text-fontColor mobile:text-sm">
+          <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-sm text-fontColor mobile:text-base">
             극장
           </div>
         </div>
+
         {/* 날짜/상영관/시간 */}
         <div
           onClick={() => handleClickNav(2)}
@@ -73,10 +78,11 @@ const Navigation = ({
             }
           ></div>
           {/* title */}
-          <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-xs text-fontColor mobile:text-sm">
+          <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-sm text-fontColor mobile:text-base">
             날짜/상영관
           </div>
         </div>
+
         {/* 인원수/좌석 */}
         <div
           onClick={() => handleClickNav(3)}
@@ -91,11 +97,12 @@ const Navigation = ({
             }
           ></div>
           {/* title */}
-          <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-xs text-fontColor mobile:text-sm">
+          <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-sm text-fontColor mobile:text-base">
             인원수/좌석
           </div>
         </div>
       </div>
+
       {/* progress bar */}
       <div className="mt-5 flex h-fit w-full flex-row items-start justify-start tablet:w-2/3">
         {/* bar position */}

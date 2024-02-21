@@ -12,8 +12,6 @@ const Book = ({ params }: { params: { slug: number } }) => {
   const [db, setDb] = useState<movieType | null>(null); // 서버 데이터
   const router = useRouter();
 
-  console.log(db);
-
   useEffect(() => {
     // 최초 랜더링 시 데이터 받아오기
     fetch(`http://localhost:3000/book/api?id=${+params.slug}`)
