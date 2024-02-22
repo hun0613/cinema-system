@@ -109,12 +109,12 @@ const Navigation = ({
         <div
           className={
             navState === 1
-              ? `flex h-2 w-1/3 translate-x-[0%] flex-col items-center justify-center rounded-lg duration-300 ease-in-out`
+              ? `flex h-2 w-1/3 translate-x-[0%] flex-col items-center justify-center rounded-lg duration-[500ms] ease-in-out`
               : navState === 2
-                ? `flex h-2 w-1/3 translate-x-[100%] flex-col items-center justify-center rounded-lg duration-300 ease-in-out`
+                ? `flex h-2 w-1/3 translate-x-[100%] flex-col items-center justify-center rounded-lg duration-[500ms] ease-in-out`
                 : navState === 3
-                  ? `flex h-2 w-1/3 translate-x-[200%] flex-col items-center justify-center rounded-lg duration-300 ease-in-out`
-                  : `flex h-2 w-1/3 translate-x-[0%] flex-col items-center justify-center rounded-lg duration-300 ease-in-out`
+                  ? `flex h-2 w-1/3 translate-x-[200%] flex-col items-center justify-center rounded-lg duration-[500ms] ease-in-out`
+                  : `flex h-2 w-1/3 translate-x-[0%] flex-col items-center justify-center rounded-lg duration-[500ms] ease-in-out`
           }
         >
           {/* item */}

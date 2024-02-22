@@ -2,7 +2,7 @@ import { useState } from "react";
 import Navigation from "./Navigation";
 
 const BodyArea = () => {
-  const [theater, setTeather] = useState<number>(0); // 극장
+  const [theater, setTeather] = useState<number>(1); // 극장
   const [date, setDate] = useState<string>(""); // 날짜
   const [time, setTime] = useState<string>(""); // 시간
   const [room, setRoom] = useState<string>(""); // 상영관
@@ -34,7 +34,10 @@ const BodyArea = () => {
         seat={seat}
       />
       {/* Reservation Area */}
-      <div className="mb-5 flex h-fit min-h-[calc(100vh/2)] w-4/5 flex-col items-center justify-center rounded-xl border border-borderColor"></div>
+      <div className="mb-5 flex h-fit min-h-[calc(100vh/2)] w-4/5 flex-col items-center justify-center rounded-xl border border-borderColor">
+        Reservation Component
+      </div>
+
       {/* btn */}
       <div className="mb-24 mt-5 flex h-fit w-full flex-col items-center justify-center mobile:flex-row">
         {navState !== 1 ? (
@@ -47,6 +50,7 @@ const BodyArea = () => {
           </button>
         ) : null}
 
+        {/* nav가 1일 경우 극장정보가 비어있으면 비활성화 / nav가 2일 경우 극장정보, 날짜, 상영관, 시간이 비어있으면 비활성화 */}
         {navState !== 3 ? (
           <button
             type="button"
@@ -67,6 +71,7 @@ const BodyArea = () => {
           </button>
         ) : null}
 
+        {/* nav가 3일 경우, 모든 정보가 입력되어있지 않으면 비활성화 */}
         {navState === 3 ? (
           <button
             type="button"
