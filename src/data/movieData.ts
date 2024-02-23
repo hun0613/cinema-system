@@ -82,7 +82,7 @@ export const movieData: movieType[] = [
   },
   {
     id: 4,
-    title: "윙카",
+    title: "웡카",
     summary: `세상에서 가장 달콤한 여정
     좋은 일은 모두 꿈에서부터 시작된다!
     
@@ -212,51 +212,6 @@ export const movieData: movieType[] = [
   },
   {
     id: 10,
-    title: "괴물2",
-    summary: `“우리 동네에는 괴물이 산다”
-    싱글맘 사오리(안도 사쿠라)는 아들 미나토(쿠로카와 소야)의 행동에서 이상 기운을 감지한다.
-    용기를 내 찾아간 학교에서 상담을 진행한 날 이후
-    선생님과 학생들의 분위기가 심상치 않게 흐르기 시작하고.
-     
-    “괴물은 누구인가?”
-    한편 사오리는 친구들로부터 따돌림을 당하고 있는 미나토의 친구 요리(히이라기 히나타)의 존재를 알게 되고
-    자신이 아는 아들의 모습과 사람들이 아는 아들의 모습이 다르다는 사실을 어렴풋이 깨닫는데…
-    태풍이 몰아치던 어느 날, 아무도 몰랐던 진실이 드러난다.`,
-    rating: 9.8,
-    reservation_rate: 38,
-    release_date: "2024-02-15",
-    classification: MovieClassification.InProgress,
-    background_img: "/images/bg_괴물.jpeg",
-    poster_img: "/images/pt_괴물.jpeg",
-  },
-  {
-    id: 11,
-    title: "도그데이즈2",
-    summary: `깔끔한 성격의 계획형 싱글남 ‘민상’(유해진).
-    영끌까지 모아 산 건물을 개똥밭으로 만드는 세입자 수의사 ‘진영’(김서형) 때문에 매일 머리가 아프다.
-    오늘도 ‘진영’과 티격태격하던 ‘민상’은 동물병원에서 한 성격하는 할머니를 만나는데,
-    다름 아닌 세계적 건축가 ‘민서’(윤여정)!
-    진행 중인 프로젝트를 위해 ‘민서’의 도움이 절실한 ‘민상’은 ‘민서’에게 잘 보이기 위해
-    ‘진영’과 그녀의 반려견 ‘차장님’을 공략하기 시작한다.
-    
-    갑자기 길에서 쓰러지게 되며 유일한 가족인 반려견 ‘완다’를 잃어 버리고만 ‘민서’.
-    동네에 살고 있는 케이팝 작곡가 ‘선용’(정성화)과 ‘정아’(김윤진) 가족이 완다를 보살피고 있다는 사실을 모르는 ‘민서’는
-    자신을 구해준 MZ 배달 라이더 ‘진우’(탕준상)와 함께 완다를 찾아 나선다.
-    
-    한편 ‘선용’의 후배인 밴드 리더 ‘현’(이현우)은 자리를 비운 여친의 반려견 ‘스팅’을 돌보던 중
-    스팅의 대디를 자청하며 나타난 여친의 전남친 ‘다니엘’(다니엘 헤니)의 등장에 기가 막힐 따름인데…!
-    
-    특별한 단짝 덕분에 엮이게 된 이들의
-    기분 좋은 갓생 스토리가 시작된다!`,
-    rating: 10.5,
-    reservation_rate: 27.4,
-    release_date: "2024-02-15",
-    classification: MovieClassification.InProgress,
-    background_img: "/images/bg_도그데이즈.jpeg",
-    poster_img: "/images/pt_도그데이즈.jpeg",
-  },
-  {
-    id: 12,
     title: "윙카2",
     summary: `세상에서 가장 달콤한 여정
     좋은 일은 모두 꿈에서부터 시작된다!
@@ -276,30 +231,7 @@ export const movieData: movieType[] = [
     poster_img: "/images/pt_윙카.jpeg",
   },
   {
-    id: 13,
-    title: "아기상어 극장판-사이렌 스톤의 비밀2",
-    summary: `대도시 미끈매끈 시티로 이사한 아기상어 ‘올리’!
-
-    최고의 단짝 ‘윌리엄’과 헤어져야 한다는 슬픔도 잠시,
-    뉴욕처럼 반짝이는 화려한 풍경과 멋진 음악에 설렌다.
-    벨루가 아이돌 ‘엔하이픈’, 상어 팝스타 ‘샤키L’,
-    그리고 최고의 스타 불가사리 ‘스타리아나’까지!
-    
-    어느 날 ‘올리’는 ‘스타리아나’의 인기 비결,
-    ‘사이렌 스톤’의 숨겨진 비밀과
-    ‘스타리아나’의 거대한 음모를 알게 되는데…
-    
-    아기상어, 스톤의 저주에 맞서 바다를 지켜라!
-    `,
-    rating: 9.1,
-    reservation_rate: 3.7,
-    release_date: "2024-02-15",
-    classification: MovieClassification.InProgress,
-    background_img: "/images/bg_아기상어.jpeg",
-    poster_img: "/images/pt_아기상어.jpeg",
-  },
-  {
-    id: 14,
+    id: 11,
     title: "데드맨2",
     summary: `목숨값 단돈 500만원! 이름값 1000억?
     이름에 살고, 이름에 죽는다!
@@ -321,7 +253,7 @@ export const movieData: movieType[] = [
     poster_img: "/images/pt_데드맨.jpeg",
   },
   {
-    id: 15,
+    id: 12,
     title: "외계+인 2부3",
     summary: `반드시 돌아가야 한다. 모두를 지키기 위해
 
@@ -348,26 +280,7 @@ export const movieData: movieType[] = [
     poster_img: "/images/pt_외계인.jpeg",
   },
   {
-    id: 16,
-    title: "괴물3",
-    summary: `“우리 동네에는 괴물이 산다”
-    싱글맘 사오리(안도 사쿠라)는 아들 미나토(쿠로카와 소야)의 행동에서 이상 기운을 감지한다.
-    용기를 내 찾아간 학교에서 상담을 진행한 날 이후
-    선생님과 학생들의 분위기가 심상치 않게 흐르기 시작하고.
-     
-    “괴물은 누구인가?”
-    한편 사오리는 친구들로부터 따돌림을 당하고 있는 미나토의 친구 요리(히이라기 히나타)의 존재를 알게 되고
-    자신이 아는 아들의 모습과 사람들이 아는 아들의 모습이 다르다는 사실을 어렴풋이 깨닫는데…
-    태풍이 몰아치던 어느 날, 아무도 몰랐던 진실이 드러난다.`,
-    rating: 9.8,
-    reservation_rate: 38,
-    release_date: "2024-02-15",
-    classification: MovieClassification.InProgress,
-    background_img: "/images/bg_괴물.jpeg",
-    poster_img: "/images/pt_괴물.jpeg",
-  },
-  {
-    id: 17,
+    id: 13,
     title: "도그데이즈3",
     summary: `깔끔한 성격의 계획형 싱글남 ‘민상’(유해진).
     영끌까지 모아 산 건물을 개똥밭으로 만드는 세입자 수의사 ‘진영’(김서형) 때문에 매일 머리가 아프다.
