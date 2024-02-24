@@ -13,6 +13,7 @@
     "@prettier/plugin-php": "^0.22.2",
     "@prettier/plugin-pug": "^3.0.0",
     "@shopify/prettier-plugin-liquid": "^1.4.1",
+    "mysql2": "^3.9.1",
     "next": "14.1.0",
     "prettier-plugin-astro": "^0.13.0",
     "prettier-plugin-css-order": "^2.0.1",
