@@ -20,18 +20,23 @@ const conn: connectInfo = {
 };
 
 /**
- * 선택 영화 정보 API
+ * 좌석정보 API
  */
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const id: number = Number(searchParams.get("id"));
+  const theater_id: number = Number(searchParams.get("theater_id"));
+  const movie_id: number = Number(searchParams.get("movie_id"));
+  const date: string | null = searchParams.get("date");
+  const time: string | null = searchParams.get("time");
+
+  console.log(theater_id, movie_id, date, time);
 
   try {
     // rds 연결
     const db: mysql.Connection = await mysql.createConnection(conn);
 
-    // movie data select
-    let sql: string = `SELECT * FROM movie WHERE id = ${id}`;
+    // seat data select
+    let sql: string = `SELECT * FROM movieTime WHERE theater_id = ${theater_id} AND movie_id = ${movie_id} AND date = ${date} AND time = "${time}"`;
 
     // db 데이터 가져오기
     const [result] = await db.execute(sql);

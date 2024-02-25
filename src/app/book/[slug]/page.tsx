@@ -2,7 +2,7 @@
 import BodyArea from "@/components/Book/BodyArea";
 import MovieInfoComp from "@/components/Book/MovieInfoComp";
 import Footer from "@/components/Home/Footer";
-import { movieType } from "@/data/movieData";
+import { movieType } from "@/data/dataType";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
@@ -16,7 +16,7 @@ const Book = ({ params }: { params: { slug: number } }) => {
     // 최초 랜더링 시 데이터 받아오기
     fetch(`http://localhost:3000/book/api?id=${+params.slug}`)
       .then((res) => res.json())
-      .then((res2) => setDb(res2));
+      .then((res2) => setDb(res2[0]));
 
     // 뒤로가기 버튼 클릭 시 홈으로 라우팅 (새로고침 후 서버사이드랜더링 에러 발생에 대한 작업)
     if (typeof window !== "undefined") {

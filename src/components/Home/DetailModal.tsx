@@ -1,4 +1,4 @@
-import { movieType } from "@/data/movieData";
+import { movieType } from "@/data/dataType";
 import Link from "next/link";
 
 interface Props {

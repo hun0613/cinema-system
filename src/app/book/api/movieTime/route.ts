@@ -20,18 +20,22 @@ const conn: connectInfo = {
 };
 
 /**
- * 선택 영화 정보 API
+ * 상영시간표 정보 API
  */
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const id: number = Number(searchParams.get("id"));
+  const theater_id: number = Number(searchParams.get("theater_id"));
+  const movie_id: number = Number(searchParams.get("movie_id"));
+  const date: string | null = searchParams.get("date");
+
+  //   console.log(theater_id, movie_id, date);
 
   try {
     // rds 연결
     const db: mysql.Connection = await mysql.createConnection(conn);
 
-    // movie data select
-    let sql: string = `SELECT * FROM movie WHERE id = ${id}`;
+    // movieTime data select
+    let sql: string = `SELECT A.theater_id, A.room_id, B.room_nm, A.date, A.time, A.seat_state FROM movieTime A LEFT OUTER JOIN room B ON A.theater_id = B.theater_id AND A.room_id = B.room_id WHERE A.theater_id = ${theater_id} AND A.movie_id = ${movie_id} AND A.date = ${date}`;
 
     // db 데이터 가져오기
     const [result] = await db.execute(sql);

@@ -1,5 +1,5 @@
 "use client";
-import { movieType } from "@/data/movieData";
+import { movieType } from "@/data/dataType";
 import useWindowSize from "@/hooks/useWindowSize";
 import { useState } from "react";
 import Modal from "../Reuse/Modal";

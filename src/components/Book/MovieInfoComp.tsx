@@ -1,4 +1,4 @@
-import { movieType } from "@/data/movieData";
+import { movieType } from "@/data/dataType";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";

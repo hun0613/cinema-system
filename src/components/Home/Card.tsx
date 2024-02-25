@@ -1,4 +1,4 @@
-import { movieType } from "@/data/movieData";
+import { movieType } from "@/data/dataType";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { isMobile } from "react-device-detect";
