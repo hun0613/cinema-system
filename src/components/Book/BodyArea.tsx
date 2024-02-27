@@ -1,8 +1,11 @@
 import { useState } from "react";
+import DateComp from "./DateComp";
 import Navigation from "./Navigation";
+import SeatComp from "./SeatComp";
+import TheaterComp from "./TheaterComp";
 
 const BodyArea = () => {
-  const [theater, setTeather] = useState<number>(1); // 극장
+  const [theater, setTeather] = useState<number>(0); // 극장
   const [date, setDate] = useState<string>(""); // 날짜
   const [time, setTime] = useState<string>(""); // 시간
   const [room, setRoom] = useState<string>(""); // 상영관
@@ -34,8 +37,14 @@ const BodyArea = () => {
         seat={seat}
       />
       {/* Reservation Area */}
-      <div className="mb-5 flex h-fit min-h-[calc(100vh/2)] w-4/5 flex-col items-center justify-center rounded-xl border border-borderColor">
-        Reservation Component
+      <div className="mb-5 flex h-fit w-[90%] flex-col items-center justify-center rounded-xl border border-borderColor tablet:h-[calc(100vh/2)]">
+        {navState === 1 ? (
+          <TheaterComp theater={theater} setTheater={setTeather} />
+        ) : navState === 2 ? (
+          <DateComp />
+        ) : navState === 3 ? (
+          <SeatComp />
+        ) : null}
       </div>
 
       {/* btn */}
