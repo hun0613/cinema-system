@@ -43,7 +43,7 @@ const Screen = ({ data }: Data) => {
     // 캐러셀 컨텐츠 전환 (15초 간격)
     let timer = setTimeout(() => {
       changeContent();
-    }, 15000);
+    }, 10000);
 
     return () => {
       clearTimeout(timer);
