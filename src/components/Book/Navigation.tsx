@@ -1,5 +1,5 @@
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 interface Props {
   navState: number;
   setNavState: React.Dispatch<React.SetStateAction<number>>;
@@ -23,22 +23,22 @@ const Navigation = ({
 }: Props) => {
   const handleClickNav = (nav: number) => {
     // // 날짜/상영관으로 넘어가려할때 극장선택이 안되있는 경우
-    // if (nav === 2 && !theater) {
-    //   toast.error("먼저 극장을 선택해주세요", {
-    //     autoClose: 2000,
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // }
-    // // 인원수/좌석으로 넘어가려할때 그전 정보가 입력되어있지 않은 경우
-    // else if (nav === 3 && (!theater || !date || !time || !room)) {
-    //   toast.error("먼저 날짜/상영관을 선택해주세요", {
-    //     autoClose: 2000,
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // } else {
-    //   setNavState(nav);
-    // }
-    setNavState(nav);
+    if (nav === 2 && !theater) {
+      toast.error("먼저 극장을 선택해주세요", {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+    // 인원수/좌석으로 넘어가려할때 그전 정보가 입력되어있지 않은 경우
+    else if (nav === 3 && (!theater || !date || !time || !room)) {
+      toast.error("먼저 날짜/상영관을 선택해주세요", {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else {
+      setNavState(nav);
+    }
+    // setNavState(nav);
   };
   return (
     <div className="flex h-fit w-full flex-col items-center justify-center p-10">

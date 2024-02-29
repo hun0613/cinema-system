@@ -4,9 +4,15 @@ import Navigation from "./Navigation";
 import SeatComp from "./SeatComp";
 import TheaterComp from "./TheaterComp";
 
-const BodyArea = () => {
+interface Props {
+  movieId: number;
+}
+
+const BodyArea = ({ movieId }: Props) => {
   const [theater, setTeather] = useState<number>(0); // 극장
-  const [date, setDate] = useState<string>(""); // 날짜
+  const [date, setDate] = useState<string>(
+    `${new Date().getFullYear()}${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1}${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`,
+  ); // 날짜
   const [time, setTime] = useState<string>(""); // 시간
   const [room, setRoom] = useState<string>(""); // 상영관
   const [headCnt, setHeadCnt] = useState<number>(0); // 인원수
@@ -41,7 +47,16 @@ const BodyArea = () => {
         {navState === 1 ? (
           <TheaterComp theater={theater} setTheater={setTeather} />
         ) : navState === 2 ? (
-          <DateComp />
+          <DateComp
+            date={date}
+            setDate={setDate}
+            time={time}
+            setTime={setTime}
+            room={room}
+            setRoom={setRoom}
+            theater={theater}
+            movieId={movieId}
+          />
         ) : navState === 3 ? (
           <SeatComp />
         ) : null}

@@ -28,6 +28,7 @@ const config: Config = {
         fontColor: "#DEDEDE",
         pointColor: "#FF0000",
         screenColor: "#161616",
+        titleColor: "#2D2D2D",
       },
       screens: {
         desktop: "1100px",

@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 interface Props {
   id: number; // 영화관 ID
   name: string; // 영화관 이름
@@ -21,6 +23,9 @@ const TheaterItem = ({
   theater,
   setTheater,
 }: Props) => {
+  // scroll focus 설정용 Ref
+  const theaterRef = useRef<HTMLDivElement>(null);
+
   const handleClickItem = () => {
     // 선택 영화관 변경
     setTheater(id);
@@ -31,12 +36,24 @@ const TheaterItem = ({
     // 경도변경
     setLongitude(Number(longitude));
   };
+
+  useEffect(() => {
+    // 첫 랜더링 시 선택한 극장을 스크롤 중심으로 이동
+    if (theater === id) {
+      theaterRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, []);
+
   return (
     <div
+      ref={theaterRef}
       onClick={handleClickItem}
       className={
         theater === id
-          ? `mb-0 mr-3 flex h-fit w-fit cursor-pointer flex-col items-start justify-center whitespace-nowrap rounded-xl border border-pointColor p-5 tablet:mb-5 tablet:mr-0 tablet:w-full tablet:whitespace-normal`
+          ? `mb-0 mr-3 flex h-fit w-fit cursor-pointer flex-col items-start justify-center whitespace-nowrap rounded-xl bg-pointColor/70 p-5 tablet:mb-5 tablet:mr-0 tablet:w-full tablet:whitespace-normal`
           : `mb-0 mr-3 flex h-fit w-fit cursor-pointer flex-col items-start justify-center whitespace-nowrap rounded-xl border border-borderColor p-5 hover:bg-borderColor/30 tablet:mb-5 tablet:mr-0 tablet:w-full tablet:whitespace-normal`
       }
     >

@@ -111,7 +111,7 @@ const TheaterComp = ({ theater, setTheater }: Props) => {
   }, [latitude]);
 
   return (
-    <div className="scroll_setting flex h-fit w-full flex-col items-center justify-center rounded-xl p-3 tablet:h-full tablet:flex-row tablet:p-5">
+    <div className="flex h-fit w-full flex-col items-center justify-center rounded-xl p-3 tablet:h-full tablet:flex-row tablet:p-5">
       {/* 영화관 리스트 */}
       <div className="mb-3 mr-0 flex h-fit w-full flex-row items-center justify-start overflow-x-auto overflow-y-auto tablet:mb-0 tablet:mr-5 tablet:h-full tablet:w-[30%] tablet:flex-col tablet:overflow-y-auto tablet:py-0">
         {/* 데이터 fetching... */}
