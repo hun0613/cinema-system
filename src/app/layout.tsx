@@ -1,6 +1,5 @@
 import Header from "@/components/Home/Header";
 import type { Metadata } from "next";
-
 import "./globals.css";
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -27,6 +26,12 @@ export default function RootLayout({
     <>
       {/* suppressHydrationWarning : "app-index.js:35 Warning: Extra attributes from the server: data-redeviation-bs-uid" warning 해결 */}
       <html lang="en" suppressHydrationWarning>
+        {/* <Head>
+          <script
+            type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=db428f3818085f900740942dadf4e15b"
+          ></script>
+        </Head> */}
         <body>
           {/* 헤더 -> html 태그 바로 자식 영역에 다른 body 외의 다른 태그가 들어가면 hydration 에러가 발생 ! 반드시 body 내부에 작성 */}
           <Header />

@@ -71,3 +71,12 @@ body {
 .content_animation {
   transition-property: opacity, transform;
 }
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: #bdbdbd5b;
+}
