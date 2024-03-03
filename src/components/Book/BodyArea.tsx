@@ -14,10 +14,14 @@ const BodyArea = ({ movieId }: Props) => {
     `${new Date().getFullYear()}${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1}${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`,
   ); // 날짜
   const [time, setTime] = useState<string>(""); // 시간
-  const [room, setRoom] = useState<string>(""); // 상영관
+  const [room, setRoom] = useState<string>(""); // 상영관 이름
+  const [roomId, setRoomId] = useState<number>(0); // 상영관 ID
   const [headCnt, setHeadCnt] = useState<number>(0); // 인원수
   const [seat, setSeat] = useState<string>(""); // 좌석
+  const [seatState, setSeatState] = useState<string[]>([""]); // 선택한 상영관의 좌석 현황
   const [navState, setNavState] = useState<number>(1); // navigation 상태
+
+  console.log({ theater, date, time, room, roomId, headCnt, seat, seatState });
 
   const handleClickNextBtn = () => {
     setNavState(navState + 1);
@@ -54,8 +58,12 @@ const BodyArea = ({ movieId }: Props) => {
             setTime={setTime}
             room={room}
             setRoom={setRoom}
+            roomId={roomId}
+            setRoomId={setRoomId}
             theater={theater}
             movieId={movieId}
+            seatState={seatState}
+            setSeatState={setSeatState}
           />
         ) : navState === 3 ? (
           <SeatComp />
