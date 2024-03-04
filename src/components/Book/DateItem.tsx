@@ -7,6 +7,10 @@ interface Props {
   idx: number; // 순번
   currDate: string; // 선택날짜
   setCurrDate: React.Dispatch<React.SetStateAction<string>>; // 선택날짜 상태변경함수
+  setRoom: React.Dispatch<React.SetStateAction<string>>; // 상영관 상태변경함수
+  setRoomId: React.Dispatch<React.SetStateAction<number>>; // 상영관 ID 상태변경함수
+  setTime: React.Dispatch<React.SetStateAction<string>>; // 상영시간 상태변경함수
+  setSeatState: React.Dispatch<React.SetStateAction<string[]>>; // 좌석현황 상태변경함수
 }
 
 const DateItem = ({
@@ -16,6 +20,10 @@ const DateItem = ({
   idx,
   currDate,
   setCurrDate,
+  setRoom,
+  setRoomId,
+  setTime,
+  setSeatState,
 }: Props) => {
   // scroll foucs 설정용 Ref
   const dateRef = useRef<HTMLDivElement>(null);
@@ -23,6 +31,11 @@ const DateItem = ({
   const handleClickDate = () => {
     // 선택 날짜 변경
     setCurrDate(date);
+    // 상영관, 상영시간, 좌석현황 초기화
+    setRoom("");
+    setRoomId(0);
+    setTime("");
+    setSeatState([""]);
   };
 
   useEffect(() => {
@@ -59,9 +72,9 @@ const DateItem = ({
           currDate === date
             ? `flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg bg-pointColor/70 p-5 text-fontColor mobile:p-3`
             : holiday_yn === "Y"
-              ? `flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg p-5 text-pointColor hover:bg-black/60 mobile:p-3`
+              ? `flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg p-5 text-pointColor/70 hover:bg-black/60 mobile:p-3`
               : week === "토"
-                ? `flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg p-5 text-[#234EE9] hover:bg-black/60 mobile:p-3`
+                ? `flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg p-5 text-[#415ab4] hover:bg-black/60 mobile:p-3`
                 : `flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg p-5 text-fontColor hover:bg-black/60 mobile:p-3`
         }
       >

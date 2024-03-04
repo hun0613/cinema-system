@@ -19,6 +19,7 @@ export interface DateType {
 export interface MovieTimeType {
   theater_id: number; // 극장ID
   room_id: number; // 상영관ID
+  room_nm: string; // 상영관이름
   movie_id: number; // 영화ID
   date: string; // 날짜 (YYYYMMDD)
   time: string; // 상영시간 (HH:MM)
