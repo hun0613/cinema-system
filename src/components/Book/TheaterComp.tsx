@@ -2,8 +2,12 @@ import { TheaterType } from "@/data/dataType";
 import { useEffect, useState } from "react";
 import TheaterItem from "./TheaterItem";
 interface Props {
-  theater: number; // 영화관 ID
-  setTheater: React.Dispatch<React.SetStateAction<number>>; // 영화관 ID 변경함수;
+  theaterId: number; // 영화관 ID
+  setTheaterId: React.Dispatch<React.SetStateAction<number>>; // 영화관 ID 변경함수;
+  theater: string; // 영화관 이름
+  setTheater: React.Dispatch<React.SetStateAction<string>>; // 영화관 이름 변경함수;
+  navState: number; // nav 상태
+  resetState: (nav: number) => void; // 상태 초기화 함수
 }
 
 // script kakao 객체 사용을 위한 window객체 선언
@@ -13,7 +17,14 @@ declare global {
   }
 }
 
-const TheaterComp = ({ theater, setTheater }: Props) => {
+const TheaterComp = ({
+  theaterId,
+  setTheaterId,
+  theater,
+  setTheater,
+  navState,
+  resetState,
+}: Props) => {
   // 영화관 서버 데이터
   const [theaterDb, setTheaterDb] = useState<TheaterType[] | null>(null);
   // 선택한 영화관 위도
@@ -30,16 +41,16 @@ const TheaterComp = ({ theater, setTheater }: Props) => {
           setTheaterDb(res2);
           // 영화관이 선택된 상태에서 랜더링 될 때 선택된 데이터로 위도, 경도 정의
           if (
-            theater !== 0 &&
+            theaterId !== 0 &&
             latitude === 37.402038 &&
             longitude === 127.108667
           ) {
             setLatitude(
-              res2.filter((el: TheaterType) => el.theater_id === theater)[0]
+              res2.filter((el: TheaterType) => el.theater_id === theaterId)[0]
                 .latitude,
             );
             setLongitude(
-              res2.filter((el: TheaterType) => el.theater_id === theater)[0]
+              res2.filter((el: TheaterType) => el.theater_id === theaterId)[0]
                 .longitude,
             );
           }
@@ -138,8 +149,12 @@ const TheaterComp = ({ theater, setTheater }: Props) => {
               setLatitude={setLatitude}
               longitude={theaterData.longitude}
               setLongitude={setLongitude}
+              theaterId={theaterId}
+              setTheaterId={setTheaterId}
               theater={theater}
               setTheater={setTheater}
+              navState={navState}
+              resetState={resetState}
             />
           );
         })}

@@ -6,10 +6,12 @@ import TheaterComp from "./TheaterComp";
 
 interface Props {
   movieId: number;
+  movieNm: string | undefined;
 }
 
-const BodyArea = ({ movieId }: Props) => {
-  const [theater, setTeather] = useState<number>(0); // 극장
+const BodyArea = ({ movieId, movieNm }: Props) => {
+  const [theater, setTeather] = useState<string>(""); // 극장 이름
+  const [theaterId, setTheaterId] = useState<number>(0); // 극장 ID
   const [date, setDate] = useState<string>(
     `${new Date().getFullYear()}${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1}${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`,
   ); // 날짜
@@ -17,11 +19,39 @@ const BodyArea = ({ movieId }: Props) => {
   const [room, setRoom] = useState<string>(""); // 상영관 이름
   const [roomId, setRoomId] = useState<number>(0); // 상영관 ID
   const [headCnt, setHeadCnt] = useState<number>(0); // 인원수
-  const [seat, setSeat] = useState<string>(""); // 좌석
+  const [seat, setSeat] = useState<string[]>(["A01", "A05"]); // 좌석
   const [seatState, setSeatState] = useState<string[]>([""]); // 선택한 상영관의 좌석 현황
   const [navState, setNavState] = useState<number>(1); // navigation 상태
 
-  console.log({ theater, date, time, room, roomId, headCnt, seat, seatState });
+  console.log({
+    movieNm,
+    theater,
+    theaterId,
+    date,
+    time,
+    room,
+    roomId,
+    headCnt,
+    seat,
+    seatState,
+  });
+
+  const resetState = (nav: number) => {
+    if (nav === 1) {
+      setDate(
+        `${new Date().getFullYear()}${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1}${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`,
+      );
+      setRoom("");
+      setRoomId(0);
+      setTime("");
+      setHeadCnt(0);
+      setSeat([]);
+      setSeatState([""]);
+    } else if (nav === 2) {
+      setHeadCnt(0);
+      setSeat([]);
+    }
+  };
 
   const handleClickNextBtn = () => {
     setNavState(navState + 1);
@@ -39,7 +69,7 @@ const BodyArea = ({ movieId }: Props) => {
       <Navigation
         navState={navState}
         setNavState={setNavState}
-        theater={theater}
+        theaterId={theaterId}
         date={date}
         time={time}
         room={room}
@@ -47,9 +77,16 @@ const BodyArea = ({ movieId }: Props) => {
         seat={seat}
       />
       {/* Reservation Area */}
-      <div className="mb-5 flex h-fit w-[90%] flex-col items-center justify-center rounded-xl border border-borderColor tablet:h-[calc(100vh/2)]">
+      <div className="mb-5 flex h-fit w-[90%] flex-col items-center justify-center rounded-xl border border-borderColor tablet:h-[calc(100vh/1.8)]">
         {navState === 1 ? (
-          <TheaterComp theater={theater} setTheater={setTeather} />
+          <TheaterComp
+            theaterId={theaterId}
+            setTheaterId={setTheaterId}
+            theater={theater}
+            setTheater={setTeather}
+            navState={navState}
+            resetState={resetState}
+          />
         ) : navState === 2 ? (
           <DateComp
             date={date}
@@ -60,13 +97,22 @@ const BodyArea = ({ movieId }: Props) => {
             setRoom={setRoom}
             roomId={roomId}
             setRoomId={setRoomId}
-            theater={theater}
+            theaterId={theaterId}
             movieId={movieId}
             seatState={seatState}
             setSeatState={setSeatState}
+            navState={navState}
+            resetState={resetState}
           />
         ) : navState === 3 ? (
-          <SeatComp />
+          <SeatComp
+            headCnt={headCnt}
+            setHeadCnt={setHeadCnt}
+            seat={seat}
+            setSeat={setSeat}
+            seatState={seatState}
+            setSeatState={setSeatState}
+          />
         ) : null}
       </div>
 
@@ -87,14 +133,14 @@ const BodyArea = ({ movieId }: Props) => {
           <button
             type="button"
             onClick={
-              (navState === 1 && theater) ||
-              (navState === 2 && theater && date && room && time)
+              (navState === 1 && theaterId) ||
+              (navState === 2 && theaterId && date && room && time)
                 ? handleClickNextBtn
                 : () => {}
             }
             className={
-              (navState === 1 && theater) ||
-              (navState === 2 && theater && date && room && time)
+              (navState === 1 && theaterId) ||
+              (navState === 2 && theaterId && date && room && time)
                 ? `mx-0 mb-3 flex h-fit w-2/5 flex-col items-center justify-center rounded-xl bg-pointColor/80 p-3 font-NMSNeo3 text-sm text-fontColor hover:bg-pointColor/60 mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5`
                 : `mx-0 mb-3 flex h-fit w-2/5 cursor-default flex-col items-center justify-center rounded-xl bg-borderColor/80 p-3 font-NMSNeo3 text-sm text-fontColor/50 mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5`
             }
@@ -108,12 +154,12 @@ const BodyArea = ({ movieId }: Props) => {
           <button
             type="button"
             onClick={
-              theater && date && room && time && headCnt && seat
+              theaterId && date && room && time && headCnt && seat
                 ? handleClickBookBtn
                 : () => {}
             }
             className={
-              theater && date && room && time && headCnt && seat
+              theaterId && date && room && time && headCnt && seat
                 ? `mx-0 mb-3 flex h-fit w-2/5 flex-col items-center justify-center rounded-xl bg-pointColor/80 p-3 font-NMSNeo3 text-sm text-fontColor hover:bg-pointColor/60 mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5`
                 : `mx-0 mb-3 flex h-fit w-2/5 cursor-default flex-col items-center justify-center rounded-xl bg-borderColor/80 p-3 font-NMSNeo3 text-sm text-fontColor/50 mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5`
             }

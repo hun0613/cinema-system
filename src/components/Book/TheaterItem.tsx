@@ -8,8 +8,12 @@ interface Props {
   setLatitude: React.Dispatch<React.SetStateAction<number>>; // 위도상태변경함수
   longitude: number; // 경도
   setLongitude: React.Dispatch<React.SetStateAction<number>>; // 경도상태변경함수
-  theater: number; // 선택된 영화관 ID
-  setTheater: React.Dispatch<React.SetStateAction<number>>; // 선택된 영화관 ID 변경함수;
+  theaterId: number; // 선택된 영화관 ID
+  setTheaterId: React.Dispatch<React.SetStateAction<number>>; // 선택된 영화관 ID 변경함수;
+  theater: string; // 선택된 영화관 이름
+  setTheater: React.Dispatch<React.SetStateAction<string>>; // 선택된 영화관 상태변경함수
+  navState: number; // nav 상태
+  resetState: (nav: number) => void; // 상태 초기화 함수
 }
 
 const TheaterItem = ({
@@ -20,15 +24,23 @@ const TheaterItem = ({
   setLatitude,
   longitude,
   setLongitude,
+  theaterId,
+  setTheaterId,
   theater,
   setTheater,
+  navState,
+  resetState,
 }: Props) => {
   // scroll focus 설정용 Ref
   const theaterRef = useRef<HTMLDivElement>(null);
 
   const handleClickItem = () => {
     // 선택 영화관 변경
-    setTheater(id);
+    setTheaterId(id);
+    setTheater(name);
+
+    // 다음 스텝 상태 초기화
+    resetState(navState);
 
     // 위도변경
     setLatitude(Number(latitude));
@@ -39,7 +51,7 @@ const TheaterItem = ({
 
   useEffect(() => {
     // 첫 랜더링 시 선택한 극장을 스크롤 중심으로 이동
-    if (theater === id) {
+    if (theaterId === id) {
       theaterRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "center",
@@ -50,9 +62,9 @@ const TheaterItem = ({
   return (
     <div
       ref={theaterRef}
-      onClick={handleClickItem}
+      onClick={theaterId === id ? () => {} : handleClickItem}
       className={
-        theater === id
+        theaterId === id
           ? `mb-0 mr-3 flex h-fit w-fit cursor-pointer flex-col items-start justify-center whitespace-nowrap rounded-xl bg-pointColor/70 p-5 tablet:mb-5 tablet:mr-0 tablet:w-full tablet:whitespace-normal`
           : `mb-0 mr-3 flex h-fit w-fit cursor-pointer flex-col items-start justify-center whitespace-nowrap rounded-xl border border-borderColor p-5 hover:bg-borderColor/30 tablet:mb-5 tablet:mr-0 tablet:w-full tablet:whitespace-normal`
       }

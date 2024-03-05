@@ -40,7 +40,7 @@ const Book = ({ params }: { params: { slug: number } }) => {
         {/* body frame */}
         <div className="bg-bgColors flex h-fit w-full max-w-[1100px] flex-col items-center justify-start border-b border-borderColor ">
           {/* content Area */}
-          <BodyArea movieId={+params.slug} />
+          <BodyArea movieId={+params.slug} movieNm={db?.title} />
         </div>
 
         {/* footer */}

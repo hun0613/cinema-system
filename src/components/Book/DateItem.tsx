@@ -11,6 +11,8 @@ interface Props {
   setRoomId: React.Dispatch<React.SetStateAction<number>>; // 상영관 ID 상태변경함수
   setTime: React.Dispatch<React.SetStateAction<string>>; // 상영시간 상태변경함수
   setSeatState: React.Dispatch<React.SetStateAction<string[]>>; // 좌석현황 상태변경함수
+  navState: number; // nav 상태
+  resetState: (nav: number) => void; // 상태 초기화 함수
 }
 
 const DateItem = ({
@@ -24,6 +26,8 @@ const DateItem = ({
   setRoomId,
   setTime,
   setSeatState,
+  navState,
+  resetState,
 }: Props) => {
   // scroll foucs 설정용 Ref
   const dateRef = useRef<HTMLDivElement>(null);
@@ -36,6 +40,7 @@ const DateItem = ({
     setRoomId(0);
     setTime("");
     setSeatState([""]);
+    resetState(navState);
   };
 
   useEffect(() => {

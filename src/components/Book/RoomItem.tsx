@@ -14,6 +14,8 @@ interface Props {
   seatState: string[]; // 선택 상영관의 예약 좌석 현황
   setSeatState: React.Dispatch<React.SetStateAction<string[]>>;
   movieTimeDb: MovieTimeType[] | null; // 상영시간표 데이터
+  navState: number; // nav 상태
+  resetState: (nav: number) => void; // 상태 초기화 함수
 }
 
 const RoomItem = ({
@@ -30,6 +32,8 @@ const RoomItem = ({
   seatState,
   setSeatState,
   movieTimeDb,
+  navState,
+  resetState,
 }: Props) => {
   console.log(timeList);
 
@@ -55,6 +59,8 @@ const RoomItem = ({
         )[0].seat_state,
       );
     }
+
+    resetState(navState);
   };
 
   return (
@@ -73,8 +79,8 @@ const RoomItem = ({
               onClick={() => handleClickTime(timeEl)}
               className={
                 currRoom === room && timeEl === time
-                  ? `mr-3 flex h-fit w-fit flex-col items-center justify-center rounded-lg bg-pointColor/70 px-5 py-2 font-NMSNeo3 text-sm text-fontColor`
-                  : `mr-3 flex h-fit w-fit cursor-pointer flex-col items-center justify-center rounded-lg bg-titleColor px-5 py-2 font-NMSNeo3 text-sm text-fontColor hover:bg-titleColor/70`
+                  ? `mr-3 flex h-fit w-fit flex-col items-center justify-center rounded-lg bg-pointColor/70 px-5 py-2 font-NMSNeo3 text-xs text-fontColor mobile:text-sm`
+                  : `mr-3 flex h-fit w-fit cursor-pointer flex-col items-center justify-center rounded-lg bg-titleColor px-5 py-2 font-NMSNeo3 text-xs text-fontColor hover:bg-titleColor/70 mobile:text-sm`
               }
             >
               {timeEl}

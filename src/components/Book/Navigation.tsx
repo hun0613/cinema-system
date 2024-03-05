@@ -3,18 +3,18 @@ import "react-toastify/dist/ReactToastify.css";
 interface Props {
   navState: number;
   setNavState: React.Dispatch<React.SetStateAction<number>>;
-  theater: number;
+  theaterId: number;
   date: string;
   time: string;
   room: string;
   headCnt: number;
-  seat: string;
+  seat: string[];
 }
 
 const Navigation = ({
   navState,
   setNavState,
-  theater,
+  theaterId,
   date,
   time,
   room,
@@ -23,14 +23,14 @@ const Navigation = ({
 }: Props) => {
   const handleClickNav = (nav: number) => {
     // // 날짜/상영관으로 넘어가려할때 극장선택이 안되있는 경우
-    if (nav === 2 && !theater) {
+    if (nav === 2 && !theaterId) {
       toast.error("먼저 극장을 선택해주세요", {
         autoClose: 2000,
         position: toast.POSITION.TOP_CENTER,
       });
     }
     // 인원수/좌석으로 넘어가려할때 그전 정보가 입력되어있지 않은 경우
-    else if (nav === 3 && (!theater || !date || !time || !room)) {
+    else if (nav === 3 && (!theaterId || !date || !time || !room)) {
       toast.error("먼저 날짜/상영관을 선택해주세요", {
         autoClose: 2000,
         position: toast.POSITION.TOP_CENTER,
@@ -52,7 +52,7 @@ const Navigation = ({
           {/* complete btn */}
           <div
             className={
-              theater
+              theaterId
                 ? `aspect-square w-3 rounded-full bg-pointColor`
                 : `aspect-square w-3 rounded-full bg-borderColor`
             }
@@ -90,7 +90,7 @@ const Navigation = ({
           {/* complete btn */}
           <div
             className={
-              headCnt && seat
+              headCnt && seat.length > 0
                 ? `aspect-square w-3 rounded-full bg-pointColor`
                 : `aspect-square w-3 rounded-full bg-borderColor`
             }
