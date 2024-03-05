@@ -90,7 +90,7 @@ const Navigation = ({
           {/* complete btn */}
           <div
             className={
-              headCnt && seat.length > 0
+              headCnt && headCnt - seat.length === 0
                 ? `aspect-square w-3 rounded-full bg-pointColor`
                 : `aspect-square w-3 rounded-full bg-borderColor`
             }

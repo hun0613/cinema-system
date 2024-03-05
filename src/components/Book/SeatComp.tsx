@@ -6,21 +6,22 @@ interface Props {
   seat: string[]; // 선택 좌석
   setSeat: React.Dispatch<React.SetStateAction<string[]>>;
   seatState: string[]; // 좌석 현황
-  setSeatState: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const SeatComp = ({
-  headCnt,
-  setHeadCnt,
-  seat,
-  setSeat,
-  seatState,
-  setSeatState,
-}: Props) => {
+const SeatComp = ({ headCnt, setHeadCnt, seat, setSeat, seatState }: Props) => {
   const countData: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
 
   const handleClickHeadCnt = (cnt: number) => {
-    setHeadCnt(cnt);
+    if (headCnt !== 0 && seat.length > 0) {
+      if (
+        window.confirm("선택된 좌석이 모두 초기화됩니다.\n변경하시겠습니까?")
+      ) {
+        setHeadCnt(cnt);
+        setSeat([]);
+      }
+    } else {
+      setHeadCnt(cnt);
+    }
   };
 
   return (
@@ -36,11 +37,9 @@ const SeatComp = ({
           {/* 상영관 컴포넌트*/}
           <One
             headCnt={headCnt}
-            setHeadCnt={setHeadCnt}
             seat={seat}
             setSeat={setSeat}
             seatState={seatState}
-            setSeatState={setSeatState}
           />
         </div>
         {/* 인원선택 */}

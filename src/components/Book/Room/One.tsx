@@ -1,22 +1,15 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Props {
   headCnt: number; // 관람인원
-  setHeadCnt: React.Dispatch<React.SetStateAction<number>>;
   seat: string[]; // 선택좌석
   setSeat: React.Dispatch<React.SetStateAction<string[]>>;
   seatState: string[]; // 좌석 현황
-  setSeatState: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const One = ({
-  headCnt,
-  setHeadCnt,
-  seat,
-  setSeat,
-  seatState,
-  setSeatState,
-}: Props) => {
+const One = ({ headCnt, seat, setSeat, seatState }: Props) => {
   // 상영관 행 정보
   const Row: string[] = ["A", "B", "C", "D", "E", "F", "G", "H"];
   // 상영관 열 정보
@@ -38,33 +31,281 @@ const One = ({
     "15",
   ];
   // 좌석간 간격 시작지점 (배열 인덱스 기준 (0 ~))
-  const Sp: number[] = [3, 12];
+  const Sp: number[] = [0, 3, 12];
   // 좌석간 간격 종료지점 (배열 인덱스 기준 (0 ~))
-  const Ep: number[] = [2, 11];
+  const Ep: number[] = [2, 11, 14];
 
   // 상영관 구조 상태
   const [seatStructure, setSeatStructure] = useState<string[][]>([[]]);
 
+  // 예약 가능 좌석 클릭 시
   const handleClickSeat = (col: string) => {
-    setSeat([col]);
+    /** 관람인원 미선택 시 */
+    if (headCnt === 0) {
+      toast.error("먼저 관람인원을 선택해주세요", {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if (headCnt - seat.length === 0) {
+      /** 선택해야할 인원수가 0이 되었을 때 */
+      toast.error("이미 좌석을 모두 선택하였습니다", {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else {
+      /** headCnt가 1명 남았을 때 */
+      if (headCnt === 1 || headCnt - seat.length === 1) {
+        // console.log("select 1 seat");
+        setSeat([...seat, col]);
+      } else if (headCnt > 1) {
+        /** headCnt가 2명 이상 남았을 때 */
+        // 왼쪽 좌석 (없으면 undefined)
+        let leftSeat: string | null | undefined = document.getElementById(
+          `${col.slice(0, 1)}${Number(col.slice(1, 3)) - 1 < 10 ? "0" + (Number(col.slice(1, 3)) - 1).toString() : (Number(col.slice(1, 3)) - 1).toString()}`,
+        )?.textContent;
+
+        // 오른쪽 좌석 (없으면 undefined)
+        let rightSeat: string | null | undefined = document.getElementById(
+          `${col.slice(0, 1)}${Number(col.slice(1, 3)) + 1 < 10 ? "0" + (Number(col.slice(1, 3)) + 1).toString() : (Number(col.slice(1, 3)) + 1).toString()}`,
+        )?.textContent;
+
+        /** EP 선택 시 */
+        if (Ep.includes(Number(col.slice(1, 3)) - 1)) {
+          /** ---- 좌측 좌석이 선택좌석 혹은 이미 예약된 좌석일 경우 */
+          if ((leftSeat && seat.includes(leftSeat)) || leftSeat === "") {
+            // console.log("left seat is already booked. so, select 1 seat");
+            setSeat([...seat, col]);
+          } else {
+            /** ---- 그렇지 않은 경우 */
+            // console.log("select 2 seats with left seat");
+            if (leftSeat) setSeat([...seat, col, leftSeat]);
+          }
+        } else {
+          /**  -- 기본 케이스 */
+          /** ---- 우측 좌석이 선택좌석 혹은 이미 예약된 좌석일 경우 */
+          if ((rightSeat && seat.includes(rightSeat)) || rightSeat === "") {
+            /** ---- 좌측 좌석도 선택좌석 혹은 이미 예약된 좌석일 경우 */
+            if ((leftSeat && seat.includes(leftSeat)) || leftSeat === "") {
+              //   console.log("left seat is already booked too. so, select 1 seat");
+              if (leftSeat) setSeat([...seat, col]);
+            } else {
+              /** ---- 그렇지 않은 경우 */
+              //   console.log("right seat is already booked. so, select left seat");
+              if (leftSeat) setSeat([...seat, col, leftSeat]);
+            }
+          } else {
+            /** ---- 예외상황이 없는 경우 */
+            // console.log("select 2 seats with right seat");
+            if (rightSeat) setSeat([...seat, col, rightSeat]);
+          }
+        }
+      }
+    }
+  };
+
+  // 선택 좌석 클릭 시
+  const handleClickSelectSeat = (col: string) => {
+    // console.log(col + "_select_click!");
+    let idx = seat.indexOf(col);
+    let tempArr = [...seat];
+
+    tempArr.splice(idx, 1);
+
+    setSeat(tempArr);
+  };
+
+  // 좌석 호버 시
+  const handleMouseEnterSeat = (col: string) => {
+    /** 관람인원 미선택 시 */
+    if (headCnt === 0) {
+      // no action
+    } else if (headCnt - seat.length === 0) {
+      /** 선택해야할 인원수가 0이 되었을 때 */
+      // no action
+    } else {
+      /** headCnt가 1명 남았을 때 */
+      if (headCnt === 1 || headCnt - seat.length === 1) {
+        // console.log("select 1 seat");
+        let currSeatEl = document.getElementById(col);
+        if (currSeatEl !== null)
+          currSeatEl.style.backgroundColor = "rgb(255 0 0 / 0.3)";
+      } else if (headCnt > 1) {
+        /** headCnt가 2명 이상 남았을 때 */
+        // 현재 좌석
+        let currSeatEl = document.getElementById(col);
+
+        // 왼쪽 좌석 (없으면 undefined)
+        let leftSeatEl: HTMLElement | null | undefined =
+          document.getElementById(
+            `${col.slice(0, 1)}${Number(col.slice(1, 3)) - 1 < 10 ? "0" + (Number(col.slice(1, 3)) - 1).toString() : (Number(col.slice(1, 3)) - 1).toString()}`,
+          );
+        // 왼쪽 좌석 코드 (없으면 undefined)
+        let leftSeat: string | null | undefined = document.getElementById(
+          `${col.slice(0, 1)}${Number(col.slice(1, 3)) - 1 < 10 ? "0" + (Number(col.slice(1, 3)) - 1).toString() : (Number(col.slice(1, 3)) - 1).toString()}`,
+        )?.textContent;
+
+        // 오른쪽 좌석 (없으면 undefined)
+        let rightSeatEl: HTMLElement | null | undefined =
+          document.getElementById(
+            `${col.slice(0, 1)}${Number(col.slice(1, 3)) + 1 < 10 ? "0" + (Number(col.slice(1, 3)) + 1).toString() : (Number(col.slice(1, 3)) + 1).toString()}`,
+          );
+        // 오른쪽 좌석 코드 (없으면 undefined)
+        let rightSeat: string | null | undefined = document.getElementById(
+          `${col.slice(0, 1)}${Number(col.slice(1, 3)) + 1 < 10 ? "0" + (Number(col.slice(1, 3)) + 1).toString() : (Number(col.slice(1, 3)) + 1).toString()}`,
+        )?.textContent;
+
+        /** EP 선택 시 */
+        if (Ep.includes(Number(col.slice(1, 3)) - 1)) {
+          /** ---- 좌측 좌석이 선택좌석 혹은 이미 예약된 좌석일 경우 */
+          if ((leftSeat && seat.includes(leftSeat)) || leftSeat === "") {
+            // console.log("left seat is already booked. so, select 1 seat");
+            if (currSeatEl !== null)
+              currSeatEl.style.backgroundColor = "rgb(255 0 0 / 0.3)";
+          } else {
+            /** ---- 그렇지 않은 경우 */
+            // console.log("select 2 seats with left seat");
+            if (currSeatEl !== null)
+              currSeatEl.style.backgroundColor = "rgb(255 0 0 / 0.3)";
+            if (leftSeatEl)
+              leftSeatEl.style.backgroundColor = "rgb(255 0 0 / 0.3)";
+          }
+        } else {
+          /**  -- 기본 케이스 */
+          /** ---- 우측 좌석이 선택좌석 혹은 이미 예약된 좌석일 경우 */
+          if ((rightSeat && seat.includes(rightSeat)) || rightSeat === "") {
+            /** ---- 좌측 좌석도 선택좌석 혹은 이미 예약된 좌석일 경우 */
+            if ((leftSeat && seat.includes(leftSeat)) || leftSeat === "") {
+              //   console.log("left seat is already booked too. so, select 1 seat");
+              if (currSeatEl)
+                currSeatEl.style.backgroundColor = "rgb(255 0 0 / 0.3)";
+            } else {
+              /** ---- 그렇지 않은 경우 */
+              //   console.log("right seat is already booked. so, select left seat");
+              if (currSeatEl !== null)
+                currSeatEl.style.backgroundColor = "rgb(255 0 0 / 0.3)";
+              if (leftSeatEl)
+                leftSeatEl.style.backgroundColor = "rgb(255 0 0 / 0.3)";
+            }
+          } else {
+            /** ---- 예외상황이 없는 경우 */
+            // console.log("select 2 seats with right seat");
+            if (currSeatEl !== null)
+              currSeatEl.style.backgroundColor = "rgb(255 0 0 / 0.3)";
+            if (rightSeatEl)
+              rightSeatEl.style.backgroundColor = "rgb(255 0 0 / 0.3)";
+          }
+        }
+      }
+    }
+  };
+
+  // 좌석 호버 아웃 시
+  const handleMouseLeaveSeat = (col: string) => {
+    /** 관람인원 미선택 시 */
+    if (headCnt === 0) {
+      // no action
+    } else if (headCnt - seat.length === 0) {
+      /** 선택해야할 인원수가 0이 되었을 때 */
+      // no action
+    } else {
+      /** headCnt가 1명 남았을 때 */
+      if (headCnt === 1 || headCnt - seat.length === 1) {
+        // console.log("select 1 seat");
+        let currSeatEl = document.getElementById(col);
+        if (currSeatEl !== null)
+          currSeatEl.style.backgroundColor = "transparent";
+      } else if (headCnt > 1) {
+        /** headCnt가 2명 이상 남았을 때 */
+        // 현재 좌석
+        let currSeatEl = document.getElementById(col);
+
+        // 왼쪽 좌석 (없으면 undefined)
+        let leftSeatEl: HTMLElement | null | undefined =
+          document.getElementById(
+            `${col.slice(0, 1)}${Number(col.slice(1, 3)) - 1 < 10 ? "0" + (Number(col.slice(1, 3)) - 1).toString() : (Number(col.slice(1, 3)) - 1).toString()}`,
+          );
+        // 왼쪽 좌석 코드 (없으면 undefined)
+        let leftSeat: string | null | undefined = document.getElementById(
+          `${col.slice(0, 1)}${Number(col.slice(1, 3)) - 1 < 10 ? "0" + (Number(col.slice(1, 3)) - 1).toString() : (Number(col.slice(1, 3)) - 1).toString()}`,
+        )?.textContent;
+
+        // 오른쪽 좌석 (없으면 undefined)
+        let rightSeatEl: HTMLElement | null | undefined =
+          document.getElementById(
+            `${col.slice(0, 1)}${Number(col.slice(1, 3)) + 1 < 10 ? "0" + (Number(col.slice(1, 3)) + 1).toString() : (Number(col.slice(1, 3)) + 1).toString()}`,
+          );
+        // 오른쪽 좌석 코드 (없으면 undefined)
+        let rightSeat: string | null | undefined = document.getElementById(
+          `${col.slice(0, 1)}${Number(col.slice(1, 3)) + 1 < 10 ? "0" + (Number(col.slice(1, 3)) + 1).toString() : (Number(col.slice(1, 3)) + 1).toString()}`,
+        )?.textContent;
+
+        /** EP 선택 시 */
+        if (Ep.includes(Number(col.slice(1, 3)) - 1)) {
+          /** ---- 좌측 좌석이 선택좌석 혹은 이미 예약된 좌석일 경우 */
+          if ((leftSeat && seat.includes(leftSeat)) || leftSeat === "") {
+            // console.log("left seat is already booked. so, select 1 seat");
+            if (currSeatEl !== null)
+              currSeatEl.style.backgroundColor = "transparent";
+          } else {
+            /** ---- 그렇지 않은 경우 */
+            // console.log("select 2 seats with left seat");
+            if (currSeatEl !== null)
+              currSeatEl.style.backgroundColor = "transparent";
+            if (leftSeatEl) leftSeatEl.style.backgroundColor = "transparent";
+          }
+        } else {
+          /**  -- 기본 케이스 */
+          /** ---- 우측 좌석이 선택좌석 혹은 이미 예약된 좌석일 경우 */
+          if ((rightSeat && seat.includes(rightSeat)) || rightSeat === "") {
+            /** ---- 좌측 좌석도 선택좌석 혹은 이미 예약된 좌석일 경우 */
+            if ((leftSeat && seat.includes(leftSeat)) || leftSeat === "") {
+              //   console.log("left seat is already booked too. so, select 1 seat");
+              if (currSeatEl) currSeatEl.style.backgroundColor = "transparent";
+            } else {
+              /** ---- 그렇지 않은 경우 */
+              //   console.log("right seat is already booked. so, select left seat");
+              if (currSeatEl !== null)
+                currSeatEl.style.backgroundColor = "transparent";
+              if (leftSeatEl) leftSeatEl.style.backgroundColor = "transparent";
+            }
+          } else {
+            /** ---- 예외상황이 없는 경우 */
+            // console.log("select 2 seats with right seat");
+            if (currSeatEl !== null)
+              currSeatEl.style.backgroundColor = "transparent";
+            if (rightSeatEl) rightSeatEl.style.backgroundColor = "transparent";
+          }
+        }
+      }
+    }
   };
 
   useEffect(() => {
     // 상영관 구조 생성 알고리즘
-    let seatArr = [];
+    if (seatStructure[0].length === 0) {
+      let seatArr = [];
 
-    for (let i = 0; i < Row.length; i++) {
-      let RowData = [];
-      for (let j = 0; j < Col.length; j++) {
-        RowData.push(Row[i] + Col[j]);
+      for (let i = 0; i < Row.length; i++) {
+        let RowData = [];
+        for (let j = 0; j < Col.length; j++) {
+          RowData.push(Row[i] + Col[j]);
+        }
+        seatArr.push(RowData);
       }
-      seatArr.push(RowData);
+
+      setSeatStructure(seatArr);
     }
 
-    setSeatStructure(seatArr);
-  }, []);
+    // headCnt 변경 시, 좌석 컴포넌트 스타일 초기화
+    let normalSeatArr: NodeListOf<HTMLElement> =
+      document.querySelectorAll(".seat");
 
-  console.log(seatStructure);
+    for (let i = 0; i < normalSeatArr.length; i++) {
+      if (normalSeatArr[i]) {
+        normalSeatArr[i].style.backgroundColor = "";
+      }
+    }
+  }, [headCnt]);
 
   return (
     <div className="absolute top-0 flex h-fit min-h-full w-fit min-w-full flex-col items-center justify-start rounded-xl p-10 pb-32">
@@ -97,13 +338,14 @@ const One = ({
                 return (
                   <div
                     id={col}
+                    onClick={() => handleClickSelectSeat(col)}
                     key={`seat_${col}`}
                     className={
                       Sp.includes(colIdx)
-                        ? `mx-[3px] ml-10 flex aspect-square w-7 flex-col items-center justify-center rounded-md border border-fontColor/70 bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
+                        ? `mx-[3px] ml-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 !bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
                         : Ep.includes(colIdx)
-                          ? `mx-[3px] mr-10 flex aspect-square w-7 flex-col items-center justify-center rounded-md border border-fontColor/70 bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
-                          : `mx-[3px] flex aspect-square w-7 flex-col items-center justify-center rounded-md border border-fontColor/70 bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
+                          ? `mx-[3px] mr-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 !bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
+                          : `mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 !bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
                     }
                   >
                     {col}
@@ -114,14 +356,16 @@ const One = ({
                 return (
                   <div
                     onClick={() => handleClickSeat(col)}
+                    onMouseEnter={() => handleMouseEnterSeat(col)}
+                    onMouseLeave={() => handleMouseLeaveSeat(col)}
                     id={col}
                     key={`seat_${col}`}
                     className={
                       Sp.includes(colIdx)
-                        ? `mx-[3px] ml-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor hover:bg-pointColor/30`
+                        ? `seat mx-[3px] ml-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor`
                         : Ep.includes(colIdx)
-                          ? `mx-[3px] mr-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor hover:bg-pointColor/30`
-                          : `mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor hover:bg-pointColor/30`
+                          ? `seat mx-[3px] mr-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor`
+                          : `seat mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor`
                     }
                   >
                     {col}
@@ -137,3 +381,5 @@ const One = ({
 };
 
 export default One;
+
+// background-color: rgb(255 0 0 / 0.3);

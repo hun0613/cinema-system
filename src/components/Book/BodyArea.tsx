@@ -111,7 +111,6 @@ const BodyArea = ({ movieId, movieNm }: Props) => {
             seat={seat}
             setSeat={setSeat}
             seatState={seatState}
-            setSeatState={setSeatState}
           />
         ) : null}
       </div>
@@ -154,12 +153,22 @@ const BodyArea = ({ movieId, movieNm }: Props) => {
           <button
             type="button"
             onClick={
-              theaterId && date && room && time && headCnt && seat
+              theaterId &&
+              date &&
+              room &&
+              time &&
+              headCnt &&
+              headCnt - seat.length === 0
                 ? handleClickBookBtn
                 : () => {}
             }
             className={
-              theaterId && date && room && time && headCnt && seat
+              theaterId &&
+              date &&
+              room &&
+              time &&
+              headCnt &&
+              headCnt - seat.length === 0
                 ? `mx-0 mb-3 flex h-fit w-2/5 flex-col items-center justify-center rounded-xl bg-pointColor/80 p-3 font-NMSNeo3 text-sm text-fontColor hover:bg-pointColor/60 mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5`
                 : `mx-0 mb-3 flex h-fit w-2/5 cursor-default flex-col items-center justify-center rounded-xl bg-borderColor/80 p-3 font-NMSNeo3 text-sm text-fontColor/50 mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5`
             }
