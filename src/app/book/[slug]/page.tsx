@@ -14,7 +14,7 @@ const Book = ({ params }: { params: { slug: number } }) => {
 
   useEffect(() => {
     // 최초 랜더링 시 데이터 받아오기
-    fetch(`${process.env.NEXT_PUBLIC_API}/book/api?id=${+params.slug}`)
+    fetch(`/book/api?id=${+params.slug}`)
       .then((res) => res.json())
       .then((res2) => setDb(res2[0]));
 

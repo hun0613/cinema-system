@@ -77,7 +77,7 @@ const BodyArea = ({ movieId, movieNm, moviePoster }: Props) => {
       seat: [...seat, ...seatState],
     };
 
-    fetch(`${process.env.NEXT_PUBLIC_API}/book/api/updateSeat`, {
+    fetch(`/book/api/updateSeat`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

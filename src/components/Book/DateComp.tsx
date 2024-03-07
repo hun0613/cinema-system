@@ -63,7 +63,7 @@ const DateComp = ({
   useEffect(() => {
     // 날짜 데이터 fetch
     if (!dateDb) {
-      fetch(`${process.env.NEXT_PUBLIC_API}/book/api/date`)
+      fetch(`/book/api/date`)
         .then((res) => res.json())
         .then((res2) => {
           setDateDb(res2);
@@ -72,7 +72,7 @@ const DateComp = ({
 
     // 상영시간표 데이터 fetch
     fetch(
-      `${process.env.NEXT_PUBLIC_API}/book/api/movieTime?theater_id=${theaterId}&movie_id=${movieId}&date=${date}`,
+      `/book/api/movieTime?theater_id=${theaterId}&movie_id=${movieId}&date=${date}`,
     )
       .then((res) => res.json())
       .then((res2) => {
