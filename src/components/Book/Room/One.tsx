@@ -7,34 +7,22 @@ interface Props {
   seat: string[]; // 선택좌석
   setSeat: React.Dispatch<React.SetStateAction<string[]>>;
   seatState: string[]; // 좌석 현황
+  Row: string[]; // 상영관 행 정보
+  Col: string[]; // 상영관 열 정보
+  Sp: number[]; // 좌석간 간격 시작지점 (배열 인덱스 기준 (0 ~))
+  Ep: number[]; // 좌석간 간격 종료지점 (배열 인덱스 기준 (0 ~))
 }
 
-const One = ({ headCnt, seat, setSeat, seatState }: Props) => {
-  // 상영관 행 정보
-  const Row: string[] = ["A", "B", "C", "D", "E", "F", "G", "H"];
-  // 상영관 열 정보
-  const Col: string[] = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-  ];
-  // 좌석간 간격 시작지점 (배열 인덱스 기준 (0 ~))
-  const Sp: number[] = [0, 3, 12];
-  // 좌석간 간격 종료지점 (배열 인덱스 기준 (0 ~))
-  const Ep: number[] = [2, 11, 14];
-
+const One = ({
+  headCnt,
+  seat,
+  setSeat,
+  seatState,
+  Row,
+  Col,
+  Sp,
+  Ep,
+}: Props) => {
   // 상영관 구조 상태
   const [seatStructure, setSeatStructure] = useState<string[][]>([[]]);
 
@@ -316,8 +304,27 @@ const One = ({ headCnt, seat, setSeat, seatState }: Props) => {
             className="mb-[6px] flex h-fit w-fit flex-row items-center justify-center"
           >
             {row.map((col: string, colIdx: number) => {
-              /* 선택불가(이미 예약된) 좌석 */
-              if (seatState.includes(col)) {
+              if (headCnt === 0) {
+                return (
+                  <div
+                    onClick={() => handleClickSeat(col)}
+                    // onMouseEnter={() => handleMouseEnterSeat(col)}
+                    // onMouseLeave={() => handleMouseLeaveSeat(col)}
+                    id={col}
+                    key={`seat_${col}`}
+                    className={
+                      Sp.includes(colIdx)
+                        ? `seat mx-[3px] ml-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/30 font-NMSNeo4 text-[9px] text-fontColor/30`
+                        : Ep.includes(colIdx)
+                          ? `seat mx-[3px] mr-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/30 font-NMSNeo4 text-[9px] text-fontColor/30`
+                          : `seat mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/30 font-NMSNeo4 text-[9px] text-fontColor/30`
+                    }
+                  >
+                    {col}
+                  </div>
+                );
+              } else if (seatState.includes(col)) {
+                /* 선택불가(이미 예약된) 좌석 */
                 return (
                   <div
                     id={col}

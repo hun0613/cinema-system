@@ -14,7 +14,7 @@ const Book = ({ params }: { params: { slug: number } }) => {
 
   useEffect(() => {
     // 최초 랜더링 시 데이터 받아오기
-    fetch(`http://localhost:3000/book/api?id=${+params.slug}`)
+    fetch(`${process.env.NEXT_PUBLIC_API}/book/api?id=${+params.slug}`)
       .then((res) => res.json())
       .then((res2) => setDb(res2[0]));
 
@@ -40,7 +40,11 @@ const Book = ({ params }: { params: { slug: number } }) => {
         {/* body frame */}
         <div className="bg-bgColors flex h-fit w-full max-w-[1100px] flex-col items-center justify-start border-b border-borderColor ">
           {/* content Area */}
-          <BodyArea movieId={+params.slug} movieNm={db?.title} />
+          <BodyArea
+            movieId={+params.slug}
+            movieNm={db?.title}
+            moviePoster={db?.poster_img}
+          />
         </div>
 
         {/* footer */}

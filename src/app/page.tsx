@@ -3,7 +3,7 @@ import Screen from "@/components/Home/Screen";
 import ContentArea from "../components/Home/ContentArea";
 
 export default async function Home() {
-  const res = await fetch("http://localhost:3000/api", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api`, {
     // cache: "force-cache",
     cache: "no-store",
   });

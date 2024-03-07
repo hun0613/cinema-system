@@ -26,16 +26,10 @@ export interface MovieTimeType {
   seat_state: string[]; // 좌석 예매 현황 (['A03', 'B04'])
 }
 
-// type Room = {
-//   room_id: number;
-//   room_nm: string; // 상영관 이름
-// };
-
 export interface TheaterType {
   theater_id: number;
   name: string; // 극장 이름
   position: string; // 극장 위치
   latitude: number; // 위도
   longitude: number; // 경도
-  // room: Room[]; // 상영관 정보
 }

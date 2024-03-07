@@ -1,3 +1,4 @@
+import { RoomData, RoomType } from "@/data/dummy/roomData";
 import One from "./Room/One";
 
 interface Props {
@@ -6,9 +7,17 @@ interface Props {
   seat: string[]; // 선택 좌석
   setSeat: React.Dispatch<React.SetStateAction<string[]>>;
   seatState: string[]; // 좌석 현황
+  roomId: number; // 상영관 ID
 }
 
-const SeatComp = ({ headCnt, setHeadCnt, seat, setSeat, seatState }: Props) => {
+const SeatComp = ({
+  headCnt,
+  setHeadCnt,
+  seat,
+  setSeat,
+  seatState,
+  roomId,
+}: Props) => {
   const countData: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
 
   const handleClickHeadCnt = (cnt: number) => {
@@ -40,10 +49,26 @@ const SeatComp = ({ headCnt, setHeadCnt, seat, setSeat, seatState }: Props) => {
             seat={seat}
             setSeat={setSeat}
             seatState={seatState}
+            Row={
+              RoomData.filter((roomEl: RoomType) => roomEl.roomId === roomId)[0]
+                .row
+            }
+            Col={
+              RoomData.filter((roomEl: RoomType) => roomEl.roomId === roomId)[0]
+                .col
+            }
+            Sp={
+              RoomData.filter((roomEl: RoomType) => roomEl.roomId === roomId)[0]
+                .sp
+            }
+            Ep={
+              RoomData.filter((roomEl: RoomType) => roomEl.roomId === roomId)[0]
+                .ep
+            }
           />
         </div>
         {/* 인원선택 */}
-        <div className="absolute bottom-0 flex h-fit w-fit flex-col items-center justify-center rounded-lg bg-titleColor/30 px-3 py-5 mobile:px-5 tablet:w-fit">
+        <div className="absolute bottom-0 flex h-fit w-fit flex-col items-center justify-center rounded-lg border border-borderColor bg-bgColor/80 px-3 py-5 mobile:px-5 tablet:w-fit">
           {/* title */}
           <div className="flex h-fit w-full flex-row items-end justify-start">
             <div className="h-fit w-fit font-NMSNeo3 text-sm text-fontColor tablet:text-base">

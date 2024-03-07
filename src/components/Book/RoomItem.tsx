@@ -35,8 +35,6 @@ const RoomItem = ({
   navState,
   resetState,
 }: Props) => {
-  console.log(timeList);
-
   const handleClickTime = (timeEl: string) => {
     // 상영관이름 설정
     setRoom(currRoom);

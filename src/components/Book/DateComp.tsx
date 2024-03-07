@@ -47,7 +47,6 @@ const DateComp = ({
 
   // 상영관 / 시간 데이터 추출 함수
   const extractRoomTimeData = (data: MovieTimeType[]) => {
-    console.log(data);
     // 상영관 리스트
     let roomList = data.map((el: MovieTimeType) => el.room_nm);
     let roomSet = new Set(roomList);
@@ -64,18 +63,16 @@ const DateComp = ({
   useEffect(() => {
     // 날짜 데이터 fetch
     if (!dateDb) {
-      fetch(`http://localhost:3000/book/api/date`)
+      fetch(`${process.env.NEXT_PUBLIC_API}/book/api/date`)
         .then((res) => res.json())
         .then((res2) => {
           setDateDb(res2);
         });
     }
 
-    console.log("check");
-
     // 상영시간표 데이터 fetch
     fetch(
-      `http://localhost:3000/book/api/movieTime?theater_id=${theaterId}&movie_id=${movieId}&date=${date}`,
+      `${process.env.NEXT_PUBLIC_API}/book/api/movieTime?theater_id=${theaterId}&movie_id=${movieId}&date=${date}`,
     )
       .then((res) => res.json())
       .then((res2) => {
