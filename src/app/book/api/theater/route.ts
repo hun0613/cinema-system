@@ -22,7 +22,7 @@ const conn: connectInfo = {
 /**
  * 극장 정보 API
  */
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<any> {
   try {
     // rds 연결
     const db: mysql.Connection = await mysql.createConnection(conn);

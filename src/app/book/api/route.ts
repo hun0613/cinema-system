@@ -22,7 +22,7 @@ const conn: connectInfo = {
 /**
  * 선택 영화 정보 API
  */
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<any> {
   const { searchParams } = new URL(req.url);
   const id: number = Number(searchParams.get("id"));
 

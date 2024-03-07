@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic"; // defaults to auto
 /**
  * movie data API
  */
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<any> {
   try {
     // rds 연결
     const db: mysql.Connection = await mysql.createConnection(conn);

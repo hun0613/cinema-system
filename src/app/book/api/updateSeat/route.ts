@@ -23,7 +23,10 @@ const conn: connectInfo = {
 /**
  * 상영시간표 정보 API
  */
-export async function PATCH(req: NextRequest, res: NextApiResponse) {
+export async function PATCH(
+  req: NextRequest,
+  res: NextApiResponse,
+): Promise<any> {
   const { searchParams } = new URL(req.url);
   const theater_id: number = Number(searchParams.get("theater_id"));
   const movie_id: number = Number(searchParams.get("movie_id"));

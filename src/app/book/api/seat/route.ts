@@ -22,7 +22,7 @@ const conn: connectInfo = {
 /**
  * 좌석정보 API
  */
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<any> {
   const { searchParams } = new URL(req.url);
   const theater_id: number = Number(searchParams.get("theater_id"));
   const movie_id: number = Number(searchParams.get("movie_id"));

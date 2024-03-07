@@ -22,7 +22,7 @@ const conn: connectInfo = {
 /**
  * 날짜 API
  */
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<any> {
   const currDateCode = new Date();
 
   let currDate = `${currDateCode.getFullYear()}${currDateCode.getMonth() + 1 < 10 ? "0" + (currDateCode.getMonth() + 1) : currDateCode.getMonth() + 1}${currDateCode.getDate() < 10 ? "0" + currDateCode.getDate() : currDateCode.getDate()}`;
