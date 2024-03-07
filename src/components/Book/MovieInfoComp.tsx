@@ -81,16 +81,16 @@ const MovieInfoComp = ({ data }: Props) => {
           {/* rate */}
           <div className="flex h-fit w-fit flex-row items-center justify-center py-1">
             <FaHeart className="text-sm text-pointColor tablet:text-base" />
-            <div className="ml-2 mt-[1px] flex h-fit w-fit flex-col items-center justify-center font-NMSNeo2 text-sm tablet:text-base">
+            <div className="ml-2 mt-[1px] flex h-fit w-fit flex-col items-center justify-center font-NMSNeo2 text-sm text-fontColor tablet:text-base">
               {data?.rating ? data?.rating : ""}
             </div>
           </div>
           {/* reservation rate */}
           <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">
-            <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-sm tablet:text-base">
+            <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-sm text-fontColor tablet:text-base">
               예매율
             </div>
-            <div className="ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-sm tablet:text-base">
+            <div className="ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-sm text-fontColor tablet:text-base">
               {data?.reservation_rate ? data?.reservation_rate : ""}%
             </div>
           </div>
