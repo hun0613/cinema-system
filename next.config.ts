@@ -3,7 +3,7 @@ module.exports = {
     return [
       {
         // matching all API routes
-        source: "/book/api/theater/:path",
+        source: "/book/api/:path",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           { key: "Access-Control-Allow-Origin", value: "*" },

@@ -35,7 +35,12 @@ const TheaterComp = ({
   useEffect(() => {
     // 첫 랜더링 시 theater data fetch
     if (!theaterDb) {
-      fetch(`${process.env.NEXT_PUBLIC_API}/book/api/theater`)
+      fetch(`${process.env.NEXT_PUBLIC_API}/book/api/theater`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
         .then((res) => res.json())
         .then((res2) => {
           setTheaterDb(res2);
