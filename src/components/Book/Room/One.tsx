@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -363,8 +364,12 @@ const One = ({
                 return (
                   <div
                     onClick={() => handleClickSeat(col)}
-                    onMouseEnter={() => handleMouseEnterSeat(col)}
-                    onMouseLeave={() => handleMouseLeaveSeat(col)}
+                    onMouseEnter={
+                      isMobile ? () => {} : () => handleMouseEnterSeat(col)
+                    }
+                    onMouseLeave={
+                      isMobile ? () => {} : () => handleMouseLeaveSeat(col)
+                    }
                     id={col}
                     key={`seat_${col}`}
                     className={
