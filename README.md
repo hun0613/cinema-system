@@ -98,3 +98,11 @@
 
 모든 예매 절차를 완료하면 아래 예매하기 버튼이 활성화되고, 예매하기 버튼 클릭 시 선택한 좌석정보는 db에 반영되게 됩니다. <br />
 그리고 Ticket 모달이 되면서 모든 예매 절차가 완료되게 됩니다.
+
+### 📌 적용 기술 스택
+#### Next.js
+#### TypeScript
+#### Tailwind CSS
+#### Next.js Route Handlers
+#### MySQL
+
