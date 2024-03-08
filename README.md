@@ -107,4 +107,6 @@
 #### 📎 Tailwind CSS
 #### 📎 Next.js Route Handlers
 #### 📎 MySQL
+#### 📎 AWS RDS
+#### 📎 Vercel
 
