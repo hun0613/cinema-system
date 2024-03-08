@@ -10,7 +10,7 @@ export default async function Home() {
   const serverDb = await res.json();
 
   return (
-    <div className="lex h-full min-h-screen w-full flex-col items-center justify-start overflow-y-auto overflow-x-hidden bg-bgColor">
+    <div className="flex h-full min-h-screen w-full flex-col items-center justify-start overflow-y-auto overflow-x-hidden bg-bgColor">
       {/* screen */}
       <Screen data={serverDb} />
 
