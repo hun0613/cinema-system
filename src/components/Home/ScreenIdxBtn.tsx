@@ -1,14 +1,11 @@
-import { movieType } from "@/data/dataType";
-
 interface Props {
-  data: movieType;
   idx: number;
   btnIdx: number;
   setIdx: React.Dispatch<React.SetStateAction<number>>;
   setZoom: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ScreenIdxBtn = ({ data, idx, btnIdx, setIdx, setZoom }: Props) => {
+const ScreenIdxBtn = ({ idx, btnIdx, setIdx, setZoom }: Props) => {
   const handleClickBtn = () => {
     setZoom(false);
     setIdx(btnIdx);

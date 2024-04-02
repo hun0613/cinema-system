@@ -139,7 +139,6 @@ const Screen = ({ data }: Data) => {
             return (
               <ScreenIdxBtn
                 key={`${movieInfo.title}_${idx}`}
-                data={movieInfo}
                 idx={contentIdx}
                 btnIdx={idx}
                 setIdx={setContentIdx}
