@@ -1,3 +1,11 @@
+import { movieType } from "@/data/dataType";
+
+export interface movieData {
+  // 영화 정보
+  db: movieType | null;
+  setDb: (el: movieType) => void;
+}
+
 export interface ReservationData {
   // 극장이름
   theater: string;

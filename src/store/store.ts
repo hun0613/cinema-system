@@ -1,5 +1,13 @@
 import { create } from "zustand";
-import { ReservationData, ReservationNavState } from "./types";
+import { ReservationData, ReservationNavState, movieData } from "./types";
+
+export const useMovieStore = create<movieData>((set) => ({
+  // server db
+  db: null,
+  setDb: (el) => {
+    set((state) => ({ db: el }));
+  },
+}));
 
 export const useReservationStore = create<ReservationData>((set) => ({
   // 극장이름
