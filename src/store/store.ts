@@ -63,6 +63,25 @@ export const useReservationStore = create<ReservationData>((set) => ({
   setSeatState: (el) => {
     set((state) => ({ seatState: el }));
   },
+
+  resetState: (el) => {
+    if (el === 1) {
+      set((state) => ({
+        date: `${new Date().getFullYear()}${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1}${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`,
+        room: "",
+        roomId: 0,
+        time: "",
+        headCnt: 0,
+        seat: [],
+        seatState: [""],
+      }));
+    } else if (el === 2) {
+      set((state) => ({
+        headCnt: 0,
+        seat: [],
+      }));
+    }
+  },
 }));
 
 export const useReservationNavStore = create<ReservationNavState>((set) => ({

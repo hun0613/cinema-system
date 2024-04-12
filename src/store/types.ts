@@ -42,6 +42,9 @@ export interface ReservationData {
   // 선택한 상영관의 좌석 현황
   seatState: string[];
   setSeatState: (el: string[]) => void;
+
+  // 상태 초기화
+  resetState: (el: number) => void;
 }
 
 export interface ReservationNavState {
