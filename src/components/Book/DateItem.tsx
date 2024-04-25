@@ -1,3 +1,4 @@
+import { useReservationNavStore, useReservationStore } from "@/store/store";
 import { useEffect, useRef } from "react";
 
 interface Props {
@@ -5,32 +6,24 @@ interface Props {
   week: string; // 요일
   holiday_yn: string; // 공휴일 유무
   idx: number; // 순번
-  currDate: string; // 선택날짜
-  setCurrDate: React.Dispatch<React.SetStateAction<string>>; // 선택날짜 상태변경함수
-  setRoom: React.Dispatch<React.SetStateAction<string>>; // 상영관 상태변경함수
-  setRoomId: React.Dispatch<React.SetStateAction<number>>; // 상영관 ID 상태변경함수
-  setTime: React.Dispatch<React.SetStateAction<string>>; // 상영시간 상태변경함수
-  setSeatState: React.Dispatch<React.SetStateAction<string[]>>; // 좌석현황 상태변경함수
-  navState: number; // nav 상태
-  resetState: (nav: number) => void; // 상태 초기화 함수
 }
 
-const DateItem = ({
-  date,
-  week,
-  holiday_yn,
-  idx,
-  currDate,
-  setCurrDate,
-  setRoom,
-  setRoomId,
-  setTime,
-  setSeatState,
-  navState,
-  resetState,
-}: Props) => {
+const DateItem = ({ date, week, holiday_yn, idx }: Props) => {
   // scroll foucs 설정용 Ref
   const dateRef = useRef<HTMLDivElement>(null);
+
+  // navigatioin 상태 (전역상태)
+  const { navState } = useReservationNavStore();
+  // 영화 예매 데이터 (전역상태)
+  const {
+    date: currDate,
+    setDate: setCurrDate,
+    setRoom,
+    setRoomId,
+    setTime,
+    setSeatState,
+    resetState,
+  } = useReservationStore();
 
   const handleClickDate = () => {
     // 선택 날짜 변경

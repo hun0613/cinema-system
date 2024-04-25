@@ -1,3 +1,8 @@
+import {
+  useMovieStore,
+  useReservationNavStore,
+  useReservationStore,
+} from "@/store/store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Modal from "../Reuse/Modal";
@@ -7,59 +12,47 @@ import SeatComp from "./SeatComp";
 import TheaterComp from "./TheaterComp";
 import Ticket from "./Ticket";
 
-interface Props {
-  movieId: number;
-  movieNm: string | undefined;
-  moviePoster: string | undefined;
-}
-
-const BodyArea = ({ movieId, movieNm, moviePoster }: Props) => {
+const BodyArea = () => {
   const router = useRouter();
 
-  const [theater, setTeather] = useState<string>(""); // 극장 이름
-  const [theaterId, setTheaterId] = useState<number>(0); // 극장 ID
-  const [date, setDate] = useState<string>(
-    `${new Date().getFullYear()}${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1}${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`,
-  ); // 날짜
-  const [time, setTime] = useState<string>(""); // 시간
-  const [room, setRoom] = useState<string>(""); // 상영관 이름
-  const [roomId, setRoomId] = useState<number>(0); // 상영관 ID
-  const [headCnt, setHeadCnt] = useState<number>(0); // 인원수
-  const [seat, setSeat] = useState<string[]>(["A01", "A05"]); // 좌석
-  const [seatState, setSeatState] = useState<string[]>([""]); // 선택한 상영관의 좌석 현황
-  const [navState, setNavState] = useState<number>(1); // navigation 상태
+  // 영화 서버데이터 (전역상태)
+  const { db } = useMovieStore();
+
+  const { navState, setNavState } = useReservationNavStore();
+  const { theaterId, date, time, room, roomId, headCnt, seat, seatState } =
+    useReservationStore();
+  /** */
+  // const [theater, setTeather] = useState<string>(""); // 극장 이름 (전역상태 전환)
+  // const [theaterId, setTheaterId] = useState<number>(0); // 극장 ID (전역상태 전환)
+  // const [date, setDate] = useState<string>(
+  //   `${new Date().getFullYear()}${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1}${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`,
+  // ); // 날짜 (전역상태 전환)
+  // const [time, setTime] = useState<string>(""); // 시간 (전역상태 전환)
+  // const [room, setRoom] = useState<string>(""); // 상영관 이름 (전역상태 전환)
+  // const [roomId, setRoomId] = useState<number>(0); // 상영관 ID (전역상태 전환)
+  // const [headCnt, setHeadCnt] = useState<number>(0); // 인원수 (전역상태 전환)
+  // const [seat, setSeat] = useState<string[]>(["A01", "A05"]); // 좌석 (전역상태 전환)
+  // const [seatState, setSeatState] = useState<string[]>([""]); // 선택한 상영관의 좌석 현황 (전역상태 전환)
+  // const [navState, setNavState] = useState<number>(1); // navigation 상태 (전역상태 전환)
+
   const [ticketModalState, setTicketModalState] = useState<boolean>(false);
 
-  // console.log({
-  //   movieNm,
-  //   theater,
-  //   theaterId,
-  //   date,
-  //   time,
-  //   room,
-  //   roomId,
-  //   headCnt,
-  //   seat,
-  //   seatState,
-  //   moviePoster,
-  // });
-
-  const resetState = (nav: number) => {
-    if (nav === 1) {
-      setDate(
-        `${new Date().getFullYear()}${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1}${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`,
-      );
-      setRoom("");
-      setRoomId(0);
-      setTime("");
-      setHeadCnt(0);
-      setSeat([]);
-      setSeatState([""]);
-    } else if (nav === 2) {
-      setHeadCnt(0);
-      setSeat([]);
-    }
-  };
+  // const resetState = (nav: number) => {
+  //   if (nav === 1) {
+  //     setDate(
+  //       `${new Date().getFullYear()}${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1}${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`,
+  //     );
+  //     setRoom("");
+  //     setRoomId(0);
+  //     setTime("");
+  //     setHeadCnt(0);
+  //     setSeat([]);
+  //     setSeatState([""]);
+  //   } else if (nav === 2) {
+  //     setHeadCnt(0);
+  //     setSeat([]);
+  //   }
+  // };
 
   const handleClickNextBtn = () => {
     setNavState(navState + 1);
@@ -71,7 +64,7 @@ const BodyArea = ({ movieId, movieNm, moviePoster }: Props) => {
     const body = {
       theater_id: theaterId,
       room_id: roomId,
-      movie_id: movieId,
+      movie_id: db?.id,
       date: date,
       time: time,
       seat: [...seat, ...seatState],
@@ -99,66 +92,20 @@ const BodyArea = ({ movieId, movieNm, moviePoster }: Props) => {
           setModalControlState={setTicketModalState}
           extraFuction={() => router.push(`/`)}
         >
-          <Ticket
-            moviePoster={moviePoster}
-            movieNm={movieNm}
-            theater={theater}
-            date={date}
-            time={time}
-            room={room}
-            seat={seat}
-          />
+          <Ticket />
         </Modal>
       )}
       <div className="flex h-full w-full flex-col items-center justify-start">
         {/* navigation */}
-        <Navigation
-          navState={navState}
-          setNavState={setNavState}
-          theaterId={theaterId}
-          date={date}
-          time={time}
-          room={room}
-          headCnt={headCnt}
-          seat={seat}
-        />
+        <Navigation />
         {/* Reservation Area */}
         <div className="mb-5 flex h-fit w-[90%] flex-col items-center justify-center rounded-xl border border-borderColor tablet:h-[calc(100vh/1.8)]">
           {navState === 1 ? (
-            <TheaterComp
-              theaterId={theaterId}
-              setTheaterId={setTheaterId}
-              theater={theater}
-              setTheater={setTeather}
-              navState={navState}
-              resetState={resetState}
-            />
+            <TheaterComp />
           ) : navState === 2 ? (
-            <DateComp
-              date={date}
-              setDate={setDate}
-              time={time}
-              setTime={setTime}
-              room={room}
-              setRoom={setRoom}
-              roomId={roomId}
-              setRoomId={setRoomId}
-              theaterId={theaterId}
-              movieId={movieId}
-              seatState={seatState}
-              setSeatState={setSeatState}
-              navState={navState}
-              resetState={resetState}
-            />
+            <DateComp />
           ) : navState === 3 ? (
-            <SeatComp
-              headCnt={headCnt}
-              setHeadCnt={setHeadCnt}
-              seat={seat}
-              setSeat={setSeat}
-              seatState={seatState}
-              roomId={roomId}
-            />
+            <SeatComp />
           ) : null}
         </div>
 

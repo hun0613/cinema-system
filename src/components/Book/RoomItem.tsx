@@ -1,40 +1,30 @@
 import { MovieTimeType } from "@/data/dataType";
+import { useReservationNavStore, useReservationStore } from "@/store/store";
 
 interface Props {
-  currDate: string; // 선택 날짜
   currRoom: string; // 현재 상영관
   currRoomId: number; // 현재 상영관 ID
   timeList: string[] | undefined; // 현재 상영시간 리스트
-  room: string; // 선택된 상영관
-  setRoom: React.Dispatch<React.SetStateAction<string>>;
-  roomId: number; // 선택한 상영관 ID
-  setRoomId: React.Dispatch<React.SetStateAction<number>>;
-  time: string; // 선택한 상영시간
-  setTime: React.Dispatch<React.SetStateAction<string>>;
-  seatState: string[]; // 선택 상영관의 예약 좌석 현황
-  setSeatState: React.Dispatch<React.SetStateAction<string[]>>;
   movieTimeDb: MovieTimeType[] | null; // 상영시간표 데이터
-  navState: number; // nav 상태
-  resetState: (nav: number) => void; // 상태 초기화 함수
 }
 
-const RoomItem = ({
-  currDate,
-  currRoom,
-  currRoomId,
-  timeList,
-  room,
-  setRoom,
-  roomId,
-  setRoomId,
-  time,
-  setTime,
-  seatState,
-  setSeatState,
-  movieTimeDb,
-  navState,
-  resetState,
-}: Props) => {
+const RoomItem = ({ currRoom, currRoomId, timeList, movieTimeDb }: Props) => {
+  // navigatioin 상태 (전역상태)
+  const { navState } = useReservationNavStore();
+  // 영화 예매 데이터 (전역상태)
+  const {
+    date: currDate,
+    room,
+    setRoom,
+    roomId,
+    setRoomId,
+    time,
+    setTime,
+    seatState,
+    setSeatState,
+    resetState,
+  } = useReservationStore();
+
   const handleClickTime = (timeEl: string) => {
     // 상영관이름 설정
     setRoom(currRoom);

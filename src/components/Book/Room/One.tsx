@@ -1,31 +1,22 @@
+import { useReservationStore } from "@/store/store";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 interface Props {
-  headCnt: number; // 관람인원
-  seat: string[]; // 선택좌석
-  setSeat: React.Dispatch<React.SetStateAction<string[]>>;
-  seatState: string[]; // 좌석 현황
   Row: string[]; // 상영관 행 정보
   Col: string[]; // 상영관 열 정보
   Sp: number[]; // 좌석간 간격 시작지점 (배열 인덱스 기준 (0 ~))
   Ep: number[]; // 좌석간 간격 종료지점 (배열 인덱스 기준 (0 ~))
 }
 
-const One = ({
-  headCnt,
-  seat,
-  setSeat,
-  seatState,
-  Row,
-  Col,
-  Sp,
-  Ep,
-}: Props) => {
+const One = ({ Row, Col, Sp, Ep }: Props) => {
   // 상영관 구조 상태
   const [seatStructure, setSeatStructure] = useState<string[][]>([[]]);
+
+  // 영화 예매 데이터 (전역상태)
+  const { headCnt, seat, setSeat, seatState } = useReservationStore();
 
   // 예약 가능 좌석 클릭 시
   const handleClickSeat = (col: string) => {

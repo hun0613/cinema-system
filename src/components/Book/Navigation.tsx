@@ -1,26 +1,13 @@
+import { useReservationNavStore, useReservationStore } from "@/store/store";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-interface Props {
-  navState: number;
-  setNavState: React.Dispatch<React.SetStateAction<number>>;
-  theaterId: number;
-  date: string;
-  time: string;
-  room: string;
-  headCnt: number;
-  seat: string[];
-}
 
-const Navigation = ({
-  navState,
-  setNavState,
-  theaterId,
-  date,
-  time,
-  room,
-  headCnt,
-  seat,
-}: Props) => {
+const Navigation = () => {
+  // navigatioin 상태 (전역상태)
+  const { navState, setNavState } = useReservationNavStore();
+  // 영화 예매 데이터 (전역상태)
+  const { theaterId, date, time, room, headCnt, seat } = useReservationStore();
+
   const handleClickNav = (nav: number) => {
     // // 날짜/상영관으로 넘어가려할때 극장선택이 안되있는 경우
     if (nav === 2 && !theaterId) {
@@ -38,7 +25,6 @@ const Navigation = ({
     } else {
       setNavState(nav);
     }
-    // setNavState(nav);
   };
   return (
     <div className="flex h-fit w-full flex-col items-center justify-center p-10">

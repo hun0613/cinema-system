@@ -1,41 +1,16 @@
 import { DateType, MovieTimeType } from "@/data/dataType";
+import { useMovieStore, useReservationStore } from "@/store/store";
 import { useEffect, useState } from "react";
 import DateItem from "./DateItem";
 import RoomItem from "./RoomItem";
 
-interface Props {
-  date: string; // 선택 날짜
-  setDate: React.Dispatch<React.SetStateAction<string>>;
-  time: string; // 선택 상영시간
-  setTime: React.Dispatch<React.SetStateAction<string>>;
-  room: string; // 선택 상영관
-  setRoom: React.Dispatch<React.SetStateAction<string>>;
-  roomId: number; // 선택 상영관 ID
-  setRoomId: React.Dispatch<React.SetStateAction<number>>;
-  theaterId: number; // 선택 영화관
-  movieId: number; // 선택 영화
-  seatState: string[]; // 선택 상영관의 예약 좌석 현황
-  setSeatState: React.Dispatch<React.SetStateAction<string[]>>;
-  navState: number; // nav 상태
-  resetState: (nav: number) => void; // 상태 초기화 함수
-}
+const DateComp = () => {
+  // 영화 서버데이터 (전역상태)
+  const { db } = useMovieStore();
 
-const DateComp = ({
-  date,
-  setDate,
-  time,
-  setTime,
-  room,
-  setRoom,
-  roomId,
-  setRoomId,
-  theaterId,
-  movieId,
-  seatState,
-  setSeatState,
-  navState,
-  resetState,
-}: Props) => {
+  // 영화 예매 데이터 (전역상태)
+  const { date, theaterId } = useReservationStore();
+
   // 날짜 서버 데이터
   const [dateDb, setDateDb] = useState<DateType[] | null>(null);
   // 상영시간표 서버 데이터
@@ -72,7 +47,7 @@ const DateComp = ({
 
     // 상영시간표 데이터 fetch
     fetch(
-      `/book/api/movieTime?theater_id=${theaterId}&movie_id=${movieId}&date=${date}`,
+      `/book/api/movieTime?theater_id=${theaterId}&movie_id=${db?.id}&date=${date}`,
     )
       .then((res) => res.json())
       .then((res2) => {
@@ -116,14 +91,6 @@ const DateComp = ({
                   week={dateEl.week}
                   holiday_yn={dateEl.holiday_yn}
                   idx={idx}
-                  currDate={date}
-                  setCurrDate={setDate}
-                  setRoom={setRoom}
-                  setRoomId={setRoomId}
-                  setTime={setTime}
-                  setSeatState={setSeatState}
-                  navState={navState}
-                  resetState={resetState}
                 />
               );
             })}
@@ -155,23 +122,12 @@ const DateComp = ({
               return (
                 <RoomItem
                   key={`room_${roomEl}`}
-                  currDate={date}
                   currRoom={roomEl}
                   currRoomId={roomIdList[idx]}
                   timeList={movieTimeDb?.map(
                     (movieTime: MovieTimeType) => movieTime.time,
                   )}
-                  room={room}
-                  setRoom={setRoom}
-                  roomId={roomId}
-                  setRoomId={setRoomId}
-                  time={time}
-                  setTime={setTime}
-                  seatState={seatState}
-                  setSeatState={setSeatState}
                   movieTimeDb={movieTimeDb}
-                  navState={navState}
-                  resetState={resetState}
                 />
               );
             })}

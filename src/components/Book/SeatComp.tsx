@@ -1,24 +1,12 @@
 import { RoomData, RoomType } from "@/data/dummy/roomData";
+import { useReservationStore } from "@/store/store";
 import One from "./Room/One";
 
-interface Props {
-  headCnt: number; // 관람 인원
-  setHeadCnt: React.Dispatch<React.SetStateAction<number>>;
-  seat: string[]; // 선택 좌석
-  setSeat: React.Dispatch<React.SetStateAction<string[]>>;
-  seatState: string[]; // 좌석 현황
-  roomId: number; // 상영관 ID
-}
-
-const SeatComp = ({
-  headCnt,
-  setHeadCnt,
-  seat,
-  setSeat,
-  seatState,
-  roomId,
-}: Props) => {
+const SeatComp = () => {
   const countData: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
+
+  // 영화 예매 데이터 (전역상태)
+  const { headCnt, setHeadCnt, seat, setSeat, roomId } = useReservationStore();
 
   const handleClickHeadCnt = (cnt: number) => {
     if (headCnt !== 0 && seat.length > 0) {
@@ -45,10 +33,6 @@ const SeatComp = ({
         <div className="relative h-full w-full overflow-auto">
           {/* 상영관 컴포넌트*/}
           <One
-            headCnt={headCnt}
-            seat={seat}
-            setSeat={setSeat}
-            seatState={seatState}
             Row={
               RoomData.filter((roomEl: RoomType) => roomEl.roomId === roomId)[0]
                 .row

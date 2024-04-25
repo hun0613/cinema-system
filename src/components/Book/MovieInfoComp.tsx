@@ -1,13 +1,12 @@
-import { movieType } from "@/data/dataType";
+import { useMovieStore } from "@/store/store";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 
-interface Props {
-  data: movieType | null;
-}
+const MovieInfoComp = () => {
+  // 영화 서버데이터 (전역상태)
+  const { db } = useMovieStore();
 
-const MovieInfoComp = ({ data }: Props) => {
   const [zoom, setZoom] = useState<boolean>(false); // 애니메이션 실행 트리거
 
   useEffect(() => {
@@ -20,11 +19,7 @@ const MovieInfoComp = ({ data }: Props) => {
         {/* bg */}
         <Image
           alt="movie img"
-          src={
-            data?.background_img
-              ? data?.background_img
-              : "/images/bg_empty.jpeg"
-          }
+          src={db?.background_img ? db.background_img : "/images/bg_empty.jpeg"}
           width={0}
           height={0}
           priority
@@ -48,7 +43,7 @@ const MovieInfoComp = ({ data }: Props) => {
         <div className="mt-14 flex aspect-[3/4.3] h-3/5 flex-col items-center justify-center drop-shadow-xl ">
           <Image
             alt="movie img"
-            src={data?.poster_img ? data?.poster_img : "/images/bg_empty.jpeg"}
+            src={db?.poster_img ? db.poster_img : "/images/bg_empty.jpeg"}
             width={0}
             height={0}
             sizes="100vw"
@@ -68,7 +63,7 @@ const MovieInfoComp = ({ data }: Props) => {
               : `content_animation mt-5 h-fit w-full translate-y-10 truncate text-center font-NMSNeo3 text-lg text-fontColor opacity-0 tablet:text-xl`
           }
         >
-          {data?.title ? data?.title : ""}
+          {db?.title ? db.title : ""}
         </h1>
         {/* info */}
         <div
@@ -82,7 +77,7 @@ const MovieInfoComp = ({ data }: Props) => {
           <div className="flex h-fit w-fit flex-row items-center justify-center py-1">
             <FaHeart className="text-sm text-pointColor tablet:text-base" />
             <div className="ml-2 mt-[1px] flex h-fit w-fit flex-col items-center justify-center font-NMSNeo2 text-sm text-fontColor tablet:text-base">
-              {data?.rating ? data?.rating : ""}
+              {db?.rating ? db.rating : ""}
             </div>
           </div>
           {/* reservation rate */}
@@ -91,7 +86,7 @@ const MovieInfoComp = ({ data }: Props) => {
               예매율
             </div>
             <div className="ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-sm text-fontColor tablet:text-base">
-              {data?.reservation_rate ? data?.reservation_rate : ""}%
+              {db?.reservation_rate ? db.reservation_rate : ""}%
             </div>
           </div>
         </div>

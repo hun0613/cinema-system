@@ -1,14 +1,7 @@
 import { TheaterType } from "@/data/dataType";
+import { useReservationNavStore, useReservationStore } from "@/store/store";
 import { useEffect, useState } from "react";
 import TheaterItem from "./TheaterItem";
-interface Props {
-  theaterId: number; // 영화관 ID
-  setTheaterId: React.Dispatch<React.SetStateAction<number>>; // 영화관 ID 변경함수;
-  theater: string; // 영화관 이름
-  setTheater: React.Dispatch<React.SetStateAction<string>>; // 영화관 이름 변경함수;
-  navState: number; // nav 상태
-  resetState: (nav: number) => void; // 상태 초기화 함수
-}
 
 // script kakao 객체 사용을 위한 window객체 선언
 declare global {
@@ -17,20 +10,18 @@ declare global {
   }
 }
 
-const TheaterComp = ({
-  theaterId,
-  setTheaterId,
-  theater,
-  setTheater,
-  navState,
-  resetState,
-}: Props) => {
+const TheaterComp = () => {
   // 영화관 서버 데이터
   const [theaterDb, setTheaterDb] = useState<TheaterType[] | null>(null);
   // 선택한 영화관 위도
   const [latitude, setLatitude] = useState<number>(37.402038);
   // 선택한 영화관 경도
   const [longitude, setLongitude] = useState<number>(127.108667);
+
+  // navigatioin 상태 (전역상태)
+  const { navState } = useReservationNavStore();
+  // 영화 예매 데이터 (전역상태)
+  const { theaterId } = useReservationStore();
 
   useEffect(() => {
     // 첫 랜더링 시 theater data fetch
@@ -149,12 +140,6 @@ const TheaterComp = ({
               setLatitude={setLatitude}
               longitude={theaterData.longitude}
               setLongitude={setLongitude}
-              theaterId={theaterId}
-              setTheaterId={setTheaterId}
-              theater={theater}
-              setTheater={setTheater}
-              navState={navState}
-              resetState={resetState}
             />
           );
         })}

@@ -1,3 +1,4 @@
+import { useReservationNavStore, useReservationStore } from "@/store/store";
 import { useEffect, useRef } from "react";
 
 interface Props {
@@ -8,12 +9,7 @@ interface Props {
   setLatitude: React.Dispatch<React.SetStateAction<number>>; // 위도상태변경함수
   longitude: number; // 경도
   setLongitude: React.Dispatch<React.SetStateAction<number>>; // 경도상태변경함수
-  theaterId: number; // 선택된 영화관 ID
-  setTheaterId: React.Dispatch<React.SetStateAction<number>>; // 선택된 영화관 ID 변경함수;
-  theater: string; // 선택된 영화관 이름
-  setTheater: React.Dispatch<React.SetStateAction<string>>; // 선택된 영화관 상태변경함수
-  navState: number; // nav 상태
-  resetState: (nav: number) => void; // 상태 초기화 함수
+  // resetState: (nav: number) => void; // 상태 초기화 함수
 }
 
 const TheaterItem = ({
@@ -24,20 +20,21 @@ const TheaterItem = ({
   setLatitude,
   longitude,
   setLongitude,
-  theaterId,
-  setTheaterId,
-  theater,
-  setTheater,
-  navState,
-  resetState,
+  // resetState,
 }: Props) => {
   // scroll focus 설정용 Ref
   const theaterRef = useRef<HTMLDivElement>(null);
 
+  // navigatioin 상태 (전역상태)
+  const { navState } = useReservationNavStore();
+  // 영화 예매 데이터 (전역상태)
+  const { theaterId, setTheaterId, setTeather, resetState } =
+    useReservationStore();
+
   const handleClickItem = () => {
     // 선택 영화관 변경
     setTheaterId(id);
-    setTheater(name);
+    setTeather(name);
 
     // 다음 스텝 상태 초기화
     resetState(navState);

@@ -1,25 +1,15 @@
+import { useMovieStore, useReservationStore } from "@/store/store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-interface Props {
-  moviePoster: string | undefined;
-  movieNm: string | undefined;
-  theater: string;
-  date: string;
-  time: string;
-  room: string;
-  seat: string[];
-}
 
-const Ticket = ({
-  moviePoster,
-  movieNm,
-  theater,
-  date,
-  time,
-  room,
-  seat,
-}: Props) => {
+const Ticket = () => {
   const router = useRouter();
+
+  // 영화 서버데이터 (전역상태)
+  const { db } = useMovieStore();
+
+  // 영화 예매 데이터 (전역상태)
+  const { theater, date, time, room, seat } = useReservationStore();
 
   const handleClickConfirm = () => {
     router.push(`/`);
@@ -54,7 +44,7 @@ const Ticket = ({
         <div className="mr-0 flex aspect-[3/4.3] h-[calc(100vh/3.5)] flex-col items-center justify-center rounded-sm bg-borderColor drop-shadow-lg tablet:mr-8">
           <Image
             alt="movie img"
-            src={moviePoster ? moviePoster : "/images/bg_empty.jpeg"}
+            src={db?.poster_img ? db?.poster_img : "/images/bg_empty.jpeg"}
             width={0}
             height={0}
             sizes="100vw"
@@ -74,7 +64,7 @@ const Ticket = ({
               </div>
               {/* movie title */}
               <div className="mt-2 h-fit w-full text-left font-NMSNeo3 text-2xl text-borderColor/70">
-                {movieNm}
+                {db?.title}
               </div>
             </div>
           </div>

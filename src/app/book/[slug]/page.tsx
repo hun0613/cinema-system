@@ -2,15 +2,17 @@
 import BodyArea from "@/components/Book/BodyArea";
 import MovieInfoComp from "@/components/Book/MovieInfoComp";
 import Footer from "@/components/Home/Footer";
-import { movieType } from "@/data/dataType";
+import { useMovieStore } from "@/store/store";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Book = ({ params }: { params: { slug: number } }) => {
-  const [db, setDb] = useState<movieType | null>(null); // 서버 데이터
   const router = useRouter();
+
+  // 영화 서버데이터 (전역상태)
+  const { setDb } = useMovieStore();
 
   useEffect(() => {
     // 최초 랜더링 시 데이터 받아오기
@@ -36,15 +38,11 @@ const Book = ({ params }: { params: { slug: number } }) => {
 
       <div className="flex h-full min-h-screen w-full flex-col items-center justify-start overflow-y-auto overflow-x-hidden bg-bgColor">
         {/* 영화정보 */}
-        <MovieInfoComp data={db} />
+        <MovieInfoComp />
         {/* body frame */}
         <div className="bg-bgColors flex h-fit w-full max-w-[1100px] flex-col items-center justify-start border-b border-borderColor ">
           {/* content Area */}
-          <BodyArea
-            movieId={+params.slug}
-            movieNm={db?.title}
-            moviePoster={db?.poster_img}
-          />
+          <BodyArea />
         </div>
 
         {/* footer */}
