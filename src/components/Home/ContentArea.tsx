@@ -44,6 +44,8 @@ const ContentArea = ({ data }: Data) => {
 
   return (
     <>
+      {/* test 모달 */}
+      <Modal setModalControlState={setModalControlState}>hello</Modal>
       {/* 상세보기 모달 */}
       {modalControlState ? (
         <Modal setModalControlState={setModalControlState}>
