@@ -45,7 +45,11 @@ const ContentArea = ({ data }: Data) => {
   return (
     <>
       {/* test 모달 */}
-      <Modal setModalControlState={setModalControlState}>hello</Modal>
+      <Modal setModalControlState={setModalControlState}>
+        <div className="h-[calc(100vh/1.5)] w-full bg-slate-500 tablet:h-[calc(100vh/2)]">
+          hello
+        </div>
+      </Modal>
       {/* 상세보기 모달 */}
       {modalControlState ? (
         <Modal setModalControlState={setModalControlState}>
