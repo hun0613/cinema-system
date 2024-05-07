@@ -52,3 +52,9 @@ export interface ReservationNavState {
   navState: number;
   setNavState: (el: number) => void;
 }
+
+export interface AuthState {
+  // 로그인/회원가입 모드상태
+  authState: string;
+  setAuthState: (el: string) => void;
+}

@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import { ReservationData, ReservationNavState, movieData } from "./types";
+import {
+  AuthState,
+  ReservationData,
+  ReservationNavState,
+  movieData,
+} from "./types";
 
 export const useMovieStore = create<movieData>((set) => ({
   // server db
@@ -89,5 +94,13 @@ export const useReservationNavStore = create<ReservationNavState>((set) => ({
   navState: 1,
   setNavState: (el) => {
     set((state) => ({ navState: el }));
+  },
+}));
+
+export const useAuthStore = create<AuthState>((set) => ({
+  // 로그인 / 회원가입 상태
+  authState: "signIn",
+  setAuthState: (el) => {
+    set((state) => ({ authState: el }));
   },
 }));
