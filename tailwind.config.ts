@@ -29,6 +29,7 @@ const config: Config = {
         pointColor: "#FF0000",
         screenColor: "#161616",
         titleColor: "#2D2D2D",
+        authPointColor: "#EE4C4C",
       },
       screens: {
         desktop: "1100px",

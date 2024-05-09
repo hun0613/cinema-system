@@ -57,4 +57,7 @@ export interface AuthState {
   // 로그인/회원가입 모드상태
   authState: string;
   setAuthState: (el: string) => void;
+  // 인증모달 활성화 여부
+  modalState: boolean;
+  setModalState: (el: boolean) => void;
 }

@@ -30,7 +30,7 @@ const Ticket = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-start">
+    <div className="flex h-full w-full flex-col items-center justify-start p-5 tablet:p-10">
       {/* Ticket Title */}
       <div className="flex h-fit w-full flex-col items-center justify-center font-NMSNeo5 text-2xl text-borderColor/70 shadow-bgColor drop-shadow-md">
         Ticket
