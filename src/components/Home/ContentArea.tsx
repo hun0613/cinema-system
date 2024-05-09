@@ -1,8 +1,11 @@
 "use client";
 import { movieType } from "@/data/dataType";
 import useWindowSize from "@/hooks/useWindowSize";
+import { useAuthStore } from "@/store/store";
 import { useState } from "react";
 import Modal from "../Reuse/Modal";
+import Login from "./Auth/Login";
+import SignUp from "./Auth/SignUp";
 import Card from "./Card";
 import DetailModal from "./DetailModal";
 import MobileNavigation from "./MobileNavigation";
@@ -19,6 +22,9 @@ const ContentArea = ({ data }: Data) => {
   const [hoverCardId, setHoverCardId] = useState<number>(0); // hover 시 활성화 되는 컨텐츠 id
   const [modalControlState, setModalControlState] = useState<boolean>(false); // 상세보기 모달 컨트롤 상태
   const [modalContentId, setModalContentId] = useState<number>(0); // 상세보기 모달에 보여지는 컨텐츠 id
+
+  // 인증모달 전역 상태 (모달 재사용 컴포넌트의 props로 넘겨줌)
+  const { modalState, setModalState } = useAuthStore();
 
   // window width size
   let width: number = useWindowSize();
@@ -44,12 +50,17 @@ const ContentArea = ({ data }: Data) => {
 
   return (
     <>
-      {/* test 모달 */}
-      <Modal setModalControlState={setModalControlState}>
-        <div className="h-[calc(100vh/1.5)] w-full bg-slate-500 tablet:h-[calc(100vh/2)]">
-          hello
-        </div>
-      </Modal>
+      {/* 인증 모달 */}
+      {modalState && (
+        <Modal setModalControlState={setModalState}>
+          {/* Container */}
+          <div className="relative flex h-[calc(100vh/1.5)] w-full flex-row overflow-hidden rounded-xl tablet:h-[calc(100vh/1.8)]">
+            <Login />
+            <SignUp />
+          </div>
+        </Modal>
+      )}
+
       {/* 상세보기 모달 */}
       {modalControlState ? (
         <Modal setModalControlState={setModalControlState}>

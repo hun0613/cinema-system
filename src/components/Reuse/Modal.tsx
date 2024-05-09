@@ -6,7 +6,9 @@ const Modal = ({
   extraFuction,
 }: {
   children: React.ReactNode;
-  setModalControlState: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalControlState:
+    | React.Dispatch<React.SetStateAction<boolean>>
+    | ((el: boolean) => void);
   extraFuction?: () => void;
 }) => {
   const [renderState, setRenderState] = useState<boolean>(false);
@@ -41,8 +43,8 @@ const Modal = ({
         }
         className={
           renderState
-            ? `flex h-fit w-[90%] max-w-[900px] translate-y-0 flex-col items-center justify-center rounded-xl bg-white/90 p-5 opacity-100 drop-shadow-xl duration-500 ease-in-out tablet:w-[90%] tablet:p-10`
-            : `flex h-fit w-[90%] max-w-[900px] translate-y-10 flex-col items-center justify-center rounded-xl bg-white/90 p-5 opacity-0 drop-shadow-xl tablet:w-[90%] tablet:p-10`
+            ? `flex h-fit w-[90%] max-w-[900px] translate-y-0 flex-col items-center justify-center rounded-xl bg-white/90 opacity-100 drop-shadow-xl duration-500 ease-in-out tablet:w-[90%]`
+            : `flex h-fit w-[90%] max-w-[900px] translate-y-10 flex-col items-center justify-center rounded-xl bg-white/90 opacity-0 drop-shadow-xl tablet:w-[90%]`
         }
       >
         {children}

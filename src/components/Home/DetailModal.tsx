@@ -8,7 +8,7 @@ interface Props {
 
 const DetailModal = ({ setModalControlState, data }: Props) => {
   return (
-    <div className="flex h-fit w-full flex-col items-start justify-start">
+    <div className="flex h-fit w-full flex-col items-start justify-start p-5 tablet:p-10">
       {/* title */}
       <h1 className="h-fit w-fit p-2 text-left font-NMSNeo3 text-lg text-borderColor tablet:text-xl">
         {data.title}
