@@ -1,6 +1,6 @@
+import ContentArea from "@/components/Home/ContentArea";
 import Footer from "@/components/Home/Footer";
 import Screen from "@/components/Home/Screen";
-import ContentArea from "../components/Home/ContentArea";
 
 export default async function Home() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api`, {

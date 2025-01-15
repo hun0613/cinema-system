@@ -1,12 +1,15 @@
-import { RoomData, RoomType } from "@/data/dummy/roomData";
 import { useReservationStore } from "@/store/store";
+import { useEffect, useState } from "react";
 import One from "./Room/One";
 
 const SeatComp = () => {
   const countData: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
 
   // 영화 예매 데이터 (전역상태)
-  const { headCnt, setHeadCnt, seat, setSeat, roomId } = useReservationStore();
+  const { headCnt, setHeadCnt, seat, setSeat, roomId, theaterId } =
+    useReservationStore();
+
+  const [room, setRoom] = useState([]);
 
   const handleClickHeadCnt = (cnt: number) => {
     if (headCnt !== 0 && seat.length > 0) {
@@ -21,6 +24,14 @@ const SeatComp = () => {
     }
   };
 
+  useEffect(() => {
+    fetch(`/book/api/room?theater_id=${theaterId}&room_id=${roomId}`)
+      .then((res) => res.json())
+      .then((res2) => {
+        setRoom(res2);
+      });
+  }, []);
+
   return (
     <div className="flex h-[calc(100vh/1.3)] w-full  flex-col items-center justify-start rounded-xl p-2 mobile:h-[calc(100vh/1.8)] mobile:p-5">
       {/* screen */}
@@ -32,24 +43,7 @@ const SeatComp = () => {
         {/* 상영관 컨테이너 */}
         <div className="relative h-full w-full overflow-auto">
           {/* 상영관 컴포넌트*/}
-          <One
-            Row={
-              RoomData.filter((roomEl: RoomType) => roomEl.roomId === roomId)[0]
-                .row
-            }
-            Col={
-              RoomData.filter((roomEl: RoomType) => roomEl.roomId === roomId)[0]
-                .col
-            }
-            Sp={
-              RoomData.filter((roomEl: RoomType) => roomEl.roomId === roomId)[0]
-                .sp
-            }
-            Ep={
-              RoomData.filter((roomEl: RoomType) => roomEl.roomId === roomId)[0]
-                .ep
-            }
-          />
+          {!!room.length && <One room={room[0]} />}
         </div>
         {/* 인원선택 */}
         <div className="absolute bottom-0 flex h-fit w-fit flex-col items-center justify-center rounded-lg border border-borderColor bg-bgColor/80 px-3 py-5 mobile:px-5 tablet:w-fit">

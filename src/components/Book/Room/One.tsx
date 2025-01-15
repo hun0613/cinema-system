@@ -4,14 +4,20 @@ import { isMobile } from "react-device-detect";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-interface Props {
-  Row: string[]; // 상영관 행 정보
-  Col: string[]; // 상영관 열 정보
-  Sp: number[]; // 좌석간 간격 시작지점 (배열 인덱스 기준 (0 ~))
-  Ep: number[]; // 좌석간 간격 종료지점 (배열 인덱스 기준 (0 ~))
-}
+type Room = {
+  row: string[]; // 상영관 행 정보
+  col: string[]; // 상영관 열 정보
+  sp: number[]; // 좌석간 간격 시작지점 (배열 인덱스 기준 (0 ~))
+  ep: number[]; // 좌석간 간격 종료지점 (배열 인덱스 기준 (0 ~))
+};
 
-const One = ({ Row, Col, Sp, Ep }: Props) => {
+type OneProps = {
+  room: Room;
+};
+
+const One = (props: OneProps) => {
+  const { row, col, sp, ep } = props.room;
+
   // 상영관 구조 상태
   const [seatStructure, setSeatStructure] = useState<string[][]>([[]]);
 
@@ -50,7 +56,7 @@ const One = ({ Row, Col, Sp, Ep }: Props) => {
         )?.textContent;
 
         /** EP 선택 시 */
-        if (Ep.includes(Number(col.slice(1, 3)) - 1)) {
+        if (ep.includes(Number(col.slice(1, 3)) - 1)) {
           /** ---- 좌측 좌석이 선택좌석 혹은 이미 예약된 좌석일 경우 */
           if ((leftSeat && seat.includes(leftSeat)) || leftSeat === "") {
             // console.log("left seat is already booked. so, select 1 seat");
@@ -135,7 +141,7 @@ const One = ({ Row, Col, Sp, Ep }: Props) => {
         )?.textContent;
 
         /** EP 선택 시 */
-        if (Ep.includes(Number(col.slice(1, 3)) - 1)) {
+        if (ep.includes(Number(col.slice(1, 3)) - 1)) {
           /** ---- 좌측 좌석이 선택좌석 혹은 이미 예약된 좌석일 경우 */
           if ((leftSeat && seat.includes(leftSeat)) || leftSeat === "") {
             // console.log("left seat is already booked. so, select 1 seat");
@@ -220,7 +226,7 @@ const One = ({ Row, Col, Sp, Ep }: Props) => {
         )?.textContent;
 
         /** EP 선택 시 */
-        if (Ep.includes(Number(col.slice(1, 3)) - 1)) {
+        if (ep.includes(Number(col.slice(1, 3)) - 1)) {
           /** ---- 좌측 좌석이 선택좌석 혹은 이미 예약된 좌석일 경우 */
           if ((leftSeat && seat.includes(leftSeat)) || leftSeat === "") {
             // console.log("left seat is already booked. so, select 1 seat");
@@ -265,10 +271,10 @@ const One = ({ Row, Col, Sp, Ep }: Props) => {
     if (seatStructure[0].length === 0) {
       let seatArr = [];
 
-      for (let i = 0; i < Row.length; i++) {
+      for (let i = 0; i < row.length; i++) {
         let RowData = [];
-        for (let j = 0; j < Col.length; j++) {
-          RowData.push(Row[i] + Col[j]);
+        for (let j = 0; j < col.length; j++) {
+          RowData.push(row[i] + col[j]);
         }
         seatArr.push(RowData);
       }
@@ -305,9 +311,9 @@ const One = ({ Row, Col, Sp, Ep }: Props) => {
                     id={col}
                     key={`seat_${col}`}
                     className={
-                      Sp.includes(colIdx)
+                      sp.includes(colIdx)
                         ? `seat mx-[3px] ml-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/30 font-NMSNeo4 text-[9px] text-fontColor/30`
-                        : Ep.includes(colIdx)
+                        : ep.includes(colIdx)
                           ? `seat mx-[3px] mr-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/30 font-NMSNeo4 text-[9px] text-fontColor/30`
                           : `seat mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/30 font-NMSNeo4 text-[9px] text-fontColor/30`
                     }
@@ -322,9 +328,9 @@ const One = ({ Row, Col, Sp, Ep }: Props) => {
                     id={col}
                     key={`seat_${col}`}
                     className={
-                      Sp.includes(colIdx)
+                      sp.includes(colIdx)
                         ? `mx-[3px] ml-10 flex aspect-square w-7 flex-col items-center justify-center rounded-md border border-borderColor font-NMSNeo4 text-[9px] text-fontColor`
-                        : Ep.includes(colIdx)
+                        : ep.includes(colIdx)
                           ? `mx-[3px] mr-10 flex aspect-square w-7 flex-col items-center justify-center rounded-md border border-borderColor font-NMSNeo4 text-[9px] text-fontColor`
                           : `mx-[3px] flex aspect-square w-7 flex-col items-center justify-center rounded-md border border-borderColor font-NMSNeo4 text-[9px] text-fontColor`
                     }
@@ -340,9 +346,9 @@ const One = ({ Row, Col, Sp, Ep }: Props) => {
                     onClick={() => handleClickSelectSeat(col)}
                     key={`seat_${col}`}
                     className={
-                      Sp.includes(colIdx)
+                      sp.includes(colIdx)
                         ? `mx-[3px] ml-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 !bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
-                        : Ep.includes(colIdx)
+                        : ep.includes(colIdx)
                           ? `mx-[3px] mr-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 !bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
                           : `mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 !bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
                     }
@@ -364,9 +370,9 @@ const One = ({ Row, Col, Sp, Ep }: Props) => {
                     id={col}
                     key={`seat_${col}`}
                     className={
-                      Sp.includes(colIdx)
+                      sp.includes(colIdx)
                         ? `seat mx-[3px] ml-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor`
-                        : Ep.includes(colIdx)
+                        : ep.includes(colIdx)
                           ? `seat mx-[3px] mr-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor`
                           : `seat mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor`
                     }
