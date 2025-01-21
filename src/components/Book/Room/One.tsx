@@ -4,7 +4,7 @@ import { isMobile } from "react-device-detect";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-type Room = {
+export type Room = {
   row: string[]; // 상영관 행 정보
   col: string[]; // 상영관 열 정보
   sp: number[]; // 좌석간 간격 시작지점 (배열 인덱스 기준 (0 ~))

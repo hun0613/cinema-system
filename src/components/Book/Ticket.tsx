@@ -1,12 +1,20 @@
-import { useMovieStore, useReservationStore } from "@/store/store";
+import { getFetchMovieQuery } from "@/actions/movies/useFetchMovieAction";
+import { useReservationStore } from "@/store/store";
+import { useSuspenseQueries } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const Ticket = () => {
+export type TicketProps = {
+  movieId: number;
+} & JSX.IntrinsicElements["div"];
+
+const Ticket: React.FC<TicketProps> = (props) => {
+  const { movieId } = props;
   const router = useRouter();
 
-  // 영화 서버데이터 (전역상태)
-  const { db } = useMovieStore();
+  const [{ data: movie }] = useSuspenseQueries({
+    queries: [getFetchMovieQuery(movieId)],
+  });
 
   // 영화 예매 데이터 (전역상태)
   const { theater, date, time, room, seat } = useReservationStore();
@@ -44,7 +52,7 @@ const Ticket = () => {
         <div className="mr-0 flex aspect-[3/4.3] h-[calc(100vh/3.5)] flex-col items-center justify-center rounded-sm bg-borderColor drop-shadow-lg tablet:mr-8">
           <Image
             alt="movie img"
-            src={db?.poster_img ? db?.poster_img : "/images/bg_empty.jpeg"}
+            src={movie.poster_img}
             width={0}
             height={0}
             sizes="100vw"
@@ -64,7 +72,7 @@ const Ticket = () => {
               </div>
               {/* movie title */}
               <div className="mt-2 h-fit w-full text-left font-NMSNeo3 text-2xl text-borderColor/70">
-                {db?.title}
+                {movie.title}
               </div>
             </div>
           </div>

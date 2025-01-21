@@ -1,10 +1,9 @@
-import {
-  useMovieStore,
-  useReservationNavStore,
-  useReservationStore,
-} from "@/store/store";
+"use client";
+import useUpdateSeatAction from "@/actions/movies/useUpdateSeatAction";
+import { useReservationNavStore, useReservationStore } from "@/store/store";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { ToastContainer } from "react-toastify";
 import Modal from "../Reuse/Modal";
 import DateComp from "./DateComp";
 import Navigation from "./Navigation";
@@ -12,12 +11,16 @@ import SeatComp from "./SeatComp";
 import TheaterComp from "./TheaterComp";
 import Ticket from "./Ticket";
 
-const BodyArea = () => {
+export type BodyAreaProps = {
+  movieId: number;
+} & JSX.IntrinsicElements["div"];
+
+const BodyArea: React.FC<BodyAreaProps> = (props) => {
+  const { movieId } = props;
+
   const router = useRouter();
 
-  // 영화 서버데이터 (전역상태)
-  const { db } = useMovieStore();
-
+  const { mutateAsync: updateSeat } = useUpdateSeatAction();
   const { navState, setNavState } = useReservationNavStore();
   const { theaterId, date, time, room, roomId, headCnt, seat, seatState } =
     useReservationStore();
@@ -37,62 +40,36 @@ const BodyArea = () => {
 
   const [ticketModalState, setTicketModalState] = useState<boolean>(false);
 
-  // const resetState = (nav: number) => {
-  //   if (nav === 1) {
-  //     setDate(
-  //       `${new Date().getFullYear()}${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1}${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`,
-  //     );
-  //     setRoom("");
-  //     setRoomId(0);
-  //     setTime("");
-  //     setHeadCnt(0);
-  //     setSeat([]);
-  //     setSeatState([""]);
-  //   } else if (nav === 2) {
-  //     setHeadCnt(0);
-  //     setSeat([]);
-  //   }
-  // };
-
   const handleClickNextBtn = () => {
     setNavState(navState + 1);
   };
   const handleClickPrevBtn = () => {
     setNavState(navState - 1);
   };
-  const handleClickBookBtn = () => {
+  const handleClickBookBtn = async () => {
     const body = {
       theater_id: theaterId,
       room_id: roomId,
-      movie_id: db?.id,
+      movie_id: movieId,
       date: date,
       time: time,
       seat: [...seat, ...seatState],
     };
 
-    fetch(`/book/api/updateSeat`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    })
-      .then((res) => res.json())
-      .then((res2) => {
-        if (res2.res === "success") {
-          setTicketModalState(true);
-        }
-      });
+    await updateSeat(body);
+    setTicketModalState(true);
   };
 
   return (
     <>
+      <ToastContainer />
+
       {ticketModalState && (
         <Modal
           setModalControlState={setTicketModalState}
           extraFuction={() => router.push(`/`)}
         >
-          <Ticket />
+          <Ticket movieId={movieId} />
         </Modal>
       )}
       <div className="flex h-full w-full flex-col items-center justify-start">
@@ -100,13 +77,15 @@ const BodyArea = () => {
         <Navigation />
         {/* Reservation Area */}
         <div className="mb-5 flex h-fit w-[90%] flex-col items-center justify-center rounded-xl border border-borderColor tablet:h-[calc(100vh/1.8)]">
-          {navState === 1 ? (
-            <TheaterComp />
-          ) : navState === 2 ? (
-            <DateComp />
-          ) : navState === 3 ? (
-            <SeatComp />
-          ) : null}
+          <Suspense fallback={<></>}>
+            {navState === 1 ? (
+              <TheaterComp />
+            ) : navState === 2 ? (
+              <DateComp movieId={movieId} />
+            ) : navState === 3 ? (
+              <SeatComp />
+            ) : null}
+          </Suspense>
         </div>
 
         {/* btn */}

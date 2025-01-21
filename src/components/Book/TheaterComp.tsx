@@ -1,5 +1,6 @@
+import { getFetchTheatersQuery } from "@/actions/theaters/useFetchTheatersAction";
 import { TheaterType } from "@/data/dataType";
-import { useReservationNavStore, useReservationStore } from "@/store/store";
+import { useSuspenseQueries } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import TheaterItem from "./TheaterItem";
 
@@ -11,43 +12,15 @@ declare global {
 }
 
 const TheaterComp = () => {
-  // 영화관 서버 데이터
-  const [theaterDb, setTheaterDb] = useState<TheaterType[] | null>(null);
+  const [{ data: theaters }] = useSuspenseQueries({
+    queries: [getFetchTheatersQuery()],
+  });
   // 선택한 영화관 위도
   const [latitude, setLatitude] = useState<number>(37.402038);
   // 선택한 영화관 경도
   const [longitude, setLongitude] = useState<number>(127.108667);
 
-  // navigatioin 상태 (전역상태)
-  const { navState } = useReservationNavStore();
-  // 영화 예매 데이터 (전역상태)
-  const { theaterId } = useReservationStore();
-
   useEffect(() => {
-    // 첫 랜더링 시 theater data fetch
-    if (!theaterDb) {
-      fetch(`/book/api/theater`)
-        .then((res) => res.json())
-        .then((res2) => {
-          setTheaterDb(res2);
-          // 영화관이 선택된 상태에서 랜더링 될 때 선택된 데이터로 위도, 경도 정의
-          if (
-            theaterId !== 0 &&
-            latitude === 37.402038 &&
-            longitude === 127.108667
-          ) {
-            setLatitude(
-              res2.filter((el: TheaterType) => el.theater_id === theaterId)[0]
-                .latitude,
-            );
-            setLongitude(
-              res2.filter((el: TheaterType) => el.theater_id === theaterId)[0]
-                .longitude,
-            );
-          }
-        });
-    }
-
     // kakao map
     // 스크립트에 kakao 스크립트 할당
     const kakaoMapScript = document.createElement("script");
@@ -67,22 +40,17 @@ const TheaterComp = () => {
         let map = new window.kakao.maps.Map(container, options);
 
         // 마커를 표시할 위치와 title 객체 배열입니다
-        let positions = theaterDb
-          ? theaterDb.map((theaterInfo: TheaterType, idx: number) => {
-              return {
-                title: theaterInfo.name,
-                latlng: new window.kakao.maps.LatLng(
-                  theaterInfo.latitude,
-                  theaterInfo.longitude,
-                ),
-              };
-            })
-          : [
-              {
-                title: "카카오",
-                latlng: new window.kakao.maps.LatLng(33.450705, 126.570677),
-              },
-            ];
+        let positions = theaters.map(
+          (theaterInfo: TheaterType, idx: number) => {
+            return {
+              title: theaterInfo.name,
+              latlng: new window.kakao.maps.LatLng(
+                theaterInfo.latitude,
+                theaterInfo.longitude,
+              ),
+            };
+          },
+        );
 
         // 마커 이미지의 이미지 주소입니다
         let imageSrc =
@@ -117,19 +85,19 @@ const TheaterComp = () => {
       {/* 영화관 리스트 */}
       <div className="mb-3 mr-0 flex h-fit w-full flex-row items-center justify-start overflow-x-auto overflow-y-auto tablet:mb-0 tablet:mr-5 tablet:h-full tablet:w-[30%] tablet:flex-col tablet:overflow-y-auto tablet:py-0">
         {/* 데이터 fetching... */}
-        {!theaterDb ? (
+        {!theaters ? (
           <div className="flex h-full w-full flex-col items-center justify-center font-NMSNeo2 text-xs text-fontColor tablet:text-sm">
             데이터 가져오는중...🤔
           </div>
         ) : null}
         {/* 데이터가 존재하지 않을 경우 */}
-        {theaterDb?.length === 0 ? (
+        {theaters.length === 0 ? (
           <div className="flex h-full w-full flex-col items-center justify-center font-NMSNeo2 text-xs text-fontColor tablet:text-sm">
             상영중인 영화관이 없어요...😱
           </div>
         ) : null}
         {/* 데이터가 존재할 경우 */}
-        {theaterDb?.map((theaterData: TheaterType, idx: number) => {
+        {theaters.map((theaterData: TheaterType, idx: number) => {
           return (
             <TheaterItem
               key={`${theaterData.theater_id}+idx`}

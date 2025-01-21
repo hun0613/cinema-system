@@ -1,23 +1,27 @@
 "use client";
+import { getFetchMoviesQuery } from "@/actions/movies/useFetchMoviesAction";
 import { movieType } from "@/data/dataType";
 import useWindowSize from "@/hooks/useWindowSize";
+import { useSuspenseQueries } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ScreenIdxBtn from "./ScreenIdxBtn";
 
-interface Data {
-  data: movieType[];
-}
+const Screen = () => {
+  const [{ data: movies }] = useSuspenseQueries({
+    queries: [getFetchMoviesQuery()],
+  });
+  let filteredMovie: movieType[] = movies.filter(
+    (el) => el.classification === 1,
+  );
 
-const Screen = ({ data }: Data) => {
   const [zoom, setZoom] = useState<boolean>(false);
   const [contentIdx, setContentIdx] = useState<number>(0);
 
   const router = useRouter();
 
   let width: number = useWindowSize();
-  let filteredMovie: movieType[] = data.filter((el) => el.classification === 1);
 
   const changeContent = () => {
     // 마지막 컨텐츠에서 전환될 때
@@ -40,7 +44,7 @@ const Screen = ({ data }: Data) => {
 
     clearTimeout(0);
 
-    // 캐러셀 컨텐츠 전환 (15초 간격)
+    // 캐러셀 컨텐츠 전환 (10초 간격)
     let timer = setTimeout(() => {
       changeContent();
     }, 10000);

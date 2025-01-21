@@ -1,20 +1,28 @@
+import { getFetchDatesQuery } from "@/actions/dates/useFetchDatesAction";
+import { getFetchMovieTimesQuery } from "@/actions/movies/useFetchMovieTimesAction";
 import { DateType, MovieTimeType } from "@/data/dataType";
-import { useMovieStore, useReservationStore } from "@/store/store";
+import { useReservationStore } from "@/store/store";
+import { useSuspenseQueries } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import DateItem from "./DateItem";
 import RoomItem from "./RoomItem";
 
-const DateComp = () => {
-  // 영화 서버데이터 (전역상태)
-  const { db } = useMovieStore();
+export type DateCompProps = {
+  movieId: number;
+} & JSX.IntrinsicElements["div"];
 
-  // 영화 예매 데이터 (전역상태)
+const DateComp: React.FC<DateCompProps> = (props) => {
+  const { movieId } = props;
   const { date, theaterId } = useReservationStore();
 
   // 날짜 서버 데이터
-  const [dateDb, setDateDb] = useState<DateType[] | null>(null);
-  // 상영시간표 서버 데이터
-  const [movieTimeDb, setMovieTimeDb] = useState<MovieTimeType[] | null>(null);
+  const [{ data: dates }, { data: movieTimes }] = useSuspenseQueries({
+    queries: [
+      getFetchDatesQuery(),
+      getFetchMovieTimesQuery(theaterId, movieId, date),
+    ],
+  });
+
   // 상영관 리스트
   const [roomList, setRoomList] = useState<string[]>([""]);
   // 상영관 ID 리스트
@@ -36,24 +44,7 @@ const DateComp = () => {
   };
 
   useEffect(() => {
-    // 날짜 데이터 fetch
-    if (!dateDb) {
-      fetch(`/book/api/date`)
-        .then((res) => res.json())
-        .then((res2) => {
-          setDateDb(res2);
-        });
-    }
-
-    // 상영시간표 데이터 fetch
-    fetch(
-      `/book/api/movieTime?theater_id=${theaterId}&movie_id=${db?.id}&date=${date}`,
-    )
-      .then((res) => res.json())
-      .then((res2) => {
-        setMovieTimeDb(res2);
-        extractRoomTimeData(res2);
-      });
+    extractRoomTimeData(movieTimes);
   }, [date]);
 
   return (
@@ -66,24 +57,24 @@ const DateComp = () => {
         </div>
         {/* date content */}
         {/* 데이터 fetching... */}
-        {!dateDb ? (
+        {!dates ? (
           <div className="flex h-full w-full flex-col items-center justify-center font-NMSNeo2 text-xs text-fontColor tablet:text-sm">
             데이터 가져오는중...🤔
           </div>
         ) : null}
         {/* 데이터가 존재하지 않을 경우 */}
-        {dateDb?.length === 0 ? (
+        {dates?.length === 0 ? (
           <div className="flex h-full w-full flex-col items-center justify-center font-NMSNeo2 text-xs text-fontColor tablet:text-sm">
             날짜정보가 존재하지않아요...😱
           </div>
         ) : null}
         {/* 데이터가 존재할 경우 */}
-        {dateDb ? (
+        {dates ? (
           <div
             id="dateArea"
             className="flex h-full w-full flex-row items-center justify-start overflow-x-auto overflow-y-auto tablet:flex-col tablet:overflow-y-auto "
           >
-            {dateDb?.map((dateEl: DateType, idx: number) => {
+            {dates.map((dateEl: DateType, idx: number) => {
               return (
                 <DateItem
                   key={`${dateEl.date}+idx`}
@@ -105,18 +96,18 @@ const DateComp = () => {
           상영관 / 시간
         </div>
         {/* 데이터 fetching... */}
-        {!movieTimeDb ? (
+        {!movieTimes ? (
           <div className="flex h-fit w-full flex-col items-center justify-center p-5 font-NMSNeo2 text-xs text-fontColor tablet:text-sm">
             데이터 가져오는중...🤔
           </div>
         ) : null}
         {/* 데이터가 존재하지 않을 경우 */}
-        {movieTimeDb?.length === 0 ? (
+        {movieTimes.length === 0 ? (
           <div className="flex h-fit w-full flex-col items-center justify-center p-5 font-NMSNeo2 text-xs text-fontColor tablet:text-sm">
             상영정보가 존재하지않아요...😱
           </div>
         ) : null}
-        {movieTimeDb ? (
+        {movieTimes ? (
           <div className="flex h-full w-full flex-col items-center justify-start overflow-y-auto rounded-xl">
             {roomList.map((roomEl: string, idx: number) => {
               return (
@@ -124,10 +115,10 @@ const DateComp = () => {
                   key={`room_${roomEl}`}
                   currRoom={roomEl}
                   currRoomId={roomIdList[idx]}
-                  timeList={movieTimeDb?.map(
+                  timeList={movieTimes.map(
                     (movieTime: MovieTimeType) => movieTime.time,
                   )}
-                  movieTimeDb={movieTimeDb}
+                  movieTimeDb={movieTimes}
                 />
               );
             })}

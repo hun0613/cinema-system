@@ -1,5 +1,6 @@
+import { getFetchRoomQuery } from "@/actions/rooms/useFetchRoomAction";
 import { useReservationStore } from "@/store/store";
-import { useEffect, useState } from "react";
+import { useSuspenseQueries } from "@tanstack/react-query";
 import One from "./Room/One";
 
 const SeatComp = () => {
@@ -9,7 +10,10 @@ const SeatComp = () => {
   const { headCnt, setHeadCnt, seat, setSeat, roomId, theaterId } =
     useReservationStore();
 
-  const [room, setRoom] = useState([]);
+  // const [room, setRoom] = useState([]);
+  const [{ data: room }] = useSuspenseQueries({
+    queries: [getFetchRoomQuery(theaterId, roomId)],
+  });
 
   const handleClickHeadCnt = (cnt: number) => {
     if (headCnt !== 0 && seat.length > 0) {
@@ -24,13 +28,13 @@ const SeatComp = () => {
     }
   };
 
-  useEffect(() => {
-    fetch(`/book/api/room?theater_id=${theaterId}&room_id=${roomId}`)
-      .then((res) => res.json())
-      .then((res2) => {
-        setRoom(res2);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`/book/api/room?theater_id=${theaterId}&room_id=${roomId}`)
+  //     .then((res) => res.json())
+  //     .then((res2) => {
+  //       setRoom(res2);
+  //     });
+  // }, []);
 
   return (
     <div className="flex h-[calc(100vh/1.3)] w-full  flex-col items-center justify-start rounded-xl p-2 mobile:h-[calc(100vh/1.8)] mobile:p-5">
@@ -43,7 +47,7 @@ const SeatComp = () => {
         {/* 상영관 컨테이너 */}
         <div className="relative h-full w-full overflow-auto">
           {/* 상영관 컴포넌트*/}
-          {!!room.length && <One room={room[0]} />}
+          <One room={room} />
         </div>
         {/* 인원선택 */}
         <div className="absolute bottom-0 flex h-fit w-fit flex-col items-center justify-center rounded-lg border border-borderColor bg-bgColor/80 px-3 py-5 mobile:px-5 tablet:w-fit">

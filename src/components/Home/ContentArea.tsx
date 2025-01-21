@@ -1,7 +1,9 @@
 "use client";
+import { getFetchMoviesQuery } from "@/actions/movies/useFetchMoviesAction";
 import { movieType } from "@/data/dataType";
 import useWindowSize from "@/hooks/useWindowSize";
 import { useAuthStore } from "@/store/store";
+import { useSuspenseQueries } from "@tanstack/react-query";
 import { useState } from "react";
 import Modal from "../Reuse/Modal";
 import Login from "./Auth/Login";
@@ -11,11 +13,11 @@ import DetailModal from "./DetailModal";
 import MobileNavigation from "./MobileNavigation";
 import Navigation from "./Navigation";
 
-interface Data {
-  data: movieType[];
-}
+const ContentArea = () => {
+  const [{ data: movies }] = useSuspenseQueries({
+    queries: [getFetchMoviesQuery()],
+  });
 
-const ContentArea = ({ data }: Data) => {
   const [navState, setNavState] = useState<number>(1); // navigation 상태
   const [searchValue, setSearchValue] = useState<string>(""); // 검색 키워드
   const [page, setPage] = useState<number>(1); // 현재 page
@@ -29,7 +31,7 @@ const ContentArea = ({ data }: Data) => {
   // window width size
   let width: number = useWindowSize();
 
-  let filteredMovie: movieType[] = data.filter((el) => {
+  let filteredMovie: movieType[] = movies.filter((el) => {
     // navigation이 검색에 가 있을 때
     if (navState === 4) {
       // 검색 키워드가 포함된 컨텐츠 필터링
@@ -66,7 +68,7 @@ const ContentArea = ({ data }: Data) => {
         <Modal setModalControlState={setModalControlState}>
           <DetailModal
             setModalControlState={setModalControlState}
-            data={data.filter((movie) => movie.id === modalContentId)[0]}
+            data={movies.filter((movie) => movie.id === modalContentId)[0]}
           />
         </Modal>
       ) : null}
