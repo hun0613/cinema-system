@@ -1,6 +1,7 @@
 import { DateType } from "@/data/dataType";
 import { UseSuspenseQueryOptions } from "@tanstack/react-query";
 import axios from "axios";
+import { header } from "..";
 
 export const getFetchDatesQuery = (): UseSuspenseQueryOptions<
   DateType[],
@@ -10,8 +11,7 @@ export const getFetchDatesQuery = (): UseSuspenseQueryOptions<
     queryKey: ["date"],
     queryFn: async () => {
       const res = await axios.get(`/book/api/date`, {
-        baseURL: process.env.NEXT_PUBLIC_API,
-        withCredentials: true,
+        ...header,
       });
       return res.data;
     },

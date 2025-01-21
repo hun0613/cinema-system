@@ -1,6 +1,7 @@
 import { MovieTimeType } from "@/data/dataType";
 import { UseSuspenseQueryOptions } from "@tanstack/react-query";
 import axios from "axios";
+import { header } from "..";
 
 export const getFetchMovieTimesQuery = (
   theaterId: number,
@@ -13,8 +14,7 @@ export const getFetchMovieTimesQuery = (
       const res = await axios.get(
         `/book/api/movieTime?theater_id=${theaterId}&movie_id=${movieId}&date=${date}`,
         {
-          baseURL: process.env.NEXT_PUBLIC_API,
-          withCredentials: true,
+          ...header,
         },
       );
       return res.data;

@@ -4,7 +4,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import axios from "axios";
-import { UseMutationAction } from "..";
+import { UseMutationAction, header } from "..";
 import { getFetchMovieTimesQuery } from "./useFetchMovieTimesAction";
 
 export type updateSeatData = {
@@ -22,9 +22,9 @@ const updateSeat: MutationFunction<{ res: string }, updateSeatData> = async (
   const res = await axios.patch(`/book/api/updateSeat`, data, {
     baseURL: process.env.NEXT_PUBLIC_API,
     headers: {
+      ...header,
       "Content-Type": "application/json",
     },
-    withCredentials: true,
   });
 
   return res.data;

@@ -1,6 +1,7 @@
 import { movieType } from "@/data/dataType";
 import { UseSuspenseQueryOptions } from "@tanstack/react-query";
 import axios from "axios";
+import { header } from "..";
 
 export const getFetchMoviesQuery = (): UseSuspenseQueryOptions<
   movieType[],
@@ -10,8 +11,7 @@ export const getFetchMoviesQuery = (): UseSuspenseQueryOptions<
     queryKey: ["movies"],
     queryFn: async () => {
       const res = await axios.get(`/api`, {
-        baseURL: process.env.NEXT_PUBLIC_API,
-        withCredentials: true,
+        ...header,
       });
       return res.data;
     },

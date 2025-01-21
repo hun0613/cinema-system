@@ -1,6 +1,7 @@
 import { Room } from "@/components/Book/Room/One";
 import { UseSuspenseQueryOptions } from "@tanstack/react-query";
 import axios from "axios";
+import { header } from "..";
 
 export const getFetchRoomQuery = (
   theaterId: number,
@@ -12,8 +13,7 @@ export const getFetchRoomQuery = (
       const res = await axios.get(
         `/book/api/room?theater_id=${theaterId}&room_id=${roomId}`,
         {
-          baseURL: process.env.NEXT_PUBLIC_API,
-          withCredentials: true,
+          ...header,
         },
       );
       return res.data[0];
