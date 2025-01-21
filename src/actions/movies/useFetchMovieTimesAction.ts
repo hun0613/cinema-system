@@ -14,7 +14,10 @@ export const getFetchMovieTimesQuery = (
       const res = await axios.get(
         `/book/api/movieTime?theater_id=${theaterId}&movie_id=${movieId}&date=${date}`,
         {
-          ...header,
+          baseURL: process.env.NEXT_PUBLIC_API,
+          headers: {
+            ...header,
+          },
         },
       );
       return res.data;

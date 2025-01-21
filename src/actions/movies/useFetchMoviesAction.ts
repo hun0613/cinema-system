@@ -11,7 +11,10 @@ export const getFetchMoviesQuery = (): UseSuspenseQueryOptions<
     queryKey: ["movies"],
     queryFn: async () => {
       const res = await axios.get(`/api`, {
-        ...header,
+        baseURL: process.env.NEXT_PUBLIC_API,
+        headers: {
+          ...header,
+        },
       });
       return res.data;
     },

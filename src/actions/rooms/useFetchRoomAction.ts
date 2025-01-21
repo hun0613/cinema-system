@@ -13,7 +13,10 @@ export const getFetchRoomQuery = (
       const res = await axios.get(
         `/book/api/room?theater_id=${theaterId}&room_id=${roomId}`,
         {
-          ...header,
+          baseURL: process.env.NEXT_PUBLIC_API,
+          headers: {
+            ...header,
+          },
         },
       );
       return res.data[0];

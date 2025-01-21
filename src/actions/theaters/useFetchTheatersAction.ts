@@ -11,7 +11,10 @@ export const getFetchTheatersQuery = (): UseSuspenseQueryOptions<
     queryKey: ["theaters"],
     queryFn: async () => {
       const res = await axios.get(`/book/api/theater`, {
-        ...header,
+        baseURL: process.env.NEXT_PUBLIC_API,
+        headers: {
+          ...header,
+        },
       });
       return res.data;
     },

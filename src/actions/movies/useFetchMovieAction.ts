@@ -10,7 +10,10 @@ export const getFetchMovieQuery = (
     queryKey: ["movie", postId],
     queryFn: async () => {
       const res = await axios.get(`/book/api?id=${postId}`, {
-        ...header,
+        baseURL: process.env.NEXT_PUBLIC_API,
+        headers: {
+          ...header,
+        },
       });
       return res.data[0];
     },

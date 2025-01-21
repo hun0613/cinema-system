@@ -11,7 +11,10 @@ export const getFetchDatesQuery = (): UseSuspenseQueryOptions<
     queryKey: ["date"],
     queryFn: async () => {
       const res = await axios.get(`/book/api/date`, {
-        ...header,
+        baseURL: process.env.NEXT_PUBLIC_API,
+        headers: {
+          ...header,
+        },
       });
       return res.data;
     },

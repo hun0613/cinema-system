@@ -6,7 +6,6 @@ export type UseMutationAction<TData, TResult = void> = (
 ) => UseMutationResult<TData, AxiosError, TResult>;
 
 export const header = {
-  baseURL: process.env.NEXT_PUBLIC_API,
   "Access-Control-Allow-Credentials": "true",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
