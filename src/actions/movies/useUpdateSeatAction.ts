@@ -24,6 +24,7 @@ const updateSeat: MutationFunction<{ res: string }, updateSeatData> = async (
     headers: {
       "Content-Type": "application/json",
     },
+    withCredentials: true,
   });
 
   return res.data;

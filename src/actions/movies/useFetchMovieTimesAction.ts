@@ -14,6 +14,7 @@ export const getFetchMovieTimesQuery = (
         `/book/api/movieTime?theater_id=${theaterId}&movie_id=${movieId}&date=${date}`,
         {
           baseURL: process.env.NEXT_PUBLIC_API,
+          withCredentials: true,
         },
       );
       return res.data;

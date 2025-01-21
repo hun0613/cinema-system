@@ -13,6 +13,7 @@ export const getFetchRoomQuery = (
         `/book/api/room?theater_id=${theaterId}&room_id=${roomId}`,
         {
           baseURL: process.env.NEXT_PUBLIC_API,
+          withCredentials: true,
         },
       );
       return res.data[0];
