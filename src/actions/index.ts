@@ -6,7 +6,6 @@ export type UseMutationAction<TData, TResult = void> = (
 ) => UseMutationResult<TData, AxiosError, TResult>;
 
 export const header = {
-  "Access-Control-Allow-Credentials": "true",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
   "Access-Control-Allow-Headers":
