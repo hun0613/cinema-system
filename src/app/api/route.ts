@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic"; // defaults to auto
 /**
  * movie data API
  */
-export async function GET(req: NextRequest, res: NextResponse): Promise<any> {
+export async function GET(req: NextRequest): Promise<any> {
   try {
     // rds 연결
     const db: mysql.Connection = await mysql.createConnection(conn);
@@ -26,10 +26,6 @@ export async function GET(req: NextRequest, res: NextResponse): Promise<any> {
     const [result] = await db.execute(sql);
 
     await db.end();
-
-    if (req.method === "OPTIONS") {
-      return;
-    }
 
     // response 리턴
     return NextResponse.json(result);
