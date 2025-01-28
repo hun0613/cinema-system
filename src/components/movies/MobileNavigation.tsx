@@ -1,61 +1,65 @@
+import { MOVIE_FILTER_TAB } from "@/types/movies/movieType";
 import { useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
 
 interface NavProps {
-  navValue: number;
-  setNavValue: React.Dispatch<React.SetStateAction<number>>;
+  filterTab: MOVIE_FILTER_TAB;
+  setFilterTab: React.Dispatch<React.SetStateAction<number>>;
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 type NavProperty = {
-  id: number;
+  tab: MOVIE_FILTER_TAB;
   name: string;
 };
 
 const navList: NavProperty[] = [
   {
-    id: 1,
+    tab: MOVIE_FILTER_TAB.IN_PROGRESS,
     name: "현재 상영작",
   },
   {
-    id: 2,
+    tab: MOVIE_FILTER_TAB.END,
     name: "상영 종료작",
   },
   {
-    id: 3,
+    tab: MOVIE_FILTER_TAB.EXPECT,
     name: "개봉 예정작",
   },
 ];
 
 const MobileNavigation = ({
-  navValue,
-  setNavValue,
+  filterTab,
+  setFilterTab,
   searchValue,
   setSearchValue,
-  setPage,
 }: NavProps) => {
   const [navModalState, setNavModalState] = useState<boolean>(false);
   const [navMenuTitle, setNavMenuTitle] = useState<string>(
-    navList.filter((el) => el.id === (navValue === 4 ? 1 : navValue))[0]?.name,
+    navList.filter(
+      (el) =>
+        el.tab ===
+        (filterTab === MOVIE_FILTER_TAB.SEARCH
+          ? MOVIE_FILTER_TAB.IN_PROGRESS
+          : filterTab),
+    )[0]?.name,
   );
 
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // nav 클릭 시 함수
-  const handleClickNav = (e: React.MouseEvent, id: number) => {
+  const handleClickNav = (e: React.MouseEvent, tab: MOVIE_FILTER_TAB) => {
     e.stopPropagation();
-    setNavValue(id);
-    setPage(1);
+    setFilterTab(tab);
 
     // 검색 영역을 클릭한 경우
-    if (id === 4) {
+    if (tab === MOVIE_FILTER_TAB.SEARCH) {
       // input창 활성화
       searchInputRef.current?.focus();
       setNavModalState(false);
-    } else if (navValue !== 4) {
+    } else if (filterTab !== MOVIE_FILTER_TAB.SEARCH) {
       setNavModalState(!navModalState);
     }
   };
@@ -63,14 +67,13 @@ const MobileNavigation = ({
   // 모달 내 nav 요소를 클릭한 경우
   const handleClickNavElement = (
     e: React.MouseEvent,
-    id: number,
+    tab: MOVIE_FILTER_TAB,
     name: string,
   ) => {
     e.stopPropagation();
-    setNavValue(id);
+    setFilterTab(tab);
     setNavMenuTitle(name);
     setNavModalState(false);
-    setPage(1);
   };
 
   // search 값 변경 시 함수
@@ -81,7 +84,7 @@ const MobileNavigation = ({
   // 돋보기 클릭 시 함수
   const handleClickSearch = () => {
     // navValue가 검색 영역일 경우만 search click 이벤트 실행
-    if (navValue === 4) {
+    if (filterTab === MOVIE_FILTER_TAB.SEARCH) {
       console.log("search!");
     }
   };
@@ -92,11 +95,11 @@ const MobileNavigation = ({
         onClick={(e) =>
           handleClickNav(
             e,
-            navList.filter((el) => el.name === navMenuTitle)[0].id,
+            navList.filter((el) => el.name === navMenuTitle)[0].tab,
           )
         }
         className={
-          navValue < 4
+          filterTab !== MOVIE_FILTER_TAB.SEARCH
             ? `relative z-10 flex h-full w-1/2 cursor-default flex-row items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-sm text-fontColor duration-150 ease-in-out hover:bg-black/30`
             : `relative z-10 flex h-full w-1/2 cursor-pointer flex-row items-center justify-center border-b-2 border-borderColor font-NMSNeo3 text-sm text-fontColor duration-150 ease-in-out hover:pb-2`
         }
@@ -105,7 +108,6 @@ const MobileNavigation = ({
         <div
           onClick={(e) => {
             e.stopPropagation();
-            // console.log("check");
           }}
           className={
             navModalState
@@ -121,12 +123,12 @@ const MobileNavigation = ({
             }
           >
             {navList
-              .filter((ele) => ele.id !== navValue)
+              .filter((ele) => ele.tab !== filterTab)
               .map((el, idx) => {
                 return (
                   <div
                     key={idx}
-                    onClick={(e) => handleClickNavElement(e, el.id, el.name)}
+                    onClick={(e) => handleClickNavElement(e, el.tab, el.name)}
                     className="mt-2 flex h-fit w-full flex-col items-center justify-center rounded-lg border-2 border-borderColor bg-black/70 p-3 drop-shadow-sm duration-150 ease-in-out hover:bg-pointColor/80"
                   >
                     {el.name}
@@ -145,9 +147,9 @@ const MobileNavigation = ({
         )}
       </div>
       <div
-        onClick={(e) => handleClickNav(e, 4)}
+        onClick={(e) => handleClickNav(e, MOVIE_FILTER_TAB.SEARCH)}
         className={
-          navValue === 4
+          filterTab === MOVIE_FILTER_TAB.SEARCH
             ? `flex h-full w-1/2 flex-row items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-sm text-fontColor`
             : `flex h-full w-1/2 cursor-pointer flex-row items-center justify-center border-b-2 border-borderColor font-NMSNeo3 text-sm text-fontColor duration-150 ease-in-out hover:bg-black/30`
         }

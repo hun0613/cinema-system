@@ -1,6 +1,6 @@
-import BodyArea from "@/components/Book/BodyArea";
-import MovieInfoComp from "@/components/Book/MovieInfoComp";
-import Footer from "@/components/Home/Footer";
+import BodyArea from "@/components/book/BodyArea";
+import MovieInfoComp from "@/components/book/MovieInfoComp";
+import Footer from "@/components/main/Footer";
 import { Suspense } from "react";
 import "react-toastify/dist/ReactToastify.css";
 

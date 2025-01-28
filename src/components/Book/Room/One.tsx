@@ -15,8 +15,9 @@ type OneProps = {
   room: Room;
 };
 
-const One = (props: OneProps) => {
-  const { row, col, sp, ep } = props.room;
+const One: React.FC<OneProps> = (props) => {
+  const { room } = props;
+  const { row, col, sp, ep } = room;
 
   // 상영관 구조 상태
   const [seatStructure, setSeatStructure] = useState<string[][]>([[]]);

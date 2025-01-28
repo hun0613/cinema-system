@@ -1,4 +1,4 @@
-import { Room } from "@/components/Book/Room/One";
+import { Room } from "@/components/book/Room/One";
 import { UseSuspenseQueryOptions } from "@tanstack/react-query";
 import axios from "axios";
 import { header } from "..";

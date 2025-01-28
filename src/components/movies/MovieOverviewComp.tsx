@@ -1,27 +1,25 @@
 "use client";
 import { getFetchMoviesQuery } from "@/actions/movies/useFetchMoviesAction";
 import { movieType } from "@/data/dataType";
-import useWindowSize from "@/hooks/useWindowSize";
+import useCheckMobile from "@/hooks/useCheckMobile";
+import { MOVIE_CLASSIFICATION } from "@/types/movies/movieType";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import ScreenIdxBtn from "./ScreenIdxBtn";
 
-const Screen = () => {
+const MovieOverviewComp = () => {
   const [{ data: movies }] = useSuspenseQueries({
     queries: [getFetchMoviesQuery()],
   });
-  let filteredMovie: movieType[] = movies.filter(
-    (el) => el.classification === 1,
-  );
+  let filteredMovie: movieType[] = movies.filter((el) => el.classification === MOVIE_CLASSIFICATION.IN_PROGRESS);
 
   const [zoom, setZoom] = useState<boolean>(false);
   const [contentIdx, setContentIdx] = useState<number>(0);
 
   const router = useRouter();
 
-  let width: number = useWindowSize();
+  const { isMobile } = useCheckMobile();
 
   const changeContent = () => {
     // 마지막 컨텐츠에서 전환될 때
@@ -67,11 +65,7 @@ const Screen = () => {
           quality={100}
           sizes="100vw"
           style={{ width: "100%", height: "auto" }}
-          className={
-            zoom
-              ? `scale-105 opacity-100 transition-transform duration-[8000ms] ease-in-out`
-              : `scale-125`
-          }
+          className={zoom ? `scale-105 opacity-100 transition-transform duration-[8000ms] ease-in-out` : `scale-125`}
         />
         {/* bg effect */}
         <div className="absolute h-full w-full bg-gradient-to-r from-screenColor"></div>
@@ -87,7 +81,7 @@ const Screen = () => {
             className={
               zoom
                 ? `content_animation font-NMSNeo  h-fit w-full translate-y-0  truncate text-center text-2xl opacity-100 duration-[2000ms] ease-in-out tablet:text-right tablet:text-3xl`
-                : ` font-NMSNeo h-fit w-full translate-y-10 truncate  text-center text-2xl opacity-0 tablet:text-right tablet:text-3xl`
+                : `font-NMSNeo h-fit w-full translate-y-10 truncate  text-center text-2xl opacity-0 tablet:text-right tablet:text-3xl`
             }
           >
             {filteredMovie[contentIdx].title}
@@ -100,7 +94,7 @@ const Screen = () => {
                 : `mt-5 flex h-fit w-fit translate-y-10 flex-col items-center justify-center text-center font-NMSNeo2 text-xs leading-loose opacity-0 transition-none target:mt-10 tablet:text-right tablet:text-sm tablet:leading-loose`
             }
           >
-            {width === 0 || width > 764
+            {!isMobile
               ? filteredMovie[contentIdx].summary
               : filteredMovie[contentIdx].summary.length > 200
                 ? `${filteredMovie[contentIdx].summary.slice(0, 200)}...`
@@ -137,11 +131,11 @@ const Screen = () => {
         </div>
       </div>
       {/* screen idx btns */}
-      {width === 0 || width > 764 ? (
+      {!isMobile ? (
         <div className="absolute bottom-0 flex h-fit w-full flex-row items-center justify-center pb-5">
           {filteredMovie.map((movieInfo: movieType, idx: number) => {
             return (
-              <ScreenIdxBtn
+              <IndexButtonComp
                 key={`${movieInfo.title}_${idx}`}
                 idx={contentIdx}
                 btnIdx={idx}
@@ -156,4 +150,29 @@ const Screen = () => {
   );
 };
 
-export default Screen;
+export default MovieOverviewComp;
+
+interface Props {
+  idx: number;
+  btnIdx: number;
+  setIdx: React.Dispatch<React.SetStateAction<number>>;
+  setZoom: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const IndexButtonComp = ({ idx, btnIdx, setIdx, setZoom }: Props) => {
+  const handleClickBtn = () => {
+    setZoom(false);
+    setIdx(btnIdx);
+  };
+
+  return (
+    <div
+      onClick={btnIdx === idx ? () => {} : handleClickBtn}
+      className={
+        btnIdx === idx
+          ? `mx-2 aspect-square w-3 rounded-full border border-transparent bg-pointColor/60 drop-shadow-xl duration-500 ease-in-out`
+          : `mx-2 aspect-square w-3 cursor-pointer rounded-full border border-white/60 drop-shadow-xl duration-500 ease-in-out hover:bg-white/20`
+      }
+    ></div>
+  );
+};

@@ -1,40 +1,30 @@
+import { MOVIE_FILTER_TAB } from "@/types/movies/movieType";
 import { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
 
 interface NavProps {
-  navValue: number;
-  setNavValue: React.Dispatch<React.SetStateAction<number>>;
+  filterTab: MOVIE_FILTER_TAB;
+  setFilterTab: React.Dispatch<React.SetStateAction<number>>;
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Navigation = ({
-  navValue,
-  setNavValue,
+  filterTab,
+  setFilterTab,
   searchValue,
   setSearchValue,
-  setPage,
 }: NavProps) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // nav 클릭 시 함수
-  const handleClickNav = (id: number) => {
-    setNavValue(id);
-    setPage(1);
+  const handleClickNav = (tab: number) => {
+    setFilterTab(tab);
 
     // 검색 영역을 클릭한 경우
-    if (id === 4) {
+    if (tab === MOVIE_FILTER_TAB.SEARCH) {
       // input창 활성화
       searchInputRef.current?.focus();
-    }
-  };
-
-  // 돋보기 클릭 시 함수
-  const handleClickSearch = () => {
-    // navValue가 검색 영역일 경우만 search click 이벤트 실행
-    if (navValue === 4) {
-      console.log("search!");
     }
   };
 
@@ -46,9 +36,9 @@ const Navigation = ({
   return (
     <div className="flex h-[60px] w-full flex-row items-center justify-start">
       <div
-        onClick={() => handleClickNav(1)}
+        onClick={() => handleClickNav(MOVIE_FILTER_TAB.IN_PROGRESS)}
         className={
-          navValue === 1
+          filterTab === MOVIE_FILTER_TAB.IN_PROGRESS
             ? `flex h-full w-1/5 cursor-default flex-col items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor duration-150 ease-in-out`
             : `flex h-full w-1/5 cursor-pointer flex-col items-center justify-center border-b-2 border-borderColor font-NMSNeo3 text-base text-fontColor duration-150 ease-in-out hover:pb-2`
         }
@@ -56,9 +46,9 @@ const Navigation = ({
         현재 상영작
       </div>
       <div
-        onClick={() => handleClickNav(2)}
+        onClick={() => handleClickNav(MOVIE_FILTER_TAB.END)}
         className={
-          navValue === 2
+          filterTab === MOVIE_FILTER_TAB.END
             ? `flex h-full w-1/5 cursor-default flex-col items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor`
             : `flex h-full w-1/5 cursor-pointer flex-col items-center justify-center border-b-2 border-borderColor font-NMSNeo3 text-base text-fontColor duration-150 ease-in-out hover:pb-2`
         }
@@ -66,9 +56,9 @@ const Navigation = ({
         상영 종료작
       </div>
       <div
-        onClick={() => handleClickNav(3)}
+        onClick={() => handleClickNav(MOVIE_FILTER_TAB.EXPECT)}
         className={
-          navValue === 3
+          filterTab === MOVIE_FILTER_TAB.EXPECT
             ? `flex h-full w-1/5 cursor-default flex-col items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor`
             : `flex h-full w-1/5 cursor-pointer flex-col items-center justify-center border-b-2 border-borderColor font-NMSNeo3 text-base text-fontColor duration-150 ease-in-out hover:pb-2`
         }
@@ -76,17 +66,14 @@ const Navigation = ({
         개봉 예정작
       </div>
       <div
-        onClick={() => handleClickNav(4)}
+        onClick={() => handleClickNav(MOVIE_FILTER_TAB.SEARCH)}
         className={
-          navValue === 4
+          filterTab === MOVIE_FILTER_TAB.SEARCH
             ? `flex h-full w-2/5 flex-row items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor`
             : `flex h-full w-2/5 cursor-pointer flex-row items-center justify-center border-b-2 border-borderColor font-NMSNeo3 text-base text-fontColor duration-150 ease-in-out hover:bg-black/30`
         }
       >
-        <BsSearch
-          onClick={handleClickSearch}
-          className="mr-3 text-base text-fontColor"
-        />
+        <BsSearch className="mr-3 text-base text-fontColor" />
         <input
           ref={searchInputRef}
           type="text"

@@ -24,7 +24,7 @@ const MovieInfoComp: React.FC<MovieInfoCompProps> = (props) => {
 
   return (
     <div className="relative flex h-fit w-full flex-col items-center justify-center bg-screenColor">
-      <div className="relative flex aspect-video h-[calc(100vh-250px)] flex-col items-center justify-start overflow-hidden bg-white/10">
+      <div className="relative flex aspect-video h-[calc(100vh)] flex-col items-center justify-start overflow-hidden bg-white/10 tablet:h-[calc(100vh-200px)]">
         {/* bg */}
         <Image
           alt="movie img"
@@ -49,7 +49,7 @@ const MovieInfoComp: React.FC<MovieInfoCompProps> = (props) => {
       {/* info area */}
       <div className="absolute top-0 flex h-full w-full max-w-[1100px] flex-col items-center justify-center p-5">
         {/* poster */}
-        <div className="mt-14 flex aspect-[3/4.3] h-3/5 flex-col items-center justify-center drop-shadow-xl ">
+        <div className="mt-14 flex aspect-[3/4.3] h-1/2 flex-col items-center justify-center drop-shadow-xl ">
           <Image
             alt="movie img"
             src={movie.poster_img}

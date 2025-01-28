@@ -10,8 +10,7 @@ const config: Config = {
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       fontFamily: {
         NMSNeo1: ["NMSNeo1"],
@@ -42,6 +41,15 @@ const config: Config = {
       aspectRatio: {
         "3/1": "3 / 1",
         "3/4.3": "3 / 4.3",
+      },
+      keyframes: {
+        scaleDown: {
+          "0%": { transform: "scale(1.25)" },
+          "100%": { transform: "scale(1)" },
+        },
+      },
+      animation: {
+        scaleDown: "scaleDown 10s ease-in-out infinite",
       },
     },
   },
