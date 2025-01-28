@@ -35,7 +35,6 @@ const MoviesComp: React.FC<MoviesCompProps> = (props) => {
           setSearchValue={setSearchValue}
         />
       )}
-
       <Suspense fallback={<GridSkeletonAtom />}>
         <MovieListComp filterTab={filterTab} searchValue={searchValue} />
       </Suspense>

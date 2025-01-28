@@ -6,9 +6,7 @@ const Modal = ({
   extraFuction,
 }: {
   children: React.ReactNode;
-  setModalControlState:
-    | React.Dispatch<React.SetStateAction<boolean>>
-    | ((el: boolean) => void);
+  setModalControlState: React.Dispatch<React.SetStateAction<boolean>> | ((el: boolean) => void);
   extraFuction?: () => void;
 }) => {
   const [renderState, setRenderState] = useState<boolean>(false);
@@ -35,12 +33,10 @@ const Modal = ({
   return (
     <div
       onMouseDown={handleClickBg}
-      className="fixed top-0 z-50 flex h-full w-full flex-col items-center justify-center overflow-hidden bg-bgColor/70"
+      className="fixed left-0 right-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center overflow-hidden bg-bgColor/70"
     >
       <div
-        onMouseDown={(e: React.MouseEvent<HTMLDivElement>) =>
-          e.stopPropagation()
-        }
+        onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         className={
           renderState
             ? `flex h-fit w-[90%] max-w-[900px] translate-y-0 flex-col items-center justify-center rounded-xl bg-white/90 opacity-100 drop-shadow-xl duration-500 ease-in-out tablet:w-[90%]`

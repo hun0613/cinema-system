@@ -52,7 +52,6 @@ const MovieItemComp = ({ data }: Data) => {
         <div className="aspect-[3/4.3] w-full overflow-hidden">
           <Image
             onClick={isMobile ? handleClickDetailBtn : undefined}
-            onMouseOver={() => console.log("mouseOver")}
             alt="movie img"
             src={data.poster_img}
             width={0}
@@ -66,28 +65,30 @@ const MovieItemComp = ({ data }: Data) => {
             }
           />
         </div>
-        <div
-          onMouseOver={handleMouseOverMovieItem}
-          onMouseLeave={handleMouseLeaveMovieItem}
-          className="absolute top-0 flex aspect-[3/4.3] w-full flex-col items-center justify-center bg-black/50 opacity-0 hover:opacity-100"
-        >
-          <button
-            onClick={handleClickDetailBtn}
-            type="button"
-            className="mb-3 flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-fontColor p-3 font-NMSNeo3 text-sm text-bgColor hover:bg-fontColor/80 tablet:text-base"
+        {!isMobile && (
+          <div
+            onMouseOver={handleMouseOverMovieItem}
+            onMouseLeave={handleMouseLeaveMovieItem}
+            className="absolute top-0 flex aspect-[3/4.3] w-full flex-col items-center justify-center bg-black/50 opacity-0 hover:opacity-100"
           >
-            상세보기
-          </button>
-          {data.classification !== MOVIE_CLASSIFICATION.IN_PROGRESS ? null : (
             <button
-              onClick={handleClickBook}
+              onClick={handleClickDetailBtn}
               type="button"
-              className="flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-pointColor p-3 font-NMSNeo3 text-sm hover:bg-pointColor/80 tablet:text-base"
+              className="mb-3 flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-fontColor p-3 font-NMSNeo3 text-sm text-bgColor hover:bg-fontColor/80 tablet:text-base"
             >
-              예매하기
+              상세보기
             </button>
-          )}
-        </div>
+            {data.classification !== MOVIE_CLASSIFICATION.IN_PROGRESS ? null : (
+              <button
+                onClick={handleClickBook}
+                type="button"
+                className="flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-pointColor p-3 font-NMSNeo3 text-sm hover:bg-pointColor/80 tablet:text-base"
+              >
+                예매하기
+              </button>
+            )}
+          </div>
+        )}
 
         {/* title */}
         <p className="mt-3 h-fit w-full truncate text-center font-NMSNeo3 text-sm text-fontColor tablet:text-base">
