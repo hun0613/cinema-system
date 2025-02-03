@@ -7,13 +7,13 @@ import { mergeClassNames } from "@/utils/domUtil";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const MoviesSliderComp = () => {
   const [{ data: movies }] = useSuspenseQueries({
     queries: [getFetchMoviesQuery()],
   });
-  let filteredMovie: MovieType[] = movies.filter((el) => el.classification === MOVIE_CLASSIFICATION.IN_PROGRESS);
+  const filteredMovie: MovieType[] = useMemo(() => movies.filter((el) => el.classification === MOVIE_CLASSIFICATION.IN_PROGRESS), [movies]);
 
   const [zoom, setZoom] = useState<boolean>(false);
   const [contentIdx, setContentIdx] = useState<number>(0);
@@ -63,6 +63,7 @@ const MoviesSliderComp = () => {
       >
         {/* bg */}
         <Image
+          key={filteredMovie[contentIdx].background_img}
           alt="movie img"
           src={filteredMovie[contentIdx].background_img}
           width={0}
