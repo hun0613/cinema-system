@@ -21,6 +21,7 @@ export type BookPayloadType = {
   movieId: number;
   date: string;
   time?: string;
+  headCount: number;
   seatState: string[];
   seat: string[];
 };
@@ -40,6 +41,7 @@ const BookComp: React.FC<BookCompProps> = (props) => {
     movieId: movieId,
     date: `${new Date().getFullYear()}${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1}${new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate()}`,
     time: undefined,
+    headCount: 0,
     seatState: [],
     seat: [],
   };
@@ -48,7 +50,10 @@ const BookComp: React.FC<BookCompProps> = (props) => {
 
   const completeTheaterStep = useMemo(() => !!bookPayload.theaterId, [bookPayload]);
   const completeScheduleAndRoomStep = useMemo(() => !!bookPayload.date && !!bookPayload.roomId && !!bookPayload.time, [bookPayload]);
-  const [completeHeadAndSeatStep, setCompleteHeadAndSeatStep] = useState<boolean>(false);
+  const completeHeadAndSeatStep = useMemo(
+    () => !!bookPayload.seat.length && bookPayload.seat.length === bookPayload.headCount,
+    [bookPayload],
+  );
 
   const shouldActiveNextButton = useMemo(() => {
     switch (bookStep) {
@@ -125,20 +130,27 @@ const BookComp: React.FC<BookCompProps> = (props) => {
     });
   };
 
-  const handleChangeSeat = (seat: string[], seatState: string[]) => {
+  const handleChangeSeat = (seat: string[]) => {
     setBookPayload({
       ...bookPayload,
       seat,
+    });
+  };
+
+  const handleChangeHeadCount = (headCount: number, seatState: string[]) => {
+    setBookPayload({
+      ...initBookPayload,
+      theaterId: bookPayload.theaterId,
+      date: bookPayload.date,
+      roomId: bookPayload.roomId,
+      time: bookPayload.time,
+      headCount,
       seatState,
     });
   };
 
   const handleChangeStep = (step: BOOK_STEP) => {
     setBookStep(step);
-  };
-
-  const handleCompleteHeadAndSeatStep = (isCompleted: boolean) => {
-    setCompleteHeadAndSeatStep(isCompleted);
   };
 
   const handleClickBook = async () => {
@@ -202,7 +214,7 @@ const BookComp: React.FC<BookCompProps> = (props) => {
                     seat: !!bookPayload.seat ? bookPayload.seat : [],
                   },
                   onChangeSeat: handleChangeSeat,
-                  onCompleteHeadAndSeatStep: handleCompleteHeadAndSeatStep,
+                  onChangeHeadCount: handleChangeHeadCount,
                 }}
               />
             )}

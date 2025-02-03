@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export type SeatOptionType = {
   currentSeat: string[];
-  onChangeSeat: (seat: string[], seatState: string[]) => void;
+  onChangeSeat: (seat: string[]) => void;
 };
 
 type SeatLayoutCompProps = {
@@ -42,7 +42,7 @@ const SeatLayoutComp: React.FC<SeatLayoutCompProps> = (props) => {
       /** headCount가 1명 남았을 때 */
       if (headCount === 1 || headCount - currentSeat.length === 1) {
         // console.log("select 1 seat");
-        onChangeSeat([...currentSeat, col], seat_state);
+        onChangeSeat([...currentSeat, col]);
       } else if (headCount > 1) {
         /** headCount가 2명 이상 남았을 때 */
         // 왼쪽 좌석 (없으면 undefined)
@@ -60,11 +60,11 @@ const SeatLayoutComp: React.FC<SeatLayoutCompProps> = (props) => {
           /** ---- 좌측 좌석이 선택좌석 혹은 이미 예약된 좌석일 경우 */
           if ((leftSeat && currentSeat.includes(leftSeat)) || leftSeat === "") {
             // console.log("left seat is already booked. so, select 1 seat");
-            onChangeSeat([...currentSeat, col], seat_state);
+            onChangeSeat([...currentSeat, col]);
           } else {
             /** ---- 그렇지 않은 경우 */
             // console.log("select 2 seats with left seat");
-            if (leftSeat) onChangeSeat([...currentSeat, col, leftSeat], seat_state);
+            if (leftSeat) onChangeSeat([...currentSeat, col, leftSeat]);
           }
         } else {
           /**  -- 기본 케이스 */
@@ -73,16 +73,16 @@ const SeatLayoutComp: React.FC<SeatLayoutCompProps> = (props) => {
             /** ---- 좌측 좌석도 선택좌석 혹은 이미 예약된 좌석일 경우 */
             if ((leftSeat && currentSeat.includes(leftSeat)) || leftSeat === "") {
               //   console.log("left seat is already booked too. so, select 1 seat");
-              if (leftSeat) onChangeSeat([...currentSeat, col], seat_state);
+              if (leftSeat) onChangeSeat([...currentSeat, col]);
             } else {
               /** ---- 그렇지 않은 경우 */
               //   console.log("right seat is already booked. so, select left seat");
-              if (leftSeat) onChangeSeat([...currentSeat, col, leftSeat], seat_state);
+              if (leftSeat) onChangeSeat([...currentSeat, col, leftSeat]);
             }
           } else {
             /** ---- 예외상황이 없는 경우 */
             // console.log("select 2 seats with right seat");
-            if (rightSeat) onChangeSeat([...currentSeat, col, rightSeat], seat_state);
+            if (rightSeat) onChangeSeat([...currentSeat, col, rightSeat]);
           }
         }
       }
@@ -97,7 +97,7 @@ const SeatLayoutComp: React.FC<SeatLayoutCompProps> = (props) => {
 
     tempArr.splice(idx, 1);
 
-    onChangeSeat(tempArr, seat_state);
+    onChangeSeat(tempArr);
   };
 
   // 좌석 호버 시

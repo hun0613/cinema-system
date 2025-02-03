@@ -1,7 +1,6 @@
 import { getFetchRoomQuery } from "@/actions/rooms/useFetchRoomAction";
 import { mergeClassNames } from "@/utils/domUtil";
 import { useSuspenseQueries } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 import { BookPayloadType } from "./BookComp";
 import SeatLayoutComp from "./SeatLayoutComp";
 
@@ -9,8 +8,8 @@ export const MAX_HEAD_COUNT = 8;
 
 export type seatOptionType = {
   currentBookPayload: Omit<BookPayloadType, "theaterId"> & { theaterId: number; roomId: number; time: string; seat: string[] };
-  onChangeSeat: (seat: string[], seatState: string[]) => void;
-  onCompleteHeadAndSeatStep: (isCompleted: boolean) => void;
+  onChangeSeat: (seat: string[]) => void;
+  onChangeHeadCount: (headCount: number, seatState: string[]) => void;
 };
 
 export type SeatCompProps = {
@@ -19,12 +18,10 @@ export type SeatCompProps = {
 
 const SeatComp: React.FC<SeatCompProps> = (props) => {
   const { seatOption } = props;
-  const { currentBookPayload, onChangeSeat, onCompleteHeadAndSeatStep } = seatOption;
-  const { theaterId, roomId, time, date, seat } = currentBookPayload;
+  const { currentBookPayload, onChangeSeat, onChangeHeadCount } = seatOption;
+  const { theaterId, roomId, time, date, seat, headCount } = currentBookPayload;
 
   const headCountList = Array.from({ length: MAX_HEAD_COUNT }, (_, i) => i + 1);
-
-  const [headCount, setHeadCount] = useState<number>(0);
 
   const [{ data: seatLayout }] = useSuspenseQueries({
     queries: [getFetchRoomQuery(theaterId, roomId, date, time)],
@@ -33,22 +30,13 @@ const SeatComp: React.FC<SeatCompProps> = (props) => {
   const handleClickHeadCount = (count: number) => {
     if (headCount !== 0 && seat.length > 0) {
       if (window.confirm("선택된 좌석이 모두 초기화됩니다.\n변경하시겠습니까?")) {
-        setHeadCount(count);
-        onChangeSeat([], []);
-        onCompleteHeadAndSeatStep(false);
+        onChangeHeadCount(count, seatLayout.seat_state);
+        onChangeSeat([]);
       }
     } else {
-      setHeadCount(count);
+      onChangeHeadCount(count, seatLayout.seat_state);
     }
   };
-
-  useEffect(() => {
-    if (!!headCount && headCount === seat.length) {
-      onCompleteHeadAndSeatStep(true);
-    } else if (!!headCount && headCount !== seat.length) {
-      onCompleteHeadAndSeatStep(false);
-    }
-  }, [seat]);
 
   return (
     <div className="flex h-[calc(100vh/1.3)] w-full flex-col items-center justify-start rounded-xl p-2 mobile:h-[calc(100vh/1.8)] mobile:p-5">
