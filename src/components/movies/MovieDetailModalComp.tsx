@@ -1,7 +1,7 @@
 import { MovieType } from "@/actions/movies/useFetchMovieAction";
 import { MOVIE_CLASSIFICATION } from "@/enums/movies/movieEnum";
 import Link from "next/link";
-import ModalAtom from "../../atomic/modal/ModalAtom";
+import ModalAtom from "../../atomics/modal/ModalAtom";
 
 interface Props {
   onCloseModal: () => void;

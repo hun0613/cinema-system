@@ -14,6 +14,7 @@
     "@prettier/plugin-pug": "^3.0.0",
     "@shopify/prettier-plugin-liquid": "^1.4.1",
     "@tanstack/react-query": "^5.64.1",
+    "@types/classnames": "^2.3.4",
     "axios": "^1.7.9",
     "mysql2": "^3.9.1",
     "next": "14.1.0",
@@ -32,6 +33,7 @@
     "react-icons": "^5.0.1",
     "react-spinners": "^0.13.8",
     "react-toastify": "^9.1.2",
+    "tailwind-merge": "^3.0.1",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import FullScreenSkeletonAtom from "@/atomic/loader/FullScreenSkeletonAtom";
+import FullScreenSkeletonAtom from "@/atomics/loader/FullScreenSkeletonAtom";
 import Footer from "@/components/mains/Footer";
 import MoviesComp from "@/components/movies/MoviesComp";
 import MoviesSliderComp from "@/components/movies/MoviesSliderComp";

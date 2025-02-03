@@ -1,5 +1,5 @@
 import { getFetchBookQuery } from "@/actions/books/useFetchBookAction";
-import ModalAtom from "@/atomic/modal/ModalAtom";
+import ModalAtom from "@/atomics/modal/ModalAtom";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

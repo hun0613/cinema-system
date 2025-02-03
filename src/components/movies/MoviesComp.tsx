@@ -1,6 +1,6 @@
 "use client";
 
-import GridSkeletonAtom from "@/atomic/loader/GridSkeletonAtom";
+import GridSkeletonAtom from "@/atomics/loader/GridSkeletonAtom";
 import { MOVIE_FILTER_TAB } from "@/enums/movies/movieEnum";
 import useCheckMobile from "@/hooks/useCheckMobile";
 import { Suspense, useState } from "react";
