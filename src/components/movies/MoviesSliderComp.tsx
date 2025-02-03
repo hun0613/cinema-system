@@ -69,7 +69,6 @@ const MoviesSliderComp = () => {
           width={0}
           height={0}
           priority
-          quality={100}
           sizes="100vw"
           style={{ width: "100%", height: "auto" }}
           className={mergeClassNames("scale-125 transition-transform duration-[8000ms] ease-in-out", { "scale-105": zoom })}
