@@ -43,7 +43,7 @@ const TheaterItemComp: React.FC<TheaterItemCompProps> = (props) => {
         "hover:bg-borderColor/30",
         "tablet:mb-5 tablet:mr-0 tablet:w-full tablet:whitespace-normal",
         {
-          "pointer-events-none border-0 bg-pointColor/70": currentTheaterId === theater_id,
+          "border-0 bg-pointColor/70 hover:bg-pointColor/70": currentTheaterId === theater_id,
         },
       )}
     >

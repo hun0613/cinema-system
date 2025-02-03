@@ -63,7 +63,6 @@ const MoviesSliderComp = () => {
       >
         {/* bg */}
         <Image
-          key={filteredMovie[contentIdx].background_img}
           alt="movie img"
           src={filteredMovie[contentIdx].background_img}
           width={0}
