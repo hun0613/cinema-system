@@ -1,8 +1,8 @@
-import { getFetchTheatersQuery } from "@/actions/theaters/useFetchTheatersAction";
-import { TheaterType } from "@/data/dataType";
+import { getFetchTheatersQuery, TheaterType } from "@/actions/theaters/useFetchTheatersAction";
+
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import TheaterItem from "./TheaterItem";
+import TheaterItemComp from "./TheaterItemComp";
 
 // script kakao 객체 사용을 위한 window객체 선언
 declare global {
@@ -11,7 +11,18 @@ declare global {
   }
 }
 
-const TheaterComp = () => {
+export type TheaterOptionType = {
+  currentTheaterId?: number;
+  onChangeTheater: (theaterId: number) => void;
+};
+
+export type TheaterCompProps = {
+  theaterOption: TheaterOptionType;
+} & JSX.IntrinsicElements["div"];
+
+const TheaterComp: React.FC<TheaterCompProps> = (props) => {
+  const { theaterOption } = props;
+
   const [{ data: theaters }] = useSuspenseQueries({
     queries: [getFetchTheatersQuery()],
   });
@@ -40,31 +51,22 @@ const TheaterComp = () => {
         let map = new window.kakao.maps.Map(container, options);
 
         // 마커를 표시할 위치와 title 객체 배열입니다
-        let positions = theaters.map(
-          (theaterInfo: TheaterType, idx: number) => {
-            return {
-              title: theaterInfo.name,
-              latlng: new window.kakao.maps.LatLng(
-                theaterInfo.latitude,
-                theaterInfo.longitude,
-              ),
-            };
-          },
-        );
+        let positions = theaters.map((theaterInfo: TheaterType, idx: number) => {
+          return {
+            title: theaterInfo.name,
+            latlng: new window.kakao.maps.LatLng(theaterInfo.latitude, theaterInfo.longitude),
+          };
+        });
 
         // 마커 이미지의 이미지 주소입니다
-        let imageSrc =
-          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
         for (let i = 0; i < positions.length; i++) {
           // 마커 이미지의 이미지 크기 입니다
           let imageSize = new window.kakao.maps.Size(24, 35);
 
           // 마커 이미지를 생성합니다
-          let markerImage = new window.kakao.maps.MarkerImage(
-            imageSrc,
-            imageSize,
-          );
+          let markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
 
           // 마커를 생성합니다
           let marker = new window.kakao.maps.Marker({
@@ -84,29 +86,20 @@ const TheaterComp = () => {
     <div className="flex h-fit w-full flex-col items-center justify-center rounded-xl p-3 tablet:h-full tablet:flex-row tablet:p-5">
       {/* 영화관 리스트 */}
       <div className="mb-3 mr-0 flex h-fit w-full flex-row items-center justify-start overflow-x-auto overflow-y-auto tablet:mb-0 tablet:mr-5 tablet:h-full tablet:w-[30%] tablet:flex-col tablet:overflow-y-auto tablet:py-0">
-        {/* 데이터 fetching... */}
-        {!theaters ? (
-          <div className="flex h-full w-full flex-col items-center justify-center font-NMSNeo2 text-xs text-fontColor tablet:text-sm">
-            데이터 가져오는중...🤔
-          </div>
-        ) : null}
         {/* 데이터가 존재하지 않을 경우 */}
-        {theaters.length === 0 ? (
+        {theaters.length === 0 && (
           <div className="flex h-full w-full flex-col items-center justify-center font-NMSNeo2 text-xs text-fontColor tablet:text-sm">
             상영중인 영화관이 없어요...😱
           </div>
-        ) : null}
+        )}
         {/* 데이터가 존재할 경우 */}
         {theaters.map((theaterData: TheaterType, idx: number) => {
           return (
-            <TheaterItem
-              key={`${theaterData.theater_id}+idx`}
-              id={theaterData.theater_id}
-              name={theaterData.name}
-              position={theaterData.position}
-              latitude={theaterData.latitude}
+            <TheaterItemComp
+              key={`${theaterData.theater_id}+${idx}`}
+              theater={theaterData}
+              theaterOption={theaterOption}
               setLatitude={setLatitude}
-              longitude={theaterData.longitude}
               setLongitude={setLongitude}
             />
           );
@@ -114,10 +107,7 @@ const TheaterComp = () => {
       </div>
       {/* Kakao Map Area */}
       <div className="flex aspect-square w-full flex-col items-center justify-center rounded-xl tablet:h-full tablet:w-[70%]">
-        <div
-          id="map"
-          className="flex h-full w-full flex-col items-center justify-center rounded-xl bg-white/10"
-        ></div>
+        <div id="map" className="flex h-full w-full flex-col items-center justify-center rounded-xl bg-white/10"></div>
       </div>
     </div>
   );

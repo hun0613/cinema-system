@@ -1,7 +1,7 @@
 "use client";
+import { MovieType } from "@/actions/movies/useFetchMovieAction";
 import { getFetchMoviesQuery } from "@/actions/movies/useFetchMoviesAction";
-import { movieType } from "@/data/dataType";
-import { MOVIE_FILTER_TAB } from "@/types/movies/movieType";
+import { MOVIE_FILTER_TAB } from "@/enums/movies/movieEnum";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useState } from "react";
 import MovieItemComp from "./MovieItemComp";
@@ -21,7 +21,7 @@ const MovieListComp: React.FC<MovieListCompProps> = (props) => {
     queries: [getFetchMoviesQuery()],
   });
 
-  const filteredMovie: movieType[] = movies.filter((el) => {
+  const filteredMovie: MovieType[] = movies.filter((el) => {
     // navigation이 검색에 가 있을 때
     if (filterTab === MOVIE_FILTER_TAB.SEARCH) {
       // 검색 키워드가 포함된 컨텐츠 필터링
@@ -36,8 +36,7 @@ const MovieListComp: React.FC<MovieListCompProps> = (props) => {
     }
   });
 
-  const showAddButton =
-    filteredMovie.length > MOVIE_COUNT_PER_PAGE && page < Math.ceil(filteredMovie.length / MOVIE_COUNT_PER_PAGE);
+  const showAddButton = filteredMovie.length > MOVIE_COUNT_PER_PAGE && page < Math.ceil(filteredMovie.length / MOVIE_COUNT_PER_PAGE);
 
   const handleClickAddBtn = () => {
     setPage(page + 1);
@@ -46,7 +45,7 @@ const MovieListComp: React.FC<MovieListCompProps> = (props) => {
   return (
     <>
       <div className="grid h-fit min-h-[300px] w-full grid-cols-2 gap-5  px-5 py-10 font-NMSNeo2 text-fontColor tablet:grid-cols-4 tablet:gap-10 desktop:px-0">
-        {filteredMovie.slice(0, page * 8).map((movieInfo: movieType, idx: number) => {
+        {filteredMovie.slice(0, page * 8).map((movieInfo: MovieType, idx: number) => {
           return <MovieItemComp key={`${movieInfo.title}_${idx}`} data={movieInfo} />;
         })}
       </div>

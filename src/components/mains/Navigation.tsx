@@ -1,4 +1,4 @@
-import { MOVIE_FILTER_TAB } from "@/types/movies/movieType";
+import { MOVIE_FILTER_TAB } from "@/enums/movies/movieEnum";
 import { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
 
@@ -9,12 +9,7 @@ interface NavProps {
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Navigation = ({
-  filterTab,
-  setFilterTab,
-  searchValue,
-  setSearchValue,
-}: NavProps) => {
+const Navigation = ({ filterTab, setFilterTab, searchValue, setSearchValue }: NavProps) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // nav 클릭 시 함수

@@ -1,12 +1,9 @@
-import { movieType } from "@/data/dataType";
 import { UseSuspenseQueryOptions } from "@tanstack/react-query";
 import axios from "axios";
 import { header } from "..";
+import { MovieType } from "./useFetchMovieAction";
 
-export const getFetchMoviesQuery = (): UseSuspenseQueryOptions<
-  movieType[],
-  unknown
-> => {
+export const getFetchMoviesQuery = (): UseSuspenseQueryOptions<MovieType[], unknown> => {
   return {
     queryKey: ["movies"],
     queryFn: async () => {

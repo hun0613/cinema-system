@@ -1,5 +1,5 @@
-import { movieType } from "@/data/dataType";
-import { MOVIE_CLASSIFICATION } from "@/types/movies/movieType";
+import { MovieType } from "@/actions/movies/useFetchMovieAction";
+import { MOVIE_CLASSIFICATION } from "@/enums/movies/movieEnum";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import { FaHeart } from "react-icons/fa";
 import MovieDetailModalComp from "./MovieDetailModalComp";
 
 interface Data {
-  data: movieType; // 컨텐츠 데이터
+  data: MovieType; // 컨텐츠 데이터
 }
 
 const MovieItemComp = ({ data }: Data) => {
@@ -31,6 +31,10 @@ const MovieItemComp = ({ data }: Data) => {
     setOpenModal(true);
   };
 
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   const handleClickBook = () => {
     router.push(`/book/${data.id}`);
   };
@@ -45,8 +49,7 @@ const MovieItemComp = ({ data }: Data) => {
 
   return (
     <>
-      {openModal && <MovieDetailModalComp setModalControlState={setOpenModal} data={data} />}
-
+      {openModal && <MovieDetailModalComp onCloseModal={handleCloseModal} data={data} />}
       <div className="relative flex h-fit w-full flex-col items-center justify-center">
         {/* poster */}
         <div className="aspect-[3/4.3] w-full overflow-hidden">
@@ -91,9 +94,7 @@ const MovieItemComp = ({ data }: Data) => {
         )}
 
         {/* title */}
-        <p className="mt-3 h-fit w-full truncate text-center font-NMSNeo3 text-sm text-fontColor tablet:text-base">
-          {data.title}
-        </p>
+        <p className="mt-3 h-fit w-full truncate text-center font-NMSNeo3 text-sm text-fontColor tablet:text-base">{data.title}</p>
         {/* info */}
         <div className="flex h-fit w-full flex-row items-center justify-center">
           {/* rate */}
@@ -107,15 +108,11 @@ const MovieItemComp = ({ data }: Data) => {
           {data.classification === MOVIE_CLASSIFICATION.IN_PROGRESS ? (
             <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">
               <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-xs tablet:text-sm">예매율</div>
-              <div className="ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-xs tablet:text-sm">
-                {data.reservation_rate}%
-              </div>
+              <div className="ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-xs tablet:text-sm">{data.reservation_rate}%</div>
             </div>
           ) : data.classification === MOVIE_CLASSIFICATION.END ? (
             <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">
-              <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-xs text-pointColor/80 tablet:text-sm">
-                상영종료
-              </div>
+              <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-xs text-pointColor/80 tablet:text-sm">상영종료</div>
             </div>
           ) : data.classification === MOVIE_CLASSIFICATION.EXPECT ? (
             <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">

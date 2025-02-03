@@ -1,23 +1,16 @@
 import { useEffect, useState } from "react";
 
-const Modal = ({
-  children,
-  setModalControlState,
-  extraFuction,
-}: {
-  children: React.ReactNode;
-  setModalControlState: React.Dispatch<React.SetStateAction<boolean>> | ((el: boolean) => void);
-  extraFuction?: () => void;
-}) => {
+export type ModalAtomProps = {
+  onCloseModal: () => void;
+} & JSX.IntrinsicElements["div"];
+
+const ModalAtom: React.FC<ModalAtomProps> = (props) => {
+  const { children, onCloseModal } = props;
   const [renderState, setRenderState] = useState<boolean>(false);
 
   const handleClickBg = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    setModalControlState(false);
-
-    if (extraFuction) {
-      extraFuction();
-    }
+    onCloseModal();
   };
 
   useEffect(() => {
@@ -49,4 +42,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default ModalAtom;

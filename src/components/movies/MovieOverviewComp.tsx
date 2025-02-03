@@ -1,56 +1,26 @@
 "use client";
-import { getFetchMoviesQuery } from "@/actions/movies/useFetchMoviesAction";
-import { movieType } from "@/data/dataType";
-import useCheckMobile from "@/hooks/useCheckMobile";
-import { MOVIE_CLASSIFICATION } from "@/types/movies/movieType";
+import { getFetchMovieQuery } from "@/actions/movies/useFetchMovieAction";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaHeart } from "react-icons/fa";
 
-const MovieOverviewComp = () => {
-  const [{ data: movies }] = useSuspenseQueries({
-    queries: [getFetchMoviesQuery()],
+export type MovieOverviewCompProps = {
+  movieId: number;
+} & JSX.IntrinsicElements["div"];
+
+const MovieOverviewComp: React.FC<MovieOverviewCompProps> = (props) => {
+  const { movieId } = props;
+
+  const [{ data: movie }] = useSuspenseQueries({
+    queries: [getFetchMovieQuery(movieId)],
   });
-  let filteredMovie: movieType[] = movies.filter((el) => el.classification === MOVIE_CLASSIFICATION.IN_PROGRESS);
 
-  const [zoom, setZoom] = useState<boolean>(false);
-  const [contentIdx, setContentIdx] = useState<number>(0);
-
-  const router = useRouter();
-
-  const { isMobile } = useCheckMobile();
-
-  const changeContent = () => {
-    // 마지막 컨텐츠에서 전환될 때
-    if (contentIdx === filteredMovie.length - 1) {
-      // 애니메이션 효과 초기화
-      setZoom(false);
-      setContentIdx(0);
-    } else {
-      setZoom(false);
-      setContentIdx(contentIdx + 1);
-    }
-  };
-
-  const handleClickBook = () => {
-    router.push(`/book/${filteredMovie[contentIdx].id}`);
-  };
+  const [zoom, setZoom] = useState<boolean>(false); // 애니메이션 실행 트리거
 
   useEffect(() => {
     setZoom(true);
-
-    clearTimeout(0);
-
-    // 캐러셀 컨텐츠 전환 (10초 간격)
-    let timer = setTimeout(() => {
-      changeContent();
-    }, 10000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [contentIdx]);
+  }, []);
 
   return (
     <div className="relative flex h-fit w-full flex-col items-center justify-center bg-screenColor">
@@ -58,7 +28,7 @@ const MovieOverviewComp = () => {
         {/* bg */}
         <Image
           alt="movie img"
-          src={filteredMovie[contentIdx].background_img}
+          src={movie.background_img}
           width={0}
           height={0}
           priority
@@ -73,51 +43,12 @@ const MovieOverviewComp = () => {
       </div>
 
       {/* info area */}
-      <div className="absolute top-0 flex h-full w-full max-w-[1100px] flex-col-reverse items-center justify-center p-5 tablet:flex-row tablet:justify-between tablet:p-10">
-        {/* summary */}
-        <div className="mt-8 flex h-fit w-full flex-col items-center justify-center font-NMSNeo2 text-sm leading-snug text-fontColor tablet:mt-0 tablet:w-[55%] tablet:items-end">
-          {/* title */}
-          <h1
-            className={
-              zoom
-                ? `content_animation font-NMSNeo  h-fit w-full translate-y-0  truncate text-center text-2xl opacity-100 duration-[2000ms] ease-in-out tablet:text-right tablet:text-3xl`
-                : `font-NMSNeo h-fit w-full translate-y-10 truncate  text-center text-2xl opacity-0 tablet:text-right tablet:text-3xl`
-            }
-          >
-            {filteredMovie[contentIdx].title}
-          </h1>
-          {/* content */}
-          <p
-            className={
-              zoom
-                ? `content_animation mt-5 flex h-fit w-fit translate-y-0 flex-col items-center justify-center text-center font-NMSNeo2 text-xs leading-loose opacity-100 duration-[2500ms] ease-in-out target:mt-10 tablet:text-right tablet:text-sm tablet:leading-loose`
-                : `mt-5 flex h-fit w-fit translate-y-10 flex-col items-center justify-center text-center font-NMSNeo2 text-xs leading-loose opacity-0 transition-none target:mt-10 tablet:text-right tablet:text-sm tablet:leading-loose`
-            }
-          >
-            {!isMobile
-              ? filteredMovie[contentIdx].summary
-              : filteredMovie[contentIdx].summary.length > 200
-                ? `${filteredMovie[contentIdx].summary.slice(0, 200)}...`
-                : filteredMovie[contentIdx].summary}
-          </p>
-          {/* 예매하기 버튼 */}
-          <button
-            type="button"
-            onClick={handleClickBook}
-            className={
-              zoom
-                ? `content_animation mt-10 flex h-fit w-1/2 translate-y-0 flex-col items-center justify-center rounded-lg bg-pointColor px-5 py-3 font-NMSNeo3 text-sm text-white opacity-100 duration-[2500ms] ease-in-out hover:bg-pointColor/60 tablet:w-2/5 tablet:text-base`
-                : `mt-10 flex h-fit w-1/2 translate-y-10 flex-col items-center justify-center rounded-lg bg-pointColor px-5 py-3 font-NMSNeo3 text-sm text-white opacity-0 tablet:w-2/5 tablet:text-base`
-            }
-          >
-            예매하기
-          </button>
-        </div>
+      <div className="absolute top-0 flex h-full w-full max-w-[1100px] flex-col items-center justify-center p-5">
         {/* poster */}
-        <div className="ml-0 mt-16 flex aspect-[3/4.3] w-[50%] flex-col items-center justify-center drop-shadow-xl tablet:ml-5 tablet:mt-0 tablet:w-1/3">
+        <div className="mt-14 flex aspect-[3/4.3] h-1/2 flex-col items-center justify-center drop-shadow-xl ">
           <Image
             alt="movie img"
-            src={filteredMovie[contentIdx].poster_img}
+            src={movie.poster_img}
             width={0}
             height={0}
             sizes="100vw"
@@ -129,50 +60,42 @@ const MovieOverviewComp = () => {
             }
           />
         </div>
-      </div>
-      {/* screen idx btns */}
-      {!isMobile ? (
-        <div className="absolute bottom-0 flex h-fit w-full flex-row items-center justify-center pb-5">
-          {filteredMovie.map((movieInfo: movieType, idx: number) => {
-            return (
-              <IndexButtonComp
-                key={`${movieInfo.title}_${idx}`}
-                idx={contentIdx}
-                btnIdx={idx}
-                setIdx={setContentIdx}
-                setZoom={setZoom}
-              />
-            );
-          })}
+        {/* title */}
+        <h1
+          className={
+            zoom
+              ? `content_animation mt-5 h-fit w-full translate-y-0 truncate text-center font-NMSNeo3 text-lg text-fontColor opacity-100 transition-all duration-[2000ms] ease-in-out tablet:text-xl`
+              : `content_animation mt-5 h-fit w-full translate-y-10 truncate text-center font-NMSNeo3 text-lg text-fontColor opacity-0 tablet:text-xl`
+          }
+        >
+          {movie.title}
+        </h1>
+        {/* info */}
+        <div
+          className={
+            zoom
+              ? `content_animation mt-1 flex h-fit w-full translate-y-0 flex-row items-center justify-center opacity-100 transition-all duration-[2500ms] ease-in-out`
+              : `content_animation mt-1 flex h-fit w-full translate-y-10 flex-row items-center justify-center opacity-0`
+          }
+        >
+          {/* rate */}
+          <div className="flex h-fit w-fit flex-row items-center justify-center py-1">
+            <FaHeart className="text-sm text-pointColor tablet:text-base" />
+            <div className="ml-2 mt-[1px] flex h-fit w-fit flex-col items-center justify-center font-NMSNeo2 text-sm text-fontColor tablet:text-base">
+              {movie.rating}
+            </div>
+          </div>
+          {/* reservation rate */}
+          <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">
+            <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-sm text-fontColor tablet:text-base">예매율</div>
+            <div className="ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-sm text-fontColor tablet:text-base">
+              {movie.reservation_rate}%
+            </div>
+          </div>
         </div>
-      ) : null}
+      </div>
     </div>
   );
 };
 
 export default MovieOverviewComp;
-
-interface Props {
-  idx: number;
-  btnIdx: number;
-  setIdx: React.Dispatch<React.SetStateAction<number>>;
-  setZoom: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const IndexButtonComp = ({ idx, btnIdx, setIdx, setZoom }: Props) => {
-  const handleClickBtn = () => {
-    setZoom(false);
-    setIdx(btnIdx);
-  };
-
-  return (
-    <div
-      onClick={btnIdx === idx ? () => {} : handleClickBtn}
-      className={
-        btnIdx === idx
-          ? `mx-2 aspect-square w-3 rounded-full border border-transparent bg-pointColor/60 drop-shadow-xl duration-500 ease-in-out`
-          : `mx-2 aspect-square w-3 cursor-pointer rounded-full border border-white/60 drop-shadow-xl duration-500 ease-in-out hover:bg-white/20`
-      }
-    ></div>
-  );
-};

@@ -1,12 +1,16 @@
-import { TheaterType } from "@/data/dataType";
 import { UseSuspenseQueryOptions } from "@tanstack/react-query";
 import axios from "axios";
 import { header } from "..";
 
-export const getFetchTheatersQuery = (): UseSuspenseQueryOptions<
-  TheaterType[],
-  unknown
-> => {
+export type TheaterType = {
+  theater_id: number;
+  name: string; // 극장 이름
+  position: string; // 극장 위치
+  latitude: number; // 위도
+  longitude: number; // 경도
+};
+
+export const getFetchTheatersQuery = (): UseSuspenseQueryOptions<TheaterType[], unknown> => {
   return {
     queryKey: ["theaters"],
     queryFn: async () => {

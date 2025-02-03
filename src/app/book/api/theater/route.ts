@@ -1,23 +1,8 @@
+import { conn } from "@/app/api";
 import mysql from "mysql2/promise";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic"; // defaults to auto
-
-type connectInfo = {
-  host: string | undefined;
-  port: number;
-  user: string | undefined;
-  password: string | undefined;
-  database: string | undefined;
-};
-
-const conn: connectInfo = {
-  host: process.env.DB_HOST,
-  port: 3306,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_DB,
-};
 
 /**
  * 극장 정보 API

@@ -1,23 +1,8 @@
+import { conn } from "@/app/api";
 import mysql from "mysql2/promise";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic"; // defaults to auto
-
-type connectInfo = {
-  host: string | undefined;
-  port: number;
-  user: string | undefined;
-  password: string | undefined;
-  database: string | undefined;
-};
-
-const conn: connectInfo = {
-  host: process.env.DB_HOST,
-  port: 3306,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_DB,
-};
 
 /**
  * 좌석정보 API
@@ -26,13 +11,15 @@ export async function GET(req: NextRequest): Promise<any> {
   const { searchParams } = new URL(req.url);
   const theater_id: number = Number(searchParams.get("theater_id"));
   const room_id: number = Number(searchParams.get("room_id"));
+  const date: string | null = searchParams.get("date");
+  const time: string | null = searchParams.get("time");
 
   try {
     // rds 연결
     const db: mysql.Connection = await mysql.createConnection(conn);
 
     // seat data select
-    let sql: string = `SELECT * FROM room WHERE theater_id = ${theater_id} AND room_id = ${room_id}`;
+    let sql: string = `SELECT A.*, B.seat_state, B.date, B.time, B.movie_id FROM room A LEFT OUTER JOIN movieTime B on A.theater_id = B.theater_id AND A.room_id = B.room_id WHERE A.theater_id = ${theater_id} AND A.room_id = ${room_id} AND B.date = '${date}' AND B.time = '${time}'`;
 
     // db 데이터 가져오기
     const [result] = await db.execute(sql);

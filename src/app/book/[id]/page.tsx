@@ -1,6 +1,7 @@
-import BodyArea from "@/components/book/BodyArea";
-import MovieInfoComp from "@/components/book/MovieInfoComp";
-import Footer from "@/components/main/Footer";
+import FullScreenSkeletonAtom from "@/atomic/loader/FullScreenSkeletonAtom";
+import BookComp from "@/components/books/BookComp";
+import Footer from "@/components/mains/Footer";
+import MovieOverviewComp from "@/components/movies/MovieOverviewComp";
 import { Suspense } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -8,19 +9,12 @@ const Book = ({ params }: { params: { id: number } }) => {
   return (
     <>
       <div className="flex h-full min-h-screen w-full flex-col items-center justify-start overflow-y-auto overflow-x-hidden bg-bgColor">
-        {/* 영화정보 */}
-        <Suspense fallback={<></>}>
-          <MovieInfoComp movieId={params.id} />\
+        <Suspense fallback={<FullScreenSkeletonAtom />}>
+          <MovieOverviewComp movieId={Number(params.id)} />
         </Suspense>
-        {/* body frame */}
-        <div className="bg-bgColors flex h-fit w-full max-w-[1100px] flex-col items-center justify-start border-b border-borderColor ">
-          {/* content Area */}
-          <Suspense fallback={<></>}>
-            <BodyArea movieId={params.id} />
-          </Suspense>
+        <div className="flex h-fit w-full max-w-[1100px] flex-col items-center justify-start border-b border-borderColor">
+          <BookComp movieId={Number(params.id)} />
         </div>
-
-        {/* footer */}
         <Footer />
       </div>
     </>
