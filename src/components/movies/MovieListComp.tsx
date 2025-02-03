@@ -2,6 +2,7 @@
 import { MovieType } from "@/actions/movies/useFetchMovieAction";
 import { getFetchMoviesQuery } from "@/actions/movies/useFetchMoviesAction";
 import { MOVIE_FILTER_TAB } from "@/enums/movies/movieEnum";
+import { mergeClassNames } from "@/utils/domUtil";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useState } from "react";
 import MovieItemComp from "./MovieItemComp";
@@ -44,7 +45,12 @@ const MovieListComp: React.FC<MovieListCompProps> = (props) => {
 
   return (
     <>
-      <div className="grid h-fit min-h-[300px] w-full grid-cols-2 gap-5  px-5 py-10 font-NMSNeo2 text-fontColor tablet:grid-cols-4 tablet:gap-10 desktop:px-0">
+      <div
+        className={mergeClassNames(
+          "grid h-fit min-h-[300px] w-full grid-cols-2 gap-5 px-5 py-10 font-NMSNeo2 text-fontColor",
+          "tablet:grid-cols-4 tablet:gap-10 desktop:px-0",
+        )}
+      >
         {filteredMovie.slice(0, page * 8).map((movieInfo: MovieType, idx: number) => {
           return <MovieItemComp key={`${movieInfo.title}_${idx}`} data={movieInfo} />;
         })}
@@ -56,7 +62,11 @@ const MovieListComp: React.FC<MovieListCompProps> = (props) => {
           <button
             onClick={handleClickAddBtn}
             type="button"
-            className="mb-10 flex h-fit w-1/4 flex-col items-center justify-center rounded-xl border border-borderColor p-3 font-NMSNeo3 text-sm text-fontColor hover:border-transparent hover:bg-pointColor/70 tablet:w-1/6 tablet:min-w-[150px]"
+            className={mergeClassNames(
+              "mb-10 flex h-fit w-1/4 flex-col items-center justify-center rounded-xl border border-borderColor p-3 font-NMSNeo3 text-sm text-fontColor",
+              "hover:border-transparent hover:bg-pointColor/70",
+              "tablet:w-1/6 tablet:min-w-[150px]",
+            )}
           >
             더보기
           </button>

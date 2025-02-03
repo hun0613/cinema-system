@@ -1,5 +1,6 @@
 import { getFetchTheatersQuery, TheaterType } from "@/actions/theaters/useFetchTheatersAction";
 
+import { mergeClassNames } from "@/utils/domUtil";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import TheaterItemComp from "./TheaterItemComp";
@@ -83,9 +84,19 @@ const TheaterComp: React.FC<TheaterCompProps> = (props) => {
   }, [latitude]);
 
   return (
-    <div className="flex h-fit w-full flex-col items-center justify-center rounded-xl p-3 tablet:h-full tablet:flex-row tablet:p-5">
+    <div
+      className={mergeClassNames(
+        "flex h-fit w-full flex-col items-center justify-center rounded-xl p-3",
+        "tablet:h-full tablet:flex-row tablet:p-5",
+      )}
+    >
       {/* 영화관 리스트 */}
-      <div className="mb-3 mr-0 flex h-fit w-full flex-row items-center justify-start overflow-x-auto overflow-y-auto tablet:mb-0 tablet:mr-5 tablet:h-full tablet:w-[30%] tablet:flex-col tablet:overflow-y-auto tablet:py-0">
+      <div
+        className={mergeClassNames(
+          "mb-3 mr-0 flex h-fit w-full flex-row items-center justify-start overflow-x-auto overflow-y-auto",
+          "tablet:mb-0 tablet:mr-5 tablet:h-full tablet:w-[30%] tablet:flex-col tablet:overflow-y-auto tablet:py-0",
+        )}
+      >
         {/* 데이터가 존재하지 않을 경우 */}
         {theaters.length === 0 && (
           <div className="flex h-full w-full flex-col items-center justify-center font-NMSNeo2 text-xs text-fontColor tablet:text-sm">

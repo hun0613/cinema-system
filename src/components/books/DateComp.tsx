@@ -1,4 +1,5 @@
 import { DateType, getFetchDatesQuery } from "@/actions/dates/useFetchDatesAction";
+import { mergeClassNames } from "@/utils/domUtil";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import DateItemComp from "./DateItemComp";
 
@@ -15,7 +16,12 @@ const DateComp: React.FC<DateCompProps> = (props) => {
   });
 
   return (
-    <div className="mb-3 mr-0 flex h-fit w-full flex-col items-center justify-start tablet:mb-0 tablet:mr-5 tablet:h-full tablet:w-[30%] tablet:py-0">
+    <div
+      className={mergeClassNames(
+        "mb-3 mr-0 flex h-fit w-full flex-col items-center justify-start",
+        "tablet:mb-0 tablet:mr-5 tablet:h-full tablet:w-[30%] tablet:py-0",
+      )}
+    >
       {/* title */}
       <div className="mb-3 flex h-fit w-full flex-col items-center justify-center rounded-lg bg-titleColor p-3 font-NMSNeo3 text-sm text-fontColor">
         날짜

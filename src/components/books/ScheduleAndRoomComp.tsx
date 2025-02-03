@@ -1,3 +1,4 @@
+import { mergeClassNames } from "@/utils/domUtil";
 import { Suspense } from "react";
 import { BookPayloadType } from "./BookComp";
 import DateComp from "./DateComp";
@@ -18,7 +19,12 @@ const ScheduleAndRoomComp: React.FC<ScheduleAndRoomCompProps> = (props) => {
   const { currentBookPayload } = scheduleAndRoomOption;
 
   return (
-    <div className="flex h-fit w-full flex-col items-center justify-center rounded-xl p-3 tablet:h-full tablet:flex-row tablet:p-5">
+    <div
+      className={mergeClassNames(
+        "flex h-fit w-full flex-col items-center justify-center rounded-xl p-3",
+        "tablet:h-full tablet:flex-row tablet:p-5",
+      )}
+    >
       {/* 날짜 그룹 */}
       <DateComp currentDate={currentBookPayload.date} onChangeDate={scheduleAndRoomOption.onChangeDate} />
 

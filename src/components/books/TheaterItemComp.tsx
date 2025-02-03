@@ -1,4 +1,5 @@
 import { TheaterType } from "@/actions/theaters/useFetchTheatersAction";
+import { mergeClassNames } from "@/utils/domUtil";
 import { useEffect, useRef } from "react";
 import { TheaterOptionType } from "./TheaterComp";
 
@@ -37,11 +38,14 @@ const TheaterItemComp: React.FC<TheaterItemCompProps> = (props) => {
     <div
       ref={theaterRef}
       onClick={handleClickItem}
-      className={
-        currentTheaterId === theater_id
-          ? `mb-0 mr-3 flex h-fit w-fit cursor-pointer flex-col items-start justify-center whitespace-nowrap rounded-xl bg-pointColor/70 p-5 tablet:mb-5 tablet:mr-0 tablet:w-full tablet:whitespace-normal`
-          : `mb-0 mr-3 flex h-fit w-fit cursor-pointer flex-col items-start justify-center whitespace-nowrap rounded-xl border border-borderColor p-5 hover:bg-borderColor/30 tablet:mb-5 tablet:mr-0 tablet:w-full tablet:whitespace-normal`
-      }
+      className={mergeClassNames(
+        "mb-0 mr-3 flex h-fit w-fit cursor-pointer flex-col items-start justify-center whitespace-nowrap rounded-xl border border-borderColor p-5",
+        "hover:bg-borderColor/30",
+        "tablet:mb-5 tablet:mr-0 tablet:w-full tablet:whitespace-normal",
+        {
+          "pointer-events-none border-0 bg-pointColor/70": currentTheaterId === theater_id,
+        },
+      )}
     >
       <div className="h-fit w-fit font-NMSNeo3 text-xs text-fontColor mobile:text-sm">{name}</div>
       <div className="mt-3  h-fit w-fit font-NMSNeo1 text-[10px] text-fontColor mobile:text-xs">{position}</div>

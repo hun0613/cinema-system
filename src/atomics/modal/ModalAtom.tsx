@@ -1,3 +1,4 @@
+import { mergeClassNames } from "@/utils/domUtil";
 import { useEffect, useState } from "react";
 
 export type ModalAtomProps = {
@@ -30,11 +31,13 @@ const ModalAtom: React.FC<ModalAtomProps> = (props) => {
     >
       <div
         onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
-        className={
-          renderState
-            ? `flex h-fit w-[90%] max-w-[900px] translate-y-0 flex-col items-center justify-center rounded-xl bg-white/90 opacity-100 drop-shadow-xl duration-500 ease-in-out tablet:w-[90%]`
-            : `flex h-fit w-[90%] max-w-[900px] translate-y-10 flex-col items-center justify-center rounded-xl bg-white/90 opacity-0 drop-shadow-xl tablet:w-[90%]`
-        }
+        className={mergeClassNames(
+          "flex h-fit w-[90%] max-w-[900px] translate-y-10 flex-col items-center justify-center rounded-xl bg-white/90 opacity-0 drop-shadow-xl",
+          "tablet:w-[90%]",
+          {
+            "translate-y-0 opacity-100 duration-500 ease-in-out": renderState,
+          },
+        )}
       >
         {children}
       </div>

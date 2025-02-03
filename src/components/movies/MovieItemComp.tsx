@@ -1,5 +1,6 @@
 import { MovieType } from "@/actions/movies/useFetchMovieAction";
 import { MOVIE_CLASSIFICATION } from "@/enums/movies/movieEnum";
+import { mergeClassNames } from "@/utils/domUtil";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -61,23 +62,28 @@ const MovieItemComp = ({ data }: Data) => {
             height={0}
             sizes="100%"
             style={{ width: "100%", height: "100%" }}
-            className={
-              isHover
-                ? "relative aspect-[3/4.3] w-[95%] scale-105 bg-white/50 duration-500 ease-in-out tablet:w-full"
-                : "relative aspect-[3/4.3] w-[95%] scale-100 bg-white/50 duration-500 ease-in-out tablet:w-full"
-            }
+            className={mergeClassNames("relative aspect-[3/4.3] w-[95%] scale-100 bg-white/50 duration-500 ease-in-out", "tablet:w-full", {
+              "scale-105": isHover,
+            })}
           />
         </div>
         {!isMobile && (
           <div
             onMouseOver={handleMouseOverMovieItem}
             onMouseLeave={handleMouseLeaveMovieItem}
-            className="absolute top-0 flex aspect-[3/4.3] w-full flex-col items-center justify-center bg-black/50 opacity-0 hover:opacity-100"
+            className={mergeClassNames(
+              "absolute top-0 flex aspect-[3/4.3] w-full flex-col items-center justify-center bg-black/50 opacity-0",
+              "hover:opacity-100",
+            )}
           >
             <button
               onClick={handleClickDetailBtn}
               type="button"
-              className="mb-3 flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-fontColor p-3 font-NMSNeo3 text-sm text-bgColor hover:bg-fontColor/80 tablet:text-base"
+              className={mergeClassNames(
+                "mb-3 flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-fontColor p-3 font-NMSNeo3 text-sm text-bgColor",
+                "hover:bg-fontColor/80",
+                "tablet:text-base",
+              )}
             >
               상세보기
             </button>
@@ -85,7 +91,11 @@ const MovieItemComp = ({ data }: Data) => {
               <button
                 onClick={handleClickBook}
                 type="button"
-                className="flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-pointColor p-3 font-NMSNeo3 text-sm hover:bg-pointColor/80 tablet:text-base"
+                className={mergeClassNames(
+                  "flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-pointColor p-3 font-NMSNeo3 text-sm",
+                  "hover:bg-pointColor/80",
+                  "tablet:text-base",
+                )}
               >
                 예매하기
               </button>

@@ -1,4 +1,5 @@
 import { BOOK_STEP } from "@/enums/books/bookEnum";
+import { mergeClassNames } from "@/utils/domUtil";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -45,9 +46,9 @@ const BookStepNavigationComp: React.FC<BookStepNavigationCompProps> = (props) =>
         >
           {/* complete btn */}
           <div
-            className={
-              completeTheaterStep ? `aspect-square w-3 rounded-full bg-pointColor` : `aspect-square w-3 rounded-full bg-borderColor`
-            }
+            className={mergeClassNames("aspect-square w-3 rounded-full bg-borderColor", {
+              "bg-pointColor": completeTheaterStep,
+            })}
           ></div>
           {/* title */}
           <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-sm text-fontColor mobile:text-base">극장</div>
@@ -60,9 +61,9 @@ const BookStepNavigationComp: React.FC<BookStepNavigationCompProps> = (props) =>
         >
           {/* complete btn */}
           <div
-            className={
-              completeScheduleAndRoomStep ? `aspect-square w-3 rounded-full bg-pointColor` : `aspect-square w-3 rounded-full bg-borderColor`
-            }
+            className={mergeClassNames("aspect-square w-3 rounded-full bg-borderColor", {
+              "bg-pointColor": completeScheduleAndRoomStep,
+            })}
           ></div>
           {/* title */}
           <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-sm text-fontColor mobile:text-base">날짜/상영관</div>
@@ -75,9 +76,9 @@ const BookStepNavigationComp: React.FC<BookStepNavigationCompProps> = (props) =>
         >
           {/* complete btn */}
           <div
-            className={
-              completeHeadAndSeatStep ? `aspect-square w-3 rounded-full bg-pointColor` : `aspect-square w-3 rounded-full bg-borderColor`
-            }
+            className={mergeClassNames("aspect-square w-3 rounded-full bg-borderColor", {
+              "bg-pointColor": completeHeadAndSeatStep,
+            })}
           ></div>
           {/* title */}
           <div className="mt-5 h-fit w-full text-center font-NMSNeo3 text-sm text-fontColor mobile:text-base">인원수/좌석</div>
@@ -88,15 +89,11 @@ const BookStepNavigationComp: React.FC<BookStepNavigationCompProps> = (props) =>
       <div className="mt-5 flex h-fit w-full flex-row items-start justify-start tablet:w-2/3">
         {/* bar position */}
         <div
-          className={
-            currentBookStep === BOOK_STEP.THEATER
-              ? `flex h-2 w-1/3 translate-x-[0%] flex-col items-center justify-center rounded-lg duration-[500ms] ease-in-out`
-              : currentBookStep === BOOK_STEP.SCHEDULE_AND_ROOM
-                ? `flex h-2 w-1/3 translate-x-[100%] flex-col items-center justify-center rounded-lg duration-[500ms] ease-in-out`
-                : currentBookStep === BOOK_STEP.HEAD_AND_SEAT
-                  ? `flex h-2 w-1/3 translate-x-[200%] flex-col items-center justify-center rounded-lg duration-[500ms] ease-in-out`
-                  : `flex h-2 w-1/3 translate-x-[0%] flex-col items-center justify-center rounded-lg duration-[500ms] ease-in-out`
-          }
+          className={mergeClassNames("flex h-2 w-1/3 flex-col items-center justify-center rounded-lg duration-[500ms] ease-in-out", {
+            "translate-x-[0%]": currentBookStep === BOOK_STEP.THEATER,
+            "translate-x-[100%]": currentBookStep === BOOK_STEP.SCHEDULE_AND_ROOM,
+            "translate-x-[200%]": currentBookStep === BOOK_STEP.HEAD_AND_SEAT,
+          })}
         >
           {/* item */}
           <div className="h-full w-1/4 rounded-lg bg-pointColor"></div>

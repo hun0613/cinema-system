@@ -1,4 +1,5 @@
 import { getFetchRoomQuery } from "@/actions/rooms/useFetchRoomAction";
+import { mergeClassNames } from "@/utils/domUtil";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { BookPayloadType } from "./BookComp";
@@ -87,11 +88,13 @@ const SeatComp: React.FC<SeatCompProps> = (props) => {
                   <div
                     onClick={() => handleClickHeadCount(count)}
                     key={`headCount_${count}`}
-                    className={
-                      count === headCount
-                        ? `flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-borderColor bg-pointColor/70 font-NMSNeo3 text-xs text-fontColor mobile:w-8 tablet:text-sm`
-                        : `flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-borderColor font-NMSNeo3 text-xs text-fontColor hover:bg-pointColor/30 mobile:w-8 tablet:text-sm`
-                    }
+                    className={mergeClassNames(
+                      "flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-borderColor bg-pointColor/70 font-NMSNeo3 text-xs text-fontColor",
+                      "mobile:w-8 tablet:text-sm",
+                      {
+                        "bg-transparent hover:bg-pointColor/30": count !== headCount,
+                      },
+                    )}
                   >
                     {count}
                   </div>

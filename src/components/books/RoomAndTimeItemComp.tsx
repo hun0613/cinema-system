@@ -1,4 +1,5 @@
 import { MovieTimeType } from "@/actions/movies/useFetchMovieTimesAction";
+import { mergeClassNames } from "@/utils/domUtil";
 
 export type roomType = {
   room_id: number;
@@ -37,11 +38,15 @@ const RoomAndTimeItemComp: React.FC<RoomAndTimeItemCompProps> = (props) => {
             <div
               key={`movieTime_${movieTime.time}`}
               onClick={() => handleClickTime(movieTime.time)}
-              className={
-                currentRoom === movieTime.room_id && currentTime === movieTime.time
-                  ? `mr-3 flex h-fit w-fit flex-col items-center justify-center rounded-lg bg-pointColor/70 px-5 py-2 font-NMSNeo3 text-xs text-fontColor mobile:text-sm`
-                  : `mr-3 flex h-fit w-fit cursor-pointer flex-col items-center justify-center rounded-lg bg-titleColor px-5 py-2 font-NMSNeo3 text-xs text-fontColor hover:bg-titleColor/70 mobile:text-sm`
-              }
+              className={mergeClassNames(
+                "mr-3 flex h-fit w-fit cursor-pointer flex-col items-center justify-center rounded-lg bg-titleColor px-5 py-2 font-NMSNeo3 text-xs text-fontColor",
+                "hover:bg-titleColor/70",
+                "mobile:text-sm",
+                {
+                  "cursor-default bg-pointColor/70 hover:bg-pointColor/70":
+                    currentRoom === movieTime.room_id && currentTime === movieTime.time,
+                },
+              )}
             >
               {movieTime.time}
             </div>

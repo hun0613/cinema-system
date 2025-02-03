@@ -1,4 +1,5 @@
 import { DateType } from "@/actions/dates/useFetchDatesAction";
+import { mergeClassNames } from "@/utils/domUtil";
 import { useEffect, useRef } from "react";
 
 type DateOptionType = {
@@ -50,15 +51,16 @@ const DateItemComp: React.FC<DateItemCompProps> = (props) => {
       <div
         ref={dateRef}
         onClick={handleClickDate}
-        className={
-          currentDate === date
-            ? `flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg bg-pointColor/70 p-5 text-fontColor mobile:p-3`
-            : holiday_yn === "Y"
-              ? `flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg p-5 text-pointColor/70 hover:bg-black/60 mobile:p-3`
-              : week === "토"
-                ? `flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg p-5 text-[#415ab4] hover:bg-black/60 mobile:p-3`
-                : `flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg p-5 text-fontColor hover:bg-black/60 mobile:p-3`
-        }
+        className={mergeClassNames(
+          "flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg p-5 text-fontColor",
+          "hover:bg-black/60",
+          "mobile:p-3",
+          {
+            "text-pointColor/70": holiday_yn === "Y",
+            "text-[#415ab4]": week === "토",
+            "bg-pointColor/70 text-fontColor hover:bg-pointColor/70": currentDate === date,
+          },
+        )}
       >
         {/* 요일 */}
         <div className="h-fit w-fit text-center font-NMSNeo3 text-xs mobile:text-sm">{week}</div>

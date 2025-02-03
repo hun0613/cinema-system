@@ -1,6 +1,7 @@
 "use client";
 import useUpdateSeatAction from "@/actions/movies/useUpdateSeatAction";
 import { BOOK_STEP } from "@/enums/books/bookEnum";
+import { mergeClassNames } from "@/utils/domUtil";
 import { useRouter } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import { ToastContainer } from "react-toastify";
@@ -213,9 +214,12 @@ const BookComp: React.FC<BookCompProps> = (props) => {
           {bookStep !== BOOK_STEP.THEATER && (
             <button
               type="button"
-              disabled={false}
               onClick={handleClickPrev}
-              className={`mx-0 mb-3 flex h-fit w-2/5 flex-col items-center justify-center rounded-xl bg-white/80 p-3 font-NMSNeo3 text-sm text-borderColor hover:bg-white/60 disabled:pointer-events-none disabled:bg-fontColor/50 mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5`}
+              className={mergeClassNames(
+                "mx-0 mb-3 flex h-fit w-2/5 flex-col items-center justify-center rounded-xl bg-white/80 p-3 font-NMSNeo3 text-sm text-borderColor",
+                "hover:bg-white/60 disabled:pointer-events-none disabled:bg-fontColor/50",
+                "mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5",
+              )}
             >
               이전
             </button>
@@ -227,9 +231,11 @@ const BookComp: React.FC<BookCompProps> = (props) => {
               type="button"
               disabled={!shouldActiveNextButton}
               onClick={handleCLickNext}
-              className={
-                "mx-0 mb-3 flex h-fit w-2/5 flex-col items-center justify-center rounded-xl bg-pointColor/80 p-3 font-NMSNeo3 text-sm text-fontColor hover:bg-pointColor/60 disabled:pointer-events-none disabled:bg-fontColor/50 mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5"
-              }
+              className={mergeClassNames(
+                "mx-0 mb-3 flex h-fit w-2/5 flex-col items-center justify-center rounded-xl bg-pointColor/80 p-3 font-NMSNeo3 text-sm text-fontColor",
+                "hover:bg-pointColor/60 disabled:pointer-events-none disabled:bg-fontColor/50",
+                "mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5",
+              )}
             >
               다음
             </button>
@@ -241,9 +247,11 @@ const BookComp: React.FC<BookCompProps> = (props) => {
               type="button"
               disabled={!shouldActiveBookButton}
               onClick={handleClickBook}
-              className={
-                "mx-0 mb-3 flex h-fit w-2/5 flex-col items-center justify-center rounded-xl bg-pointColor/80 p-3 font-NMSNeo3 text-sm text-fontColor hover:bg-pointColor/60 disabled:pointer-events-none disabled:bg-fontColor/50 mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5"
-              }
+              className={mergeClassNames(
+                "mx-0 mb-3 flex h-fit w-2/5 flex-col items-center justify-center rounded-xl bg-pointColor/80 p-3 font-NMSNeo3 text-sm text-fontColor",
+                "hover:bg-pointColor/60 disabled:pointer-events-none disabled:bg-fontColor/50",
+                "mobile:mx-3 mobile:mb-0 mobile:w-1/4 mobile:text-base tablet:w-1/5",
+              )}
             >
               예매하기
             </button>

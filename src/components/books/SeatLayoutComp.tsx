@@ -1,4 +1,5 @@
 import { SeatLayoutType } from "@/actions/rooms/useFetchRoomAction";
+import { mergeClassNames } from "@/utils/domUtil";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { toast } from "react-toastify";
@@ -285,13 +286,13 @@ const SeatLayoutComp: React.FC<SeatLayoutCompProps> = (props) => {
                     onClick={() => handleClickSeat(col)}
                     id={col}
                     key={`seat_${col}`}
-                    className={
-                      sp.includes(colIdx)
-                        ? `seat mx-[3px] ml-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/30 font-NMSNeo4 text-[9px] text-fontColor/30`
-                        : ep.includes(colIdx)
-                          ? `seat mx-[3px] mr-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/30 font-NMSNeo4 text-[9px] text-fontColor/30`
-                          : `seat mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/30 font-NMSNeo4 text-[9px] text-fontColor/30`
-                    }
+                    className={mergeClassNames(
+                      "seat mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/30 font-NMSNeo4 text-[9px] text-fontColor/30",
+                      {
+                        "ml-10": sp.includes(colIdx),
+                        "mr-10": ep.includes(colIdx),
+                      },
+                    )}
                   >
                     {col}
                   </div>
@@ -302,13 +303,13 @@ const SeatLayoutComp: React.FC<SeatLayoutCompProps> = (props) => {
                   <div
                     id={col}
                     key={`seat_${col}`}
-                    className={
-                      sp.includes(colIdx)
-                        ? `mx-[3px] ml-10 flex aspect-square w-7 flex-col items-center justify-center rounded-md border border-borderColor font-NMSNeo4 text-[9px] text-fontColor`
-                        : ep.includes(colIdx)
-                          ? `mx-[3px] mr-10 flex aspect-square w-7 flex-col items-center justify-center rounded-md border border-borderColor font-NMSNeo4 text-[9px] text-fontColor`
-                          : `mx-[3px] flex aspect-square w-7 flex-col items-center justify-center rounded-md border border-borderColor font-NMSNeo4 text-[9px] text-fontColor`
-                    }
+                    className={mergeClassNames(
+                      "mx-[3px] flex aspect-square w-7 flex-col items-center justify-center rounded-md border border-borderColor font-NMSNeo4 text-[9px] text-fontColor",
+                      {
+                        "ml-10": sp.includes(colIdx),
+                        "mr-10": ep.includes(colIdx),
+                      },
+                    )}
                   >
                     {""}
                   </div>
@@ -320,13 +321,13 @@ const SeatLayoutComp: React.FC<SeatLayoutCompProps> = (props) => {
                     id={col}
                     onClick={() => handleClickSelectSeat(col)}
                     key={`seat_${col}`}
-                    className={
-                      sp.includes(colIdx)
-                        ? `mx-[3px] ml-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 !bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
-                        : ep.includes(colIdx)
-                          ? `mx-[3px] mr-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 !bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
-                          : `mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 !bg-pointColor font-NMSNeo4 text-[9px] text-fontColor`
-                    }
+                    className={mergeClassNames(
+                      "mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 !bg-pointColor font-NMSNeo4 text-[9px] text-fontColor",
+                      {
+                        "ml-10": sp.includes(colIdx),
+                        "mr-10": ep.includes(colIdx),
+                      },
+                    )}
                   >
                     {col}
                   </div>
@@ -336,17 +337,17 @@ const SeatLayoutComp: React.FC<SeatLayoutCompProps> = (props) => {
                 return (
                   <div
                     onClick={() => handleClickSeat(col)}
-                    onMouseEnter={isMobile ? () => {} : () => handleMouseEnterSeat(col)}
-                    onMouseLeave={isMobile ? () => {} : () => handleMouseLeaveSeat(col)}
+                    onMouseEnter={isMobile ? undefined : () => handleMouseEnterSeat(col)}
+                    onMouseLeave={isMobile ? undefined : () => handleMouseLeaveSeat(col)}
                     id={col}
                     key={`seat_${col}`}
-                    className={
-                      sp.includes(colIdx)
-                        ? `seat mx-[3px] ml-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor`
-                        : ep.includes(colIdx)
-                          ? `seat mx-[3px] mr-10 flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor`
-                          : `seat mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor`
-                    }
+                    className={mergeClassNames(
+                      "seat mx-[3px] flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-fontColor/70 font-NMSNeo4 text-[9px] text-fontColor",
+                      {
+                        "ml-10": sp.includes(colIdx),
+                        "mr-10": ep.includes(colIdx),
+                      },
+                    )}
                   >
                     {col}
                   </div>
@@ -361,5 +362,3 @@ const SeatLayoutComp: React.FC<SeatLayoutCompProps> = (props) => {
 };
 
 export default SeatLayoutComp;
-
-// background-color: rgb(255 0 0 / 0.3);

@@ -1,5 +1,6 @@
 import { getFetchBookQuery } from "@/actions/books/useFetchBookAction";
 import ModalAtom from "@/atomics/modal/ModalAtom";
+import { mergeClassNames } from "@/utils/domUtil";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -57,7 +58,7 @@ const TicketComp: React.FC<TicketCompProps> = (props) => {
               height={0}
               sizes="100vw"
               style={{ width: "100%", height: "100%" }}
-              className=" rounded-sm"
+              className="rounded-sm"
             />
           </div>
           {/* ticket info */}
@@ -126,7 +127,11 @@ const TicketComp: React.FC<TicketCompProps> = (props) => {
         <button
           onClick={handleClickConfirm}
           type="button"
-          className="mx-0 mb-3 flex h-fit  flex-col items-center justify-center rounded-xl bg-pointColor/80 p-3 px-10 font-NMSNeo3 text-sm text-fontColor hover:bg-pointColor/60 mobile:mx-3 mobile:mb-0 mobile:text-base"
+          className={mergeClassNames(
+            "mx-0 mb-3 flex h-fit  flex-col items-center justify-center rounded-xl bg-pointColor/80 p-3 px-10 font-NMSNeo3 text-sm text-fontColor",
+            "mobile:mx-3 mobile:mb-0 mobile:text-base",
+            "hover:bg-pointColor/60",
+          )}
         >
           홈으로 돌아가기
         </button>
