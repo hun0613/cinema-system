@@ -46,14 +46,16 @@ const RoomAndTimeComp: React.FC<RoomAndTimeCompProps> = (props) => {
       ) : null}
       {!!movieTimes && (
         <div className="flex h-full w-full flex-col items-center justify-start overflow-y-auto rounded-xl">
-          {roomList.map((room) => {
+          {roomList.map((room, index) => {
             return (
-              <RoomAndTimeItemComp
-                key={`room_${room.room_id}`}
-                room={room}
-                roomAndTimeOption={{ currentRoom: roomId, currentTime: time, onChangeRoomAndTime }}
-                movieTimes={movieTimes}
-              />
+              !!room && (
+                <RoomAndTimeItemComp
+                  key={`room_${index}`}
+                  room={room}
+                  roomAndTimeOption={{ currentRoom: roomId, currentTime: time, onChangeRoomAndTime }}
+                  movieTimes={movieTimes}
+                />
+              )
             );
           })}
         </div>
