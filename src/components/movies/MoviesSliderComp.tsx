@@ -63,15 +63,15 @@ const MoviesSliderComp = () => {
       >
         {/* bg */}
         <Image
-          key={filteredMovie[contentIdx].background_img}
           alt="movie img"
           src={filteredMovie[contentIdx].background_img}
           width={0}
           height={0}
           priority
+          quality={100}
           sizes="100vw"
           style={{ width: "100%", height: "auto" }}
-          className={mergeClassNames("scale-125 transition-transform duration-[8000ms] ease-in-out", { "scale-105": zoom })}
+          className={mergeClassNames("scale-125 opacity-100 transition-transform duration-[8000ms] ease-in-out", { "scale-105": zoom })}
         />
         {/* bg effect */}
         <div className="absolute h-full w-full bg-gradient-to-r from-screenColor"></div>
