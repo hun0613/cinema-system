@@ -41,8 +41,6 @@ const MoviesSliderComp = () => {
   useEffect(() => {
     setZoom(true);
 
-    clearTimeout(0);
-
     // 캐러셀 컨텐츠 전환 (10초 간격)
     let timer = setTimeout(() => {
       changeContent();
@@ -70,8 +68,8 @@ const MoviesSliderComp = () => {
           priority
           quality={100}
           sizes="100vw"
-          style={{ width: "100%", height: "auto" }}
-          className={mergeClassNames("scale-125 opacity-100 transition-transform duration-[8000ms] ease-in-out", { "scale-105": zoom })}
+          style={{ width: "100%", height: "auto", willChange: "transform" }}
+          className={mergeClassNames("scale-125 opacity-100", { "scale-105 transition-transform duration-[8000ms] ease-in-out": zoom })}
         />
         {/* bg effect */}
         <div className="absolute h-full w-full bg-gradient-to-r from-screenColor"></div>

@@ -46,11 +46,11 @@ const config: Config = {
       keyframes: {
         scaleDown: {
           "0%": { transform: "scale(1.25)" },
-          "100%": { transform: "scale(1)" },
+          "100%": { transform: "scale(1.05)" },
         },
       },
       animation: {
-        scaleDown: "scaleDown 10s ease-in-out infinite",
+        scaleDown: "scaleDown 10s ease-in-out forward",
       },
     },
   },
