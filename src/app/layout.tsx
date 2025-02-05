@@ -1,20 +1,6 @@
 import Provider from '@/components/Provider';
 import Header from '@/components/mains/Header';
-import type { Metadata } from 'next';
 import './globals.css';
-
-export const metadata: Metadata = {
-  title: '영화예매 시스템',
-  description: '영화예매 시스템 입니다',
-  icons: {
-    icon: [
-      {
-        url: '/images/movie.png',
-        href: '/images/movie.png',
-      },
-    ],
-  },
-};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
