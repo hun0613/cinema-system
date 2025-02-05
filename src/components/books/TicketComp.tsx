@@ -1,6 +1,6 @@
 import { getFetchBookQuery } from '@/actions/books/useFetchBookAction';
-import ButtonAtom, { SIZE } from '@/atomics/button/ButtonAtom';
-import ModalAtom from '@/atomics/modal/ModalAtom';
+import ButtonAtom, { SIZE } from '@/atomics/buttons/ButtonAtom';
+import ModalAtom from '@/atomics/modals/ModalAtom';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';

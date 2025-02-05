@@ -1,6 +1,6 @@
 'use client';
 import useUpdateSeatAction from '@/actions/movies/useUpdateSeatAction';
-import ButtonAtom, { BUTTON_COLOR, SIZE } from '@/atomics/button/ButtonAtom';
+import ButtonAtom, { BUTTON_COLOR, SIZE } from '@/atomics/buttons/ButtonAtom';
 import { BOOK_STEP } from '@/enums/books/bookEnum';
 import { mergeClassNames } from '@/utils/domUtil';
 import { useRouter } from 'next/navigation';

@@ -1,7 +1,7 @@
 'use client';
 import { MovieType } from '@/actions/movies/useFetchMovieAction';
 import { getFetchMoviesQuery } from '@/actions/movies/useFetchMoviesAction';
-import ButtonAtom, { SIZE } from '@/atomics/button/ButtonAtom';
+import ButtonAtom, { SIZE } from '@/atomics/buttons/ButtonAtom';
 import { MOVIE_CLASSIFICATION } from '@/enums/movies/movieEnum';
 import useCheckMobile from '@/hooks/useCheckMobile';
 import { mergeClassNames } from '@/utils/domUtil';

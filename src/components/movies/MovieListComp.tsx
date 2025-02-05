@@ -1,7 +1,7 @@
 'use client';
 import { MovieType } from '@/actions/movies/useFetchMovieAction';
 import { getFetchMoviesQuery } from '@/actions/movies/useFetchMoviesAction';
-import ButtonAtom, { BUTTON_COLOR, BUTTON_LAYOUT, SIZE } from '@/atomics/button/ButtonAtom';
+import ButtonAtom, { BUTTON_COLOR, BUTTON_LAYOUT, SIZE } from '@/atomics/buttons/ButtonAtom';
 import { MOVIE_FILTER_TAB } from '@/enums/movies/movieEnum';
 import { mergeClassNames } from '@/utils/domUtil';
 import { useSuspenseQueries } from '@tanstack/react-query';

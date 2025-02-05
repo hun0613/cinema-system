@@ -1,4 +1,4 @@
-import FullScreenSkeletonAtom from '@/atomics/loader/FullScreenSkeletonAtom';
+import FullScreenSkeletonAtom from '@/atomics/loaders/FullScreenSkeletonAtom';
 import Footer from '@/components/mains/Footer';
 import MoviesComp from '@/components/movies/MoviesComp';
 import MoviesSliderComp from '@/components/movies/MoviesSliderComp';
@@ -12,8 +12,8 @@ export default async function Home() {
       </Suspense>
       <div className='w-full max-w-[1100px]'>
         <MoviesComp />
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }

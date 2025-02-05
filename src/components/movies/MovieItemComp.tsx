@@ -1,5 +1,5 @@
 import { MovieType } from '@/actions/movies/useFetchMovieAction';
-import ButtonAtom, { BUTTON_COLOR, SIZE } from '@/atomics/button/ButtonAtom';
+import ButtonAtom, { BUTTON_COLOR, SIZE } from '@/atomics/buttons/ButtonAtom';
 import { MOVIE_CLASSIFICATION } from '@/enums/movies/movieEnum';
 import { mergeClassNames } from '@/utils/domUtil';
 import Image from 'next/image';

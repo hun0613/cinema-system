@@ -1,9 +1,9 @@
 import { MovieType } from '@/actions/movies/useFetchMovieAction';
-import ButtonAtom, { BUTTON_COLOR, SIZE } from '@/atomics/button/ButtonAtom';
+import ButtonAtom, { BUTTON_COLOR, SIZE } from '@/atomics/buttons/ButtonAtom';
 import { MOVIE_CLASSIFICATION } from '@/enums/movies/movieEnum';
 import { mergeClassNames } from '@/utils/domUtil';
 import { useRouter } from 'next/navigation';
-import ModalAtom from '../../atomics/modal/ModalAtom';
+import ModalAtom from '../../atomics/modals/ModalAtom';
 
 export type MovieDetailModalCompProps = {
   onCloseModal: () => void;
