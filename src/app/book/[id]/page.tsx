@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: 'Cinema-system',
       images: [
         {
-          url: '/images/bg_서울의봄.jpeg',
+          url: `https://cinema-project.com/${movie.background_img}`,
           width: 1920,
           height: 1080,
         },
