@@ -11,7 +11,6 @@ const Header = () => {
           <Link href={`/`}>영화예매시스템</Link>
         </div>
       </PageContainerAtom>
-      {/* </div> */}
     </header>
   );
 };
