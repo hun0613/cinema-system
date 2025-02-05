@@ -1,8 +1,8 @@
-import mysql from "mysql2/promise";
-import { NextRequest, NextResponse } from "next/server";
-import { conn } from ".";
+import mysql from 'mysql2/promise';
+import { NextRequest, NextResponse } from 'next/server';
+import { conn } from '.';
 
-export const dynamic = "force-dynamic"; // defaults to auto
+export const dynamic = 'force-dynamic'; // defaults to auto
 
 /**
  * movie data API
@@ -13,7 +13,7 @@ export async function GET(req: NextRequest): Promise<any> {
     const db: mysql.Connection = await mysql.createConnection(conn);
 
     // movie data select
-    let sql: string = "SELECT * FROM movie";
+    let sql: string = 'SELECT * FROM movie';
 
     // db 데이터 가져오기
     const [result] = await db.execute(sql);

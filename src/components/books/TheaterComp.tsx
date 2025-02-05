@@ -1,9 +1,9 @@
-import { getFetchTheatersQuery, TheaterType } from "@/actions/theaters/useFetchTheatersAction";
+import { getFetchTheatersQuery, TheaterType } from '@/actions/theaters/useFetchTheatersAction';
 
-import { mergeClassNames } from "@/utils/domUtil";
-import { useSuspenseQueries } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import TheaterItemComp from "./TheaterItemComp";
+import { mergeClassNames } from '@/utils/domUtil';
+import { useSuspenseQueries } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import TheaterItemComp from './TheaterItemComp';
 
 // script kakao 객체 사용을 위한 window객체 선언
 declare global {
@@ -19,7 +19,7 @@ export type TheaterOptionType = {
 
 export type TheaterCompProps = {
   theaterOption: TheaterOptionType;
-} & JSX.IntrinsicElements["div"];
+} & JSX.IntrinsicElements['div'];
 
 const TheaterComp: React.FC<TheaterCompProps> = (props) => {
   const { theaterOption } = props;
@@ -35,7 +35,7 @@ const TheaterComp: React.FC<TheaterCompProps> = (props) => {
   useEffect(() => {
     // kakao map
     // 스크립트에 kakao 스크립트 할당
-    const kakaoMapScript = document.createElement("script");
+    const kakaoMapScript = document.createElement('script');
     kakaoMapScript.async = false;
     kakaoMapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_KEY}&autoload=false`;
     document.head.appendChild(kakaoMapScript);
@@ -43,7 +43,7 @@ const TheaterComp: React.FC<TheaterCompProps> = (props) => {
     // 페이지 로드 시 kakao map 발생 함수 실행
     const onLoadKakaoAPI = () => {
       window.kakao.maps.load(() => {
-        let container = document.getElementById("map");
+        let container = document.getElementById('map');
         let options = {
           center: new window.kakao.maps.LatLng(latitude, longitude),
           level: 3,
@@ -60,7 +60,7 @@ const TheaterComp: React.FC<TheaterCompProps> = (props) => {
         });
 
         // 마커 이미지의 이미지 주소입니다
-        let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        let imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
 
         for (let i = 0; i < positions.length; i++) {
           // 마커 이미지의 이미지 크기 입니다
@@ -80,26 +80,26 @@ const TheaterComp: React.FC<TheaterCompProps> = (props) => {
       });
     };
 
-    kakaoMapScript.addEventListener("load", onLoadKakaoAPI);
+    kakaoMapScript.addEventListener('load', onLoadKakaoAPI);
   }, [latitude]);
 
   return (
     <div
       className={mergeClassNames(
-        "flex h-fit w-full flex-col items-center justify-center rounded-xl p-3",
-        "tablet:h-full tablet:flex-row tablet:p-5",
+        'flex h-fit w-full flex-col items-center justify-center rounded-xl p-3',
+        'tablet:h-full tablet:flex-row tablet:p-5',
       )}
     >
       {/* 영화관 리스트 */}
       <div
         className={mergeClassNames(
-          "mb-3 mr-0 flex h-fit w-full flex-row items-center justify-start overflow-x-auto overflow-y-auto",
-          "tablet:mb-0 tablet:mr-5 tablet:h-full tablet:w-[30%] tablet:flex-col tablet:overflow-y-auto tablet:py-0",
+          'mb-3 mr-0 flex h-fit w-full flex-row items-center justify-start overflow-x-auto overflow-y-auto',
+          'tablet:mb-0 tablet:mr-5 tablet:h-full tablet:w-[30%] tablet:flex-col tablet:overflow-y-auto tablet:py-0',
         )}
       >
         {/* 데이터가 존재하지 않을 경우 */}
         {theaters.length === 0 && (
-          <div className="flex h-full w-full flex-col items-center justify-center font-NMSNeo2 text-xs text-fontColor tablet:text-sm">
+          <div className='flex h-full w-full flex-col items-center justify-center font-NMSNeo2 text-xs text-fontColor tablet:text-sm'>
             상영중인 영화관이 없어요...😱
           </div>
         )}
@@ -117,8 +117,8 @@ const TheaterComp: React.FC<TheaterCompProps> = (props) => {
         })}
       </div>
       {/* Kakao Map Area */}
-      <div className="flex aspect-square w-full flex-col items-center justify-center rounded-xl tablet:h-full tablet:w-[70%]">
-        <div id="map" className="flex h-full w-full flex-col items-center justify-center rounded-xl bg-white/10"></div>
+      <div className='flex aspect-square w-full flex-col items-center justify-center rounded-xl tablet:h-full tablet:w-[70%]'>
+        <div id='map' className='flex h-full w-full flex-col items-center justify-center rounded-xl bg-white/10'></div>
       </div>
     </div>
   );

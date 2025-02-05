@@ -1,7 +1,7 @@
-import { TheaterType } from "@/actions/theaters/useFetchTheatersAction";
-import { mergeClassNames } from "@/utils/domUtil";
-import { useEffect, useRef } from "react";
-import { TheaterOptionType } from "./TheaterComp";
+import { TheaterType } from '@/actions/theaters/useFetchTheatersAction';
+import { mergeClassNames } from '@/utils/domUtil';
+import { useEffect, useRef } from 'react';
+import { TheaterOptionType } from './TheaterComp';
 
 export type TheaterItemCompProps = {
   theater: TheaterType;
@@ -28,8 +28,8 @@ const TheaterItemComp: React.FC<TheaterItemCompProps> = (props) => {
     // 첫 랜더링 시 선택한 극장을 스크롤 중심으로 이동
     if (currentTheaterId === theater_id) {
       theaterRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
+        behavior: 'smooth',
+        block: 'center',
       });
     }
   }, []);
@@ -39,11 +39,11 @@ const TheaterItemComp: React.FC<TheaterItemCompProps> = (props) => {
       ref={theaterRef}
       onClick={handleClickItem}
       className={mergeClassNames(
-        "mb-0 mr-3 flex h-fit w-fit cursor-pointer flex-col items-start justify-center whitespace-nowrap rounded-xl border border-borderColor p-5",
-        "hover:bg-borderColor/30",
-        "tablet:mb-5 tablet:mr-0 tablet:w-full tablet:whitespace-normal",
+        'mb-0 mr-3 flex h-fit w-fit cursor-pointer flex-col items-start justify-center whitespace-nowrap rounded-xl border border-borderColor p-5',
+        'hover:bg-borderColor/30',
+        'tablet:mb-5 tablet:mr-0 tablet:w-full tablet:whitespace-normal',
         {
-          "border-0 bg-pointColor/70 hover:bg-pointColor/70": currentTheaterId === theater_id,
+          'border-0 bg-pointColor/70 hover:bg-pointColor/70': currentTheaterId === theater_id,
         },
       )}
     >

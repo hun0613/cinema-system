@@ -1,6 +1,6 @@
-import { UseSuspenseQueryOptions } from "@tanstack/react-query";
-import axios from "axios";
-import { header } from "..";
+import { UseSuspenseQueryOptions } from '@tanstack/react-query';
+import axios from 'axios';
+import { header } from '..';
 
 export type MovieType = {
   id: number; // id
@@ -16,7 +16,7 @@ export type MovieType = {
 
 export const getFetchMovieQuery = (postId: number): UseSuspenseQueryOptions<MovieType, unknown> => {
   return {
-    queryKey: ["movie", postId],
+    queryKey: ['movie', postId],
     queryFn: async () => {
       const res = await axios.get(`/book/api?id=${postId}`, {
         baseURL: process.env.NEXT_PUBLIC_API,

@@ -1,8 +1,8 @@
-import { MOVIE_FILTER_TAB } from "@/enums/movies/movieEnum";
-import { mergeClassNames } from "@/utils/domUtil";
-import { useRef, useState } from "react";
-import { BsSearch } from "react-icons/bs";
-import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
+import { MOVIE_FILTER_TAB } from '@/enums/movies/movieEnum';
+import { mergeClassNames } from '@/utils/domUtil';
+import { useRef, useState } from 'react';
+import { BsSearch } from 'react-icons/bs';
+import { TbTriangleFilled, TbTriangleInvertedFilled } from 'react-icons/tb';
 
 interface NavProps {
   filterTab: MOVIE_FILTER_TAB;
@@ -19,15 +19,15 @@ type NavProperty = {
 const navList: NavProperty[] = [
   {
     tab: MOVIE_FILTER_TAB.IN_PROGRESS,
-    name: "현재 상영작",
+    name: '현재 상영작',
   },
   {
     tab: MOVIE_FILTER_TAB.END,
-    name: "상영 종료작",
+    name: '상영 종료작',
   },
   {
     tab: MOVIE_FILTER_TAB.EXPECT,
-    name: "개봉 예정작",
+    name: '개봉 예정작',
   },
 ];
 
@@ -75,14 +75,14 @@ const MobileNavigation = ({ filterTab, setFilterTab, searchValue, setSearchValue
   };
 
   return (
-    <div className="flex h-[60px] w-full flex-row items-center justify-start">
+    <div className='flex h-[60px] w-full flex-row items-center justify-start'>
       <div
         onClick={(e) => handleClickNav(e, navList.filter((el) => el.name === navMenuTitle)[0].tab)}
         className={mergeClassNames(
-          "relative z-10 flex h-full w-1/2 cursor-pointer flex-row items-center justify-center border-b-2 border-borderColor font-NMSNeo3 text-sm text-fontColor duration-150 ease-in-out",
-          "hover:pb-2",
+          'relative z-10 flex h-full w-1/2 cursor-pointer flex-row items-center justify-center border-b-2 border-borderColor font-NMSNeo3 text-sm text-fontColor duration-150 ease-in-out',
+          'hover:pb-2',
           {
-            "cursor-default border-pointColor hover:bg-black/30 hover:pb-0": filterTab !== MOVIE_FILTER_TAB.SEARCH,
+            'cursor-default border-pointColor hover:bg-black/30 hover:pb-0': filterTab !== MOVIE_FILTER_TAB.SEARCH,
           },
         )}
       >
@@ -92,17 +92,17 @@ const MobileNavigation = ({ filterTab, setFilterTab, searchValue, setSearchValue
             e.stopPropagation();
           }}
           className={mergeClassNames(
-            "absolute top-[60px] flex h-0 w-full flex-col items-baseline justify-start overflow-hidden duration-300 ease-in-out",
+            'absolute top-[60px] flex h-0 w-full flex-col items-baseline justify-start overflow-hidden duration-300 ease-in-out',
             {
-              "h-[180px]": navModalState,
+              'h-[180px]': navModalState,
             },
           )}
         >
           <div
             className={mergeClassNames(
-              "relative -top-[180px] flex h-fit w-full flex-col items-center justify-start border-0 border-borderColor duration-300 ease-in-out",
+              'relative -top-[180px] flex h-fit w-full flex-col items-center justify-start border-0 border-borderColor duration-300 ease-in-out',
               {
-                "-top-[0px]": navModalState,
+                '-top-[0px]': navModalState,
               },
             )}
           >
@@ -114,8 +114,8 @@ const MobileNavigation = ({ filterTab, setFilterTab, searchValue, setSearchValue
                     key={idx}
                     onClick={(e) => handleClickNavElement(e, el.tab, el.name)}
                     className={mergeClassNames(
-                      "mt-2 flex h-fit w-full flex-col items-center justify-center rounded-lg border-2 border-borderColor bg-black/70 p-3 drop-shadow-sm duration-150 ease-in-out",
-                      "hover:bg-pointColor/80",
+                      'mt-2 flex h-fit w-full flex-col items-center justify-center rounded-lg border-2 border-borderColor bg-black/70 p-3 drop-shadow-sm duration-150 ease-in-out',
+                      'hover:bg-pointColor/80',
                     )}
                   >
                     {el.name}
@@ -127,25 +127,25 @@ const MobileNavigation = ({ filterTab, setFilterTab, searchValue, setSearchValue
         {navMenuTitle}
 
         {/* 모달 상태에 따른 화살표 */}
-        {navModalState ? <TbTriangleFilled className="ml-3" /> : <TbTriangleInvertedFilled className="ml-3" />}
+        {navModalState ? <TbTriangleFilled className='ml-3' /> : <TbTriangleInvertedFilled className='ml-3' />}
       </div>
       <div
         onClick={(e) => handleClickNav(e, MOVIE_FILTER_TAB.SEARCH)}
         className={mergeClassNames(
-          "flex h-full w-1/2 items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-sm text-fontColor",
+          'flex h-full w-1/2 items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-sm text-fontColor',
           {
-            "cursor-pointer border-borderColor duration-150 ease-in-out hover:bg-black/30": filterTab !== MOVIE_FILTER_TAB.SEARCH,
+            'cursor-pointer border-borderColor duration-150 ease-in-out hover:bg-black/30': filterTab !== MOVIE_FILTER_TAB.SEARCH,
           },
         )}
       >
-        <BsSearch onClick={handleClickSearch} className="mr-3 text-base text-fontColor" />
+        <BsSearch onClick={handleClickSearch} className='mr-3 text-base text-fontColor' />
         <input
           ref={searchInputRef}
-          type="text"
+          type='text'
           value={searchValue}
-          placeholder="제목을 입력하세요"
+          placeholder='제목을 입력하세요'
           onChange={handleChangeSearch}
-          className="w-2/3 bg-transparent p-1 font-NMSNeo2 text-fontColor outline-none"
+          className='w-2/3 bg-transparent p-1 font-NMSNeo2 text-fontColor outline-none'
         />
       </div>
     </div>

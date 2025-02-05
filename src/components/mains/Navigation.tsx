@@ -1,7 +1,7 @@
-import { MOVIE_FILTER_TAB } from "@/enums/movies/movieEnum";
-import { mergeClassNames } from "@/utils/domUtil";
-import { useRef } from "react";
-import { BsSearch } from "react-icons/bs";
+import { MOVIE_FILTER_TAB } from '@/enums/movies/movieEnum';
+import { mergeClassNames } from '@/utils/domUtil';
+import { useRef } from 'react';
+import { BsSearch } from 'react-icons/bs';
 
 interface NavProps {
   filterTab: MOVIE_FILTER_TAB;
@@ -30,13 +30,13 @@ const Navigation = ({ filterTab, setFilterTab, searchValue, setSearchValue }: Na
   };
 
   return (
-    <div className="flex h-[60px] w-full flex-row items-center justify-start">
+    <div className='flex h-[60px] w-full flex-row items-center justify-start'>
       <div
         onClick={() => handleClickNav(MOVIE_FILTER_TAB.IN_PROGRESS)}
         className={mergeClassNames(
-          "flex h-full w-1/5 cursor-default flex-col items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor duration-150 ease-in-out",
+          'flex h-full w-1/5 cursor-default flex-col items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor duration-150 ease-in-out',
           {
-            "border-borderColor hover:pb-2": filterTab !== MOVIE_FILTER_TAB.IN_PROGRESS,
+            'border-borderColor hover:pb-2': filterTab !== MOVIE_FILTER_TAB.IN_PROGRESS,
           },
         )}
       >
@@ -45,9 +45,9 @@ const Navigation = ({ filterTab, setFilterTab, searchValue, setSearchValue }: Na
       <div
         onClick={() => handleClickNav(MOVIE_FILTER_TAB.END)}
         className={mergeClassNames(
-          "flex h-full w-1/5 cursor-default flex-col items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor duration-150 ease-in-out",
+          'flex h-full w-1/5 cursor-default flex-col items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor duration-150 ease-in-out',
           {
-            "border-borderColor hover:pb-2": filterTab !== MOVIE_FILTER_TAB.END,
+            'border-borderColor hover:pb-2': filterTab !== MOVIE_FILTER_TAB.END,
           },
         )}
       >
@@ -56,9 +56,9 @@ const Navigation = ({ filterTab, setFilterTab, searchValue, setSearchValue }: Na
       <div
         onClick={() => handleClickNav(MOVIE_FILTER_TAB.EXPECT)}
         className={mergeClassNames(
-          "flex h-full w-1/5 cursor-default flex-col items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor duration-150 ease-in-out",
+          'flex h-full w-1/5 cursor-default flex-col items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor duration-150 ease-in-out',
           {
-            "border-borderColor hover:pb-2": filterTab !== MOVIE_FILTER_TAB.EXPECT,
+            'border-borderColor hover:pb-2': filterTab !== MOVIE_FILTER_TAB.EXPECT,
           },
         )}
       >
@@ -67,20 +67,20 @@ const Navigation = ({ filterTab, setFilterTab, searchValue, setSearchValue }: Na
       <div
         onClick={() => handleClickNav(MOVIE_FILTER_TAB.SEARCH)}
         className={mergeClassNames(
-          "flex h-full w-2/5 flex-row items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor",
+          'flex h-full w-2/5 flex-row items-center justify-center border-b-2 border-pointColor font-NMSNeo3 text-base text-fontColor',
           {
-            "cursor-pointer border-borderColor duration-150 ease-in-out hover:bg-black/30": filterTab !== MOVIE_FILTER_TAB.SEARCH,
+            'cursor-pointer border-borderColor duration-150 ease-in-out hover:bg-black/30': filterTab !== MOVIE_FILTER_TAB.SEARCH,
           },
         )}
       >
-        <BsSearch className="mr-3 text-base text-fontColor" />
+        <BsSearch className='mr-3 text-base text-fontColor' />
         <input
           ref={searchInputRef}
-          type="text"
+          type='text'
           value={searchValue}
-          placeholder="영화 제목을 검색해보세요"
+          placeholder='영화 제목을 검색해보세요'
           onChange={handleChangeSearch}
-          className="w-2/3 bg-transparent p-1 font-NMSNeo2 text-fontColor outline-none"
+          className='w-2/3 bg-transparent p-1 font-NMSNeo2 text-fontColor outline-none'
         />
       </div>
     </div>

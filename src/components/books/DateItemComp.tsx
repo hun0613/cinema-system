@@ -1,6 +1,6 @@
-import { DateType } from "@/actions/dates/useFetchDatesAction";
-import { mergeClassNames } from "@/utils/domUtil";
-import { useEffect, useRef } from "react";
+import { DateType } from '@/actions/dates/useFetchDatesAction';
+import { mergeClassNames } from '@/utils/domUtil';
+import { useEffect, useRef } from 'react';
 
 type DateOptionType = {
   currentDate: string;
@@ -29,21 +29,21 @@ const DateItemComp: React.FC<DateItemCompProps> = (props) => {
     // 첫 랜더링 시 선택한 날짜를 스크롤 중심으로 이동
     if (date === currentDate) {
       dateRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
+        behavior: 'smooth',
+        block: 'center',
       });
     }
   }, []);
 
   return (
-    <div className="flex h-fit w-full flex-row items-center justify-center tablet:flex-col">
+    <div className='flex h-fit w-full flex-row items-center justify-center tablet:flex-col'>
       {/* 년도, 월 */}
-      {date.slice(6, 8) === "01" || idx === 0 ? (
-        <div className="flex h-fit w-full flex-col items-center justify-center p-5">
+      {date.slice(6, 8) === '01' || idx === 0 ? (
+        <div className='flex h-fit w-full flex-col items-center justify-center p-5'>
           {/* 년도 */}
-          <div className="mb-1 h-fit w-full text-center font-NMSNeo4 text-[10px] text-fontColor mobile:text-xs">{date.slice(0, 4)}</div>
+          <div className='mb-1 h-fit w-full text-center font-NMSNeo4 text-[10px] text-fontColor mobile:text-xs'>{date.slice(0, 4)}</div>
           {/* 월 */}
-          <div className="h-fit w-full text-center font-NMSNeo5 text-base text-fontColor mobile:text-lg">{date.slice(4, 6)}</div>
+          <div className='h-fit w-full text-center font-NMSNeo5 text-base text-fontColor mobile:text-lg'>{date.slice(4, 6)}</div>
         </div>
       ) : null}
 
@@ -52,20 +52,20 @@ const DateItemComp: React.FC<DateItemCompProps> = (props) => {
         ref={dateRef}
         onClick={handleClickDate}
         className={mergeClassNames(
-          "flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg p-5 text-fontColor",
-          "hover:bg-black/60",
-          "mobile:p-3",
+          'flex h-fit w-full cursor-pointer flex-row items-center justify-center rounded-lg p-5 text-fontColor',
+          'hover:bg-black/60',
+          'mobile:p-3',
           {
-            "text-pointColor/70": holiday_yn === "Y",
-            "text-[#415ab4]": week === "토",
-            "bg-pointColor/70 text-fontColor hover:bg-pointColor/70": currentDate === date,
+            'text-pointColor/70': holiday_yn === 'Y',
+            'text-[#415ab4]': week === '토',
+            'bg-pointColor/70 text-fontColor hover:bg-pointColor/70': currentDate === date,
           },
         )}
       >
         {/* 요일 */}
-        <div className="h-fit w-fit text-center font-NMSNeo3 text-xs mobile:text-sm">{week}</div>
+        <div className='h-fit w-fit text-center font-NMSNeo3 text-xs mobile:text-sm'>{week}</div>
         {/* 일 */}
-        <div className="ml-2 h-fit w-fit text-center font-NMSNeo4 text-xs mobile:text-sm">{date.slice(6, 8)}</div>
+        <div className='ml-2 h-fit w-fit text-center font-NMSNeo4 text-xs mobile:text-sm'>{date.slice(6, 8)}</div>
       </div>
     </div>
   );

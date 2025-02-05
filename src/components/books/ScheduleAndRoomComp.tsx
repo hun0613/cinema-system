@@ -1,18 +1,18 @@
-import { mergeClassNames } from "@/utils/domUtil";
-import { Suspense } from "react";
-import { BookPayloadType } from "./BookComp";
-import DateComp from "./DateComp";
-import RoomAndTimeComp, { RoomAndTimeSkeletonComp } from "./RoomAndTimeComp";
+import { mergeClassNames } from '@/utils/domUtil';
+import { Suspense } from 'react';
+import { BookPayloadType } from './BookComp';
+import DateComp from './DateComp';
+import RoomAndTimeComp, { RoomAndTimeSkeletonComp } from './RoomAndTimeComp';
 
 type ScheduleAndRoomOption = {
-  currentBookPayload: Omit<BookPayloadType, "theaterId"> & { theaterId: number };
+  currentBookPayload: Omit<BookPayloadType, 'theaterId'> & { theaterId: number };
   onChangeDate: (date: string) => void;
   onChangeRoomAndTime: (roomId: number, time: string) => void;
 };
 
 export type ScheduleAndRoomCompProps = {
   scheduleAndRoomOption: ScheduleAndRoomOption;
-} & JSX.IntrinsicElements["div"];
+} & JSX.IntrinsicElements['div'];
 
 const ScheduleAndRoomComp: React.FC<ScheduleAndRoomCompProps> = (props) => {
   const { scheduleAndRoomOption } = props;
@@ -21,8 +21,8 @@ const ScheduleAndRoomComp: React.FC<ScheduleAndRoomCompProps> = (props) => {
   return (
     <div
       className={mergeClassNames(
-        "flex h-fit w-full flex-col items-center justify-center rounded-xl p-3",
-        "tablet:h-full tablet:flex-row tablet:p-5",
+        'flex h-fit w-full flex-col items-center justify-center rounded-xl p-3',
+        'tablet:h-full tablet:flex-row tablet:p-5',
       )}
     >
       {/* 날짜 그룹 */}

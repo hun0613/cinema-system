@@ -1,5 +1,8 @@
 {
   "plugins": ["prettier-plugin-svelte", "prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"],
   "pluginSearchDirs": false,
-  "printWidth": 140
+  "printWidth": 140,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "quoteProps": "preserve"
 }

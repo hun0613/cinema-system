@@ -1,6 +1,6 @@
-import { UseSuspenseQueryOptions } from "@tanstack/react-query";
-import axios from "axios";
-import { header } from "..";
+import { UseSuspenseQueryOptions } from '@tanstack/react-query';
+import axios from 'axios';
+import { header } from '..';
 
 export type DateType = {
   date: string; // 날짜 (YYYYMMDD);
@@ -10,7 +10,7 @@ export type DateType = {
 
 export const getFetchDatesQuery = (): UseSuspenseQueryOptions<DateType[], unknown> => {
   return {
-    queryKey: ["date"],
+    queryKey: ['date'],
     queryFn: async () => {
       const res = await axios.get(`/book/api/date`, {
         baseURL: process.env.NEXT_PUBLIC_API,

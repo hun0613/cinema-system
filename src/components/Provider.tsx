@@ -1,7 +1,7 @@
-"use client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+'use client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-type ProviderProps = {} & JSX.IntrinsicElements["div"];
+type ProviderProps = {} & JSX.IntrinsicElements['div'];
 
 const Provider: React.FC<ProviderProps> = (props) => {
   const { children } = props;
@@ -13,9 +13,7 @@ const Provider: React.FC<ProviderProps> = (props) => {
     },
   });
 
-  return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };
 
 export default Provider;

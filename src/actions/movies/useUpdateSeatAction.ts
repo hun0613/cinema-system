@@ -1,7 +1,7 @@
-import { MutationFunction, useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { UseMutationAction, header } from "..";
-import { getFetchMovieTimesQuery } from "./useFetchMovieTimesAction";
+import { MutationFunction, useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import { UseMutationAction, header } from '..';
+import { getFetchMovieTimesQuery } from './useFetchMovieTimesAction';
 
 export type UpdateSeatData = {
   theater_id: number;
@@ -18,7 +18,7 @@ const updateSeat: MutationFunction<{ res: string; bookId: number }, UpdateSeatDa
     baseURL: process.env.NEXT_PUBLIC_API,
     headers: {
       ...header,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 

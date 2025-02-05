@@ -1,12 +1,13 @@
-import { MovieType } from "@/actions/movies/useFetchMovieAction";
-import { MOVIE_CLASSIFICATION } from "@/enums/movies/movieEnum";
-import { mergeClassNames } from "@/utils/domUtil";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { isMobile } from "react-device-detect";
-import { FaHeart } from "react-icons/fa";
-import MovieDetailModalComp from "./MovieDetailModalComp";
+import { MovieType } from '@/actions/movies/useFetchMovieAction';
+import ButtonAtom, { BUTTON_COLOR, SIZE } from '@/atomics/button/ButtonAtom';
+import { MOVIE_CLASSIFICATION } from '@/enums/movies/movieEnum';
+import { mergeClassNames } from '@/utils/domUtil';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { isMobile } from 'react-device-detect';
+import { FaHeart } from 'react-icons/fa';
+import MovieDetailModalComp from './MovieDetailModalComp';
 
 interface Data {
   data: MovieType; // 컨텐츠 데이터
@@ -51,19 +52,19 @@ const MovieItemComp = ({ data }: Data) => {
   return (
     <>
       {openModal && <MovieDetailModalComp onCloseModal={handleCloseModal} data={data} />}
-      <div className="relative flex h-fit w-full flex-col items-center justify-center">
+      <div className='relative flex h-fit w-full flex-col items-center justify-center'>
         {/* poster */}
-        <div className="aspect-[3/4.3] w-full overflow-hidden">
+        <div className='aspect-[3/4.3] w-full overflow-hidden'>
           <Image
             onClick={isMobile ? handleClickDetailBtn : undefined}
-            alt="movie img"
+            alt='movie img'
             src={data.poster_img}
             width={0}
             height={0}
-            sizes="100%"
-            style={{ width: "100%", height: "100%" }}
-            className={mergeClassNames("relative aspect-[3/4.3] w-[95%] scale-100 bg-white/50 duration-500 ease-in-out", "tablet:w-full", {
-              "scale-105": isHover,
+            sizes='100%'
+            style={{ width: '100%', height: '100%' }}
+            className={mergeClassNames('relative aspect-[3/4.3] w-[95%] scale-100 bg-white/50 duration-500 ease-in-out', 'tablet:w-full', {
+              'scale-105': isHover,
             })}
           />
         </div>
@@ -72,61 +73,49 @@ const MovieItemComp = ({ data }: Data) => {
             onMouseOver={handleMouseOverMovieItem}
             onMouseLeave={handleMouseLeaveMovieItem}
             className={mergeClassNames(
-              "absolute top-0 flex aspect-[3/4.3] w-full flex-col items-center justify-center bg-black/50 opacity-0",
-              "hover:opacity-100",
+              'absolute top-0 flex aspect-[3/4.3] w-full flex-col items-center justify-center gap-3 bg-black/50 px-5 opacity-0',
+              'hover:opacity-100',
             )}
           >
-            <button
-              onClick={handleClickDetailBtn}
-              type="button"
-              className={mergeClassNames(
-                "mb-3 flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-fontColor p-3 font-NMSNeo3 text-sm text-bgColor",
-                "hover:bg-fontColor/80",
-                "tablet:text-base",
-              )}
-            >
+            <ButtonAtom full size={SIZE.SMALL} color={BUTTON_COLOR.GRAY} onClick={handleClickDetailBtn}>
               상세보기
-            </button>
-            {data.classification !== MOVIE_CLASSIFICATION.IN_PROGRESS ? null : (
-              <button
-                onClick={handleClickBook}
-                type="button"
-                className={mergeClassNames(
-                  "flex h-fit w-2/3 flex-col items-center justify-center rounded-xl bg-pointColor p-3 font-NMSNeo3 text-sm",
-                  "hover:bg-pointColor/80",
-                  "tablet:text-base",
-                )}
-              >
-                예매하기
-              </button>
-            )}
+            </ButtonAtom>
+            <ButtonAtom
+              full
+              size={SIZE.SMALL}
+              className={mergeClassNames('block', {
+                absolute: data.classification !== MOVIE_CLASSIFICATION.IN_PROGRESS,
+              })}
+            >
+              예매하기
+            </ButtonAtom>
           </div>
         )}
 
         {/* title */}
-        <p className="mt-3 h-fit w-full truncate text-center font-NMSNeo3 text-sm text-fontColor tablet:text-base">{data.title}</p>
+        <p className='mt-3 h-fit w-full truncate text-center font-NMSNeo3 text-sm text-fontColor tablet:text-base'>{data.title}</p>
         {/* info */}
-        <div className="flex h-fit w-full flex-row items-center justify-center">
+        <div className='flex h-fit w-full flex-row items-center justify-center'>
           {/* rate */}
-          <div className="flex h-fit w-fit flex-row items-center justify-center py-1">
-            <FaHeart className="text-xs text-pointColor tablet:text-sm" />
-            <div className="ml-2 mt-[2px] flex h-fit w-fit flex-col items-center justify-center font-NMSNeo2 text-xs tablet:text-sm">
+          <div className='flex h-fit w-fit flex-row items-center justify-center py-1'>
+            <FaHeart className='text-xs text-pointColor tablet:text-sm' />
+            <div className='ml-2 mt-[2px] flex h-fit w-fit flex-col items-center justify-center font-NMSNeo2 text-xs tablet:text-sm'>
               {data.rating}
             </div>
           </div>
           {/* reservation rate */}
           {data.classification === MOVIE_CLASSIFICATION.IN_PROGRESS ? (
-            <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">
-              <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-xs tablet:text-sm">예매율</div>
-              <div className="ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-xs tablet:text-sm">{data.reservation_rate}%</div>
+            <div className='ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3'>
+              <div className='mt-[2px] h-fit w-fit font-NMSNeo3 text-xs tablet:text-sm'>예매율</div>
+              <div className='ml-2 mt-[2px] h-fit w-fit font-NMSNeo2 text-xs tablet:text-sm'>{data.reservation_rate}%</div>
             </div>
           ) : data.classification === MOVIE_CLASSIFICATION.END ? (
-            <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">
-              <div className="mt-[2px] h-fit w-fit font-NMSNeo3 text-xs text-pointColor/80 tablet:text-sm">상영종료</div>
+            <div className='ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3'>
+              <div className='mt-[2px] h-fit w-fit font-NMSNeo3 text-xs text-pointColor/80 tablet:text-sm'>상영종료</div>
             </div>
           ) : data.classification === MOVIE_CLASSIFICATION.EXPECT ? (
-            <div className="ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3">
-              <div className="mt-[2px] h-fit w-fit font-NMSNeo4 text-xs text-pointColor/80 tablet:text-sm">
+            <div className='ml-3 flex h-fit w-fit flex-row items-center justify-center py-1 tablet:ml-3'>
+              <div className='mt-[2px] h-fit w-fit font-NMSNeo4 text-xs text-pointColor/80 tablet:text-sm'>
                 D-{diffDate(data.release_date)}
               </div>
             </div>

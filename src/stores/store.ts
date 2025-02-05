@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 export type AuthState = {
   // 로그인/회원가입 모드상태
@@ -11,7 +11,7 @@ export type AuthState = {
 
 export const useAuthStore = create<AuthState>((set) => ({
   // 로그인(signIn) / 회원가입(signUp) 상태
-  authState: "signIn",
+  authState: 'signIn',
   setAuthState: (el) => {
     set((state) => ({ authState: el }));
   },

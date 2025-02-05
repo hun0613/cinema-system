@@ -1,6 +1,6 @@
-import { UseSuspenseQueryOptions } from "@tanstack/react-query";
-import axios from "axios";
-import { header } from "..";
+import { UseSuspenseQueryOptions } from '@tanstack/react-query';
+import axios from 'axios';
+import { header } from '..';
 
 export type SeatLayoutType = {
   row: string[]; // 상영관 행 정보
@@ -17,7 +17,7 @@ export const getFetchRoomQuery = (
   time: string,
 ): UseSuspenseQueryOptions<SeatLayoutType, unknown> => {
   return {
-    queryKey: ["room", theaterId, roomId, date, time],
+    queryKey: ['room', theaterId, roomId, date, time],
     queryFn: async () => {
       const res = await axios.get(`/book/api/room?theater_id=${theaterId}&room_id=${roomId}&date=${date}&time=${time}`, {
         baseURL: process.env.NEXT_PUBLIC_API,

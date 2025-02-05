@@ -1,6 +1,6 @@
-import { UseSuspenseQueryOptions } from "@tanstack/react-query";
-import axios from "axios";
-import { header } from "..";
+import { UseSuspenseQueryOptions } from '@tanstack/react-query';
+import axios from 'axios';
+import { header } from '..';
 
 export type BookType = {
   book_id: number;
@@ -15,7 +15,7 @@ export type BookType = {
 
 export const getFetchBookQuery = (bookId: number): UseSuspenseQueryOptions<BookType, unknown> => {
   return {
-    queryKey: ["book", bookId],
+    queryKey: ['book', bookId],
     queryFn: async () => {
       const res = await axios.get(`/book/api/book?book_id=${bookId}`, {
         baseURL: process.env.NEXT_PUBLIC_API,
