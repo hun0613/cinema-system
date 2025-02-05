@@ -7,7 +7,7 @@ const FullScreenSkeletonAtom: React.FC<FullScreenSkeletonAtomProps> = (props) =>
     <div className='relative flex h-fit w-full flex-col items-center justify-center bg-screenColor'>
       <div
         className={mergeClassNames(
-          'relative flex aspect-video h-[calc(100vh)] flex-col items-center justify-start overflow-hidden bg-white/10',
+          'relative flex aspect-video h-[calc(100vh)] flex-col items-center justify-start overflow-hidden bg-borderColor/50',
           'tablet:h-[calc(100vh-200px)]',
         )}
       ></div>
