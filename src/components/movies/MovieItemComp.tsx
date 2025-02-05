@@ -83,8 +83,9 @@ const MovieItemComp = ({ data }: Data) => {
             <ButtonAtom
               full
               size={SIZE.SMALL}
-              className={mergeClassNames('block', {
-                absolute: data.classification !== MOVIE_CLASSIFICATION.IN_PROGRESS,
+              onClick={handleClickBook}
+              className={mergeClassNames('hidden', {
+                'block': data.classification === MOVIE_CLASSIFICATION.IN_PROGRESS,
               })}
             >
               예매하기

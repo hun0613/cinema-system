@@ -1,6 +1,6 @@
 import { getFetchBookQuery } from '@/actions/books/useFetchBookAction';
+import ButtonAtom, { SIZE } from '@/atomics/button/ButtonAtom';
 import ModalAtom from '@/atomics/modal/ModalAtom';
-import { mergeClassNames } from '@/utils/domUtil';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -124,17 +124,9 @@ const TicketComp: React.FC<TicketCompProps> = (props) => {
           </div>
         </div>
         {/* confirm btn */}
-        <button
-          onClick={handleClickConfirm}
-          type='button'
-          className={mergeClassNames(
-            'mx-0 mb-3 flex h-fit  flex-col items-center justify-center rounded-xl bg-pointColor/80 p-3 px-10 font-NMSNeo3 text-sm text-fontColor',
-            'mobile:mx-3 mobile:mb-0 mobile:text-base',
-            'hover:bg-pointColor/60',
-          )}
-        >
+        <ButtonAtom size={SIZE.MEDIUM} onClick={handleClickConfirm} className='mb-3'>
           홈으로 돌아가기
-        </button>
+        </ButtonAtom>
       </div>
     </ModalAtom>
   );

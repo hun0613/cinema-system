@@ -1,7 +1,7 @@
 'use client';
 import { MovieType } from '@/actions/movies/useFetchMovieAction';
 import { getFetchMoviesQuery } from '@/actions/movies/useFetchMoviesAction';
-import ButtonAtom from '@/atomics/button/ButtonAtom';
+import ButtonAtom, { SIZE } from '@/atomics/button/ButtonAtom';
 import { MOVIE_CLASSIFICATION } from '@/enums/movies/movieEnum';
 import useCheckMobile from '@/hooks/useCheckMobile';
 import { mergeClassNames } from '@/utils/domUtil';
@@ -120,7 +120,8 @@ const MoviesSliderComp = () => {
                 : filteredMovie[contentIdx].summary}
           </p>
           <ButtonAtom
-            className={mergeClassNames('mt-10 w-1/2 translate-y-10 opacity-0', {
+            size={SIZE.SMALL}
+            className={mergeClassNames('mt-10 w-1/3 translate-y-10 opacity-0', {
               'content_animation translate-y-0 opacity-100 duration-[2500ms] ease-in-out': zoom,
             })}
             onClick={handleClickBook}
