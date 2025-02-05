@@ -56,7 +56,7 @@ const MovieListComp: React.FC<MovieListCompProps> = (props) => {
           return <MovieItemComp key={`${movieInfo.title}_${idx}`} data={movieInfo} />;
         })}
       </div>
-      <div className='flex h-fit w-full flex-col items-center justify-center border-b border-borderColor/40'>
+      <div className='flex h-fit w-full flex-col items-center justify-center'>
         {showAddButton && (
           <ButtonAtom
             onClick={handleClickAdd}

@@ -2,6 +2,7 @@
 import { MovieType } from '@/actions/movies/useFetchMovieAction';
 import { getFetchMoviesQuery } from '@/actions/movies/useFetchMoviesAction';
 import ButtonAtom, { SIZE } from '@/atomics/buttons/ButtonAtom';
+import PageContainerAtom from '@/atomics/layouts/PageContainerAtom';
 import { MOVIE_CLASSIFICATION } from '@/enums/movies/movieEnum';
 import useCheckMobile from '@/hooks/useCheckMobile';
 import { mergeClassNames } from '@/utils/domUtil';
@@ -78,77 +79,79 @@ const MoviesSliderComp = () => {
       </div>
 
       {/* info area */}
-      <div
-        className={mergeClassNames(
-          'absolute top-0 flex h-full w-full max-w-[1100px] flex-col-reverse items-center justify-center p-5',
-          'tablet:flex-row tablet:justify-between tablet:p-10',
-        )}
-      >
-        {/* summary */}
+      <PageContainerAtom className='absolute top-0 h-full'>
         <div
           className={mergeClassNames(
-            'mt-8 flex h-fit w-full flex-col items-center justify-center font-NMSNeo2 text-sm leading-snug text-fontColor',
-            'tablet:mt-0 tablet:w-[55%] tablet:items-end',
+            'flex h-full w-full flex-col-reverse items-center justify-center p-5',
+            'tablet:flex-row tablet:justify-between tablet:p-10',
           )}
         >
-          {/* title */}
-          <h1
+          {/* summary */}
+          <div
             className={mergeClassNames(
-              'font-NMSNeo h-fit w-full translate-y-10 truncate  text-center text-2xl opacity-0',
-              'tablet:text-right tablet:text-3xl',
-              {
-                'content_animation translate-y-0 opacity-100 duration-[2000ms] ease-in-out': zoom,
-              },
+              'mt-8 flex h-fit w-full flex-col items-center justify-center font-NMSNeo2 text-sm leading-snug text-fontColor',
+              'tablet:mt-0 tablet:w-[55%] tablet:items-end',
             )}
           >
-            {filteredMovie[contentIdx].title}
-          </h1>
-          {/* content */}
-          <p
+            {/* title */}
+            <h1
+              className={mergeClassNames(
+                'font-NMSNeo h-fit w-full translate-y-10 truncate  text-center text-2xl opacity-0',
+                'tablet:text-right tablet:text-3xl',
+                {
+                  'content_animation translate-y-0 opacity-100 duration-[2000ms] ease-in-out': zoom,
+                },
+              )}
+            >
+              {filteredMovie[contentIdx].title}
+            </h1>
+            {/* content */}
+            <p
+              className={mergeClassNames(
+                'content_animation mt-5 flex h-fit w-fit translate-y-10 flex-col items-center justify-center text-center font-NMSNeo2 text-xs leading-loose opacity-0 transition-none',
+                'target:mt-10 tablet:text-right tablet:text-sm tablet:leading-loose',
+                {
+                  'translate-y-0 opacity-100 duration-[2500ms] ease-in-out': zoom,
+                },
+              )}
+            >
+              {!isMobile
+                ? filteredMovie[contentIdx].summary
+                : filteredMovie[contentIdx].summary.length > 200
+                  ? `${filteredMovie[contentIdx].summary.slice(0, 200)}...`
+                  : filteredMovie[contentIdx].summary}
+            </p>
+            <ButtonAtom
+              size={SIZE.SMALL}
+              className={mergeClassNames('mt-10 w-1/3 translate-y-10 opacity-0', {
+                'content_animation translate-y-0 opacity-100 duration-[2500ms] ease-in-out': zoom,
+              })}
+              onClick={handleClickBook}
+            >
+              예매하기
+            </ButtonAtom>
+          </div>
+          {/* poster */}
+          <div
             className={mergeClassNames(
-              'content_animation mt-5 flex h-fit w-fit translate-y-10 flex-col items-center justify-center text-center font-NMSNeo2 text-xs leading-loose opacity-0 transition-none',
-              'target:mt-10 tablet:text-right tablet:text-sm tablet:leading-loose',
-              {
-                'translate-y-0 opacity-100 duration-[2500ms] ease-in-out': zoom,
-              },
+              'ml-0 mt-16 flex aspect-[3/4.3] w-[50%] flex-col items-center justify-center drop-shadow-xl',
+              'tablet:ml-5 tablet:mt-0 tablet:w-1/3',
             )}
           >
-            {!isMobile
-              ? filteredMovie[contentIdx].summary
-              : filteredMovie[contentIdx].summary.length > 200
-                ? `${filteredMovie[contentIdx].summary.slice(0, 200)}...`
-                : filteredMovie[contentIdx].summary}
-          </p>
-          <ButtonAtom
-            size={SIZE.SMALL}
-            className={mergeClassNames('mt-10 w-1/3 translate-y-10 opacity-0', {
-              'content_animation translate-y-0 opacity-100 duration-[2500ms] ease-in-out': zoom,
-            })}
-            onClick={handleClickBook}
-          >
-            예매하기
-          </ButtonAtom>
+            <Image
+              alt='movie img'
+              src={filteredMovie[contentIdx].poster_img}
+              width={0}
+              height={0}
+              sizes='100vw'
+              style={{ width: '100%', height: '100%' }}
+              className={mergeClassNames('translate-y-10 opacity-0', {
+                'translate-y-0 opacity-100 transition-all duration-[1500ms] ease-in-out': zoom,
+              })}
+            />
+          </div>
         </div>
-        {/* poster */}
-        <div
-          className={mergeClassNames(
-            'ml-0 mt-16 flex aspect-[3/4.3] w-[50%] flex-col items-center justify-center drop-shadow-xl',
-            'tablet:ml-5 tablet:mt-0 tablet:w-1/3',
-          )}
-        >
-          <Image
-            alt='movie img'
-            src={filteredMovie[contentIdx].poster_img}
-            width={0}
-            height={0}
-            sizes='100vw'
-            style={{ width: '100%', height: '100%' }}
-            className={mergeClassNames('translate-y-10 opacity-0', {
-              'translate-y-0 opacity-100 transition-all duration-[1500ms] ease-in-out': zoom,
-            })}
-          />
-        </div>
-      </div>
+      </PageContainerAtom>
       {/* screen idx btns */}
       {!isMobile ? (
         <div className='absolute bottom-0 flex h-fit w-full flex-row items-center justify-center pb-5'>

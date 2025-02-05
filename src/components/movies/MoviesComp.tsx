@@ -19,7 +19,7 @@ const MoviesComp: React.FC<MoviesCompProps> = (props) => {
   const { isMobile } = useCheckMobile();
 
   return (
-    <div className='flex flex-col items-center justify-start'>
+    <div className='flex w-full flex-col items-center justify-start'>
       {!isMobile ? (
         <Navigation filterTab={filterTab} setFilterTab={setFilterTab} searchValue={searchValue} setSearchValue={setSearchValue} />
       ) : (
