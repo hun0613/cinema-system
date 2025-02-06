@@ -30,8 +30,8 @@ const SeatComp: React.FC<SeatCompProps> = (props) => {
   const handleClickHeadCount = (count: number) => {
     if (headCount !== 0 && seat.length > 0) {
       if (window.confirm('선택된 좌석이 모두 초기화됩니다.\n변경하시겠습니까?')) {
-        onChangeHeadCount(count, seatLayout.seat_state);
         onChangeSeat([]);
+        onChangeHeadCount(count, seatLayout.seat_state);
       }
     } else {
       onChangeHeadCount(count, seatLayout.seat_state);
@@ -74,13 +74,13 @@ const SeatComp: React.FC<SeatCompProps> = (props) => {
               {headCountList.map((count: number) => {
                 return (
                   <div
-                    onClick={() => handleClickHeadCount(count)}
+                    onClick={count !== headCount ? () => handleClickHeadCount(count) : undefined}
                     key={`headCount_${count}`}
                     className={mergeClassNames(
-                      'flex aspect-square w-7 cursor-pointer flex-col items-center justify-center rounded-md border border-borderColor bg-pointColor/70 font-NMSNeo3 text-xs text-fontColor',
+                      'flex aspect-square w-7 cursor-default flex-col items-center justify-center rounded-md border border-borderColor bg-pointColor/70 font-NMSNeo3 text-xs text-fontColor',
                       'mobile:w-8 tablet:text-sm',
                       {
-                        'bg-transparent hover:bg-pointColor/30': count !== headCount,
+                        'cursor-pointer bg-transparent hover:bg-pointColor/30': count !== headCount,
                       },
                     )}
                   >
