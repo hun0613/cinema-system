@@ -1,8 +1,8 @@
 import Header from '@/components/mains/Header';
 import AuthProvider from '@/components/providers/AuthProvider';
 import QueryProvider from '@/components/providers/QueryProvider';
+import { authOptions } from '@/utils/authUtil';
 import { getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]/route';
 import './globals.css';
 
 export default async function RootLayout({ children, params: { ...params } }: { children: React.ReactNode; params: any }) {
