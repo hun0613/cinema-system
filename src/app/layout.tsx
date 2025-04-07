@@ -2,6 +2,7 @@ import Header from '@/components/mains/Header';
 import AuthProvider from '@/components/providers/AuthProvider';
 import QueryProvider from '@/components/providers/QueryProvider';
 import { authOptions } from '@/utils/authUtil';
+import { Analytics } from '@vercel/analytics/react';
 import { getServerSession } from 'next-auth';
 import './globals.css';
 
@@ -10,6 +11,7 @@ export default async function RootLayout({ children, params: { ...params } }: { 
 
   return (
     <>
+      <Analytics />
       {/* suppressHydrationWarning : "app-index.js:35 Warning: Extra attributes from the server: data-redeviation-bs-uid" warning 해결 */}
       <html lang='en' suppressHydrationWarning>
         <body>

@@ -17,6 +17,7 @@
     "@shopify/prettier-plugin-liquid": "^1.4.1",
     "@tanstack/react-query": "^5.64.1",
     "@types/classnames": "^2.3.4",
+    "@vercel/analytics": "^1.5.0",
     "axios": "^1.7.9",
     "mysql2": "^3.9.1",
     "next": "14.1.0",
